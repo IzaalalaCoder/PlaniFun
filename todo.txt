@@ -1,0 +1,17 @@
+Réflexion sur le sujet 
+
+
+  * Les priorité des tâches listées sous forme d'énumération
+
+- Une tâche est représenté par la liste de choses suivantes : 
+  Un descriptif explicatif de la tâche
+  Une tâche peut être de deux types !  
+    SIMPLE 
+        --> Ne contient pas de barre de progression mais une valeur booléennes indiquant que la tâche a été réalisée
+        --> Une date d'échéance qui représente le délai de la tâche elle ne sera pas accompagnée d'une horaire
+        --> Une durée potentielle que prendra la tâche la valeur est minimum 0
+    COMPLEXE 
+        --> Contient une barre de progression calculées sur la liste des tâches se trouvant dans celle-ci 
+        --> La date d'échéance et la plus grande de ces sous tâches
+        --> La durée estimée est la somme des durées de ces sous tâches
+

@@ -18,11 +18,11 @@ public interface Task {
 
     // COMMANDS
 
-    public void setPriority(Priority p);
+    public void setPriority(Priority priority);
 
-    public void setExpiryDate(Date d);
+    public void setExpiryDate(Date expiryDate);
 
-    public void setDescription(String s);
+    public void setDescription(String description);
 
-    public void setCompletionDate(int i);
+    public void setCompletionDate(int completionDate);
 }

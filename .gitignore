@@ -1,1 +1,5 @@
 uml/
+.idea/
+*.class
+*.xml
+*.iml

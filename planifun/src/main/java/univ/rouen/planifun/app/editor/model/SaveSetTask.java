@@ -4,12 +4,12 @@ public class SaveSetTask {
 
     // ATTRIBUTES
 
-    private SetTask tasks;
+    //private SetTask tasks;
 
     // CONSTRUCTOR
 
     public SaveSetTask(SetTask tasks) {
-        this.tasks = tasks;
+        //this.tasks = tasks;
     }
 
     // COMMANDS

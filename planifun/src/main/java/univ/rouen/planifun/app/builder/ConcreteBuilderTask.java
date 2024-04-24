@@ -8,10 +8,11 @@ import univ.rouen.planifun.app.editor.model.task.factory.FactoryNormalTask;
 
 public class ConcreteBuilderTask implements BuilderTask {
 
+    // COMMANDS
 
     @Override
-    public SetTask createTask() {
-        return new SetTask();
+    public SetTask createTask(String name) {
+        return new SetTask(name);
     }
 
     @Override

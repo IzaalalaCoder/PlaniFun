@@ -3,7 +3,10 @@ package univ.rouen.planifun.app.editor.model;
 import univ.rouen.planifun.app.editor.model.task.ComplexTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class SetTask {
@@ -12,7 +15,15 @@ public class SetTask {
 
     private List<Task> tasks;
     private String name;
-    private Date creationDate;
+    private Calendar creationDate;
+
+    // CONSTRUCTORS
+
+    public SetTask(String name) {
+        this.tasks = new ArrayList<>();
+        this.creationDate = new GregorianCalendar();
+        this.name = name;
+    }
 
     // REQUESTS
 
@@ -33,7 +44,7 @@ public class SetTask {
     }
 
     public Date getCreationDate() {
-        return this.creationDate;
+        return this.creationDate.getTime();
     }
 
     // COMMANDS

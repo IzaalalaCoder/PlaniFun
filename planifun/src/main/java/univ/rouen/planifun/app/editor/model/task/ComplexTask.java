@@ -23,9 +23,10 @@ public class ComplexTask implements Task {
         this.priority = Priority.NORMAL;
         this.completionDate = 5;
         this.progressStatus = 0;
+        this.expiryDate = null;
     }
 
-     // REQUESTS
+    // REQUESTS
 
     @Override
     public String getDescription() {

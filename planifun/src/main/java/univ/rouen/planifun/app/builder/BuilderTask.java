@@ -4,7 +4,10 @@ import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
 public interface BuilderTask {
-    public SetTask createTask();
+
+    // COMMANDS
+
+    public SetTask createTask(String name);
 
     public Task createNormalTask();
 

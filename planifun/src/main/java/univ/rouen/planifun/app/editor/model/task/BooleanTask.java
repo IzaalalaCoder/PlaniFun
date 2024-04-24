@@ -45,8 +45,8 @@ public class BooleanTask implements Task {
     }
 
     @Override
-    public int getProgressStatus() {
-        return this.done ? 100 : 0;
+    public Double getProgressStatus() {
+        return this.done ? 100.0 : 0.0;
     }
 
     // COMMANDS

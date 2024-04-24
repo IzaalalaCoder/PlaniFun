@@ -10,14 +10,14 @@ public class NormalTask implements Task {
     private Date expiryDate;
     private Priority priority;
     private int completionDate;
-    private int progressStatus;
+    private Double progressStatus;
 
     // CONSTRUCTORS
 
     public NormalTask() {
         this.completionDate = 5;
         this.description = "";
-        this.progressStatus = 0;
+        this.progressStatus = 0.0;
         this.expiryDate = null;
         this.priority = Priority.NORMAL;
     }
@@ -45,7 +45,7 @@ public class NormalTask implements Task {
     }
 
     @Override
-    public int getProgressStatus() {
+    public Double getProgressStatus() {
         return this.progressStatus;
     }
 
@@ -71,7 +71,7 @@ public class NormalTask implements Task {
         this.completionDate = completionDate;
     }
 
-    public void setProgressStatus(int progressStatus) {
+    public void setProgressStatus(Double progressStatus) {
         this.progressStatus = progressStatus;
     }
 }

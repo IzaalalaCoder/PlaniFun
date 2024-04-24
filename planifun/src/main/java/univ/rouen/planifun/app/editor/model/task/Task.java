@@ -14,7 +14,7 @@ public interface Task {
 
     public int getCompletionDate();
 
-    public int getProgressStatus();
+    public Double getProgressStatus();
 
     // COMMANDS
 

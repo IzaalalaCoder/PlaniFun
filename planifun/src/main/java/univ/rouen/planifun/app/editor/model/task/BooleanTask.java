@@ -1,5 +1,6 @@
 package univ.rouen.planifun.app.editor.model.task;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class BooleanTask implements BasicTask {
@@ -10,10 +11,12 @@ public class BooleanTask implements BasicTask {
     private Priority priority;
     private int completionDate;
     private boolean done;
+    private Calendar defaultCalendar;
 
     // CONSTRUCTORS
 
     public BooleanTask() {
+        this.defaultCalendar = null;
         this.completionDate = 5;
         this.description = "";
         this.done = false;
@@ -29,7 +32,9 @@ public class BooleanTask implements BasicTask {
 
     @Override
     public Date getExpiryDate() {
-        return null;
+        Calendar c = this.defaultCalendar;
+        c.add(Calendar.DAY_OF_MONTH, completionDate);
+        return c.getTime();
     }
 
     @Override
@@ -62,6 +67,11 @@ public class BooleanTask implements BasicTask {
     @Override
     public void setCompletionDate(int completionDate) {
         this.completionDate = completionDate;
+    }
+
+    @Override
+    public void setDefaultCalendar(Calendar c) {
+        this.defaultCalendar = c;
     }
 
     public void setIsDone(boolean done) {

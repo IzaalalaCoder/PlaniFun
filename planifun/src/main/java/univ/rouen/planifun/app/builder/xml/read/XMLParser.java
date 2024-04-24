@@ -1,4 +1,4 @@
-package univ.rouen.planifun.app.builder.xml;
+package univ.rouen.planifun.app.builder.xml.read;
 
 import java.io.IOException;
 import univ.rouen.planifun.app.editor.model.SetTask;

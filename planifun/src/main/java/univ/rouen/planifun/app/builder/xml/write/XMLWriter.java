@@ -1,4 +1,4 @@
-package univ.rouen.planifun.app.builder.xml;
+package univ.rouen.planifun.app.builder.xml.write;
 
 import java.io.File;
 import java.io.IOException;

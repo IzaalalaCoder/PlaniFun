@@ -7,7 +7,7 @@ import univ.rouen.planifun.app.editor.model.task.factory.FactoryComplexTask;
 import univ.rouen.planifun.app.editor.model.task.factory.FactoryNormalTask;
 
 public class ConcreteBuilderTask implements BuilderTask {
-
+    
     // COMMANDS
 
     @Override

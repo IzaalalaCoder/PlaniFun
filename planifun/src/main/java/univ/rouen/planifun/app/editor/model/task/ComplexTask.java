@@ -1,7 +1,9 @@
 package univ.rouen.planifun.app.editor.model.task;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class ComplexTask implements Task {
@@ -33,7 +35,23 @@ public class ComplexTask implements Task {
 
     @Override
     public Date getExpiryDate() {
-        return null;
+        Calendar calendar =  new GregorianCalendar();
+        calendar.set(Calendar.YEAR, 1);
+        calendar.set(Calendar.MONTH, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        
+        for (Task task : this.subTasks) {
+            if (!(task instanceof ComplexTask)) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(task.getExpiryDate());
+
+                if (c.after(calendar)) {
+                    calendar = c;
+                }
+            }
+        }
+
+        return calendar.getTime();
     }
 
     @Override

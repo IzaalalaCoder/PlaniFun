@@ -22,6 +22,7 @@ import univ.rouen.planifun.app.editor.model.task.BasicTask;
 import univ.rouen.planifun.app.editor.model.task.BooleanTask;
 import univ.rouen.planifun.app.editor.model.task.ComplexTask;
 import univ.rouen.planifun.app.editor.model.task.NormalTask;
+import univ.rouen.planifun.app.editor.model.task.Priority;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
 public class ReadingXML implements XMLScheme, XMLParser {
@@ -129,6 +130,9 @@ public class ReadingXML implements XMLScheme, XMLParser {
             final Element descElement = (Element) task.getElementsByTagName("description").item(0);
             String desc = descElement.getTextContent();
 
+            // get priority
+            final Priority priority = this.getPriority(task.getAttributes().getNamedItem("mode").getTextContent());
+
             // is complex 
             boolean isComplexTask = task.getElementsByTagName("progress").getLength() == 0;
             
@@ -149,7 +153,6 @@ public class ReadingXML implements XMLScheme, XMLParser {
                 progress = Double.parseDouble(progressElement.getTextContent());
 
                 // is normal task
-
                 boolean isNormal = progressElement.getAttributes().getNamedItem("mode")
                     .getTextContent().equals("NORMAL");
                 
@@ -161,14 +164,14 @@ public class ReadingXML implements XMLScheme, XMLParser {
                     ((BooleanTask) newTask).setIsDone(progress == 100.0);
                 }
 
-                ((BasicTask) newTask).setCompletionDate(completion);
-
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(this.model.getCreationDate());
                 ((BasicTask) newTask).setDefaultCalendar(calendar);
+                ((BasicTask) newTask).setCompletionDate(completion);
             }
 
             newTask.setDescription(desc);
+            newTask.setPriority(priority);
 
             if (complexTask == null) {
                 this.model.addTaskInList(newTask);
@@ -214,5 +217,14 @@ public class ReadingXML implements XMLScheme, XMLParser {
         calendar.set(Calendar.SECOND, second);
 
         return calendar;
+    }
+
+    private Priority getPriority(String p) {
+        for (Priority priority : Priority.values()) {
+            if (priority.name().equals(p)) {
+                return priority;
+            }
+        }
+        return null;
     }
 }

@@ -1,10 +1,13 @@
-package univ.rouen.planifun.app.editor.model.task;
+package univ.rouen.planifun.app.editor.model.task.complex;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import univ.rouen.planifun.app.editor.model.task.Priority;
+import univ.rouen.planifun.app.editor.model.task.Task;
 
 public class ComplexTask implements Task {
 
@@ -41,13 +44,11 @@ public class ComplexTask implements Task {
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         
         for (Task task : this.subTasks) {
-            if (!(task instanceof ComplexTask)) {
-                Calendar c = Calendar.getInstance();
-                c.setTime(task.getExpiryDate());
+            Calendar c = Calendar.getInstance();
+            c.setTime(task.getExpiryDate());
 
-                if (c.after(calendar)) {
-                    calendar = c;
-                }
+            if (c.after(calendar)) {
+                calendar = c;
             }
         }
 

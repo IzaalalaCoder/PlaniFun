@@ -1,6 +1,8 @@
-package univ.rouen.planifun.app.editor.model.task;
+package univ.rouen.planifun.app.editor.model.task.basic;
 
 import java.util.Calendar;
+
+import univ.rouen.planifun.app.editor.model.task.Task;
 
 public interface BasicTask extends Task {
     

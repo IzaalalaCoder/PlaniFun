@@ -1,7 +1,7 @@
 package univ.rouen.planifun.app.editor.model;
 
-import univ.rouen.planifun.app.editor.model.task.ComplexTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
+import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -72,5 +72,9 @@ public class SetTask {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.creationDate = calendar;
     }
 }

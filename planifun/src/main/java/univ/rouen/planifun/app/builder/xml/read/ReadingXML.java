@@ -18,12 +18,12 @@ import org.xml.sax.SAXParseException;
 import univ.rouen.planifun.app.builder.BuilderTask;
 import univ.rouen.planifun.app.builder.ConcreteBuilderTask;
 import univ.rouen.planifun.app.editor.model.SetTask;
-import univ.rouen.planifun.app.editor.model.task.BasicTask;
-import univ.rouen.planifun.app.editor.model.task.BooleanTask;
-import univ.rouen.planifun.app.editor.model.task.ComplexTask;
-import univ.rouen.planifun.app.editor.model.task.NormalTask;
 import univ.rouen.planifun.app.editor.model.task.Priority;
 import univ.rouen.planifun.app.editor.model.task.Task;
+import univ.rouen.planifun.app.editor.model.task.basic.BasicTask;
+import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
+import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
+import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 
 public class ReadingXML implements XMLScheme, XMLParser {
 
@@ -108,7 +108,9 @@ public class ReadingXML implements XMLScheme, XMLParser {
     private void browseFile(File file) {
         final Element dataElement = (Element) this.document.getElementsByTagName("data").item(0);
         final Element nameElement = (Element) dataElement.getElementsByTagName("name").item(0);
-        this.model = new SetTask(nameElement.getTextContent(), this.browseTime(dataElement));
+
+        this.model = this.builderTask.createTask(nameElement.getTextContent());
+        this.model.setCalendar(this.browseTime(dataElement));
 
         final Element tasksElement = (Element) this.document.getElementsByTagName("tasks").item(0);
         this.browseAllTask(tasksElement, null);

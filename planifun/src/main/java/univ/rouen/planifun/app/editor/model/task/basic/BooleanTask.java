@@ -1,7 +1,9 @@
-package univ.rouen.planifun.app.editor.model.task;
+package univ.rouen.planifun.app.editor.model.task.basic;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import univ.rouen.planifun.app.editor.model.task.Priority;
 
 public class BooleanTask implements BasicTask {
 

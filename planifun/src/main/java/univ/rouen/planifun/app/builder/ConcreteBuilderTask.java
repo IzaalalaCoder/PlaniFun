@@ -1,10 +1,10 @@
 package univ.rouen.planifun.app.builder;
 
 import univ.rouen.planifun.app.editor.model.SetTask;
+import univ.rouen.planifun.app.editor.model.factory.FactoryBooleanTask;
+import univ.rouen.planifun.app.editor.model.factory.FactoryComplexTask;
+import univ.rouen.planifun.app.editor.model.factory.FactoryNormalTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
-import univ.rouen.planifun.app.editor.model.task.factory.FactoryBooleanTask;
-import univ.rouen.planifun.app.editor.model.task.factory.FactoryComplexTask;
-import univ.rouen.planifun.app.editor.model.task.factory.FactoryNormalTask;
 
 public class ConcreteBuilderTask implements BuilderTask {
     

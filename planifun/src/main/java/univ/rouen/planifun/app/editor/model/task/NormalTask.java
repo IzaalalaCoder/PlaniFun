@@ -2,12 +2,11 @@ package univ.rouen.planifun.app.editor.model.task;
 
 import java.util.Date;
 
-public class NormalTask implements Task {
+public class NormalTask implements BasicTask {
 
     // ATTRIBUTES
 
     private String description;
-    private Date expiryDate;
     private Priority priority;
     private int completionDate;
     private Double progressStatus;
@@ -18,7 +17,6 @@ public class NormalTask implements Task {
         this.completionDate = 5;
         this.description = "";
         this.progressStatus = 0.0;
-        this.expiryDate = null;
         this.priority = Priority.NORMAL;
     }
 
@@ -31,7 +29,7 @@ public class NormalTask implements Task {
 
     @Override
     public Date getExpiryDate() {
-        return this.expiryDate;
+        return null;
     }
 
     @Override
@@ -54,11 +52,6 @@ public class NormalTask implements Task {
     @Override
     public void setPriority(Priority priority) {
         this.priority = priority;
-    }
-
-    @Override
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
     }
 
     @Override

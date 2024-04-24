@@ -10,7 +10,6 @@ public class ComplexTask implements Task {
 
     private List<Task> subTasks;
     private String description;
-    private Date expiryDate;
     private Priority priority;
     private int completionDate;
     private Double progressStatus;
@@ -21,9 +20,8 @@ public class ComplexTask implements Task {
         this.subTasks = new ArrayList<>();
         this.description = "";
         this.priority = Priority.NORMAL;
-        this.completionDate = 5;
+        this.completionDate = 0;
         this.progressStatus = 100.0;
-        this.expiryDate = null;
     }
 
     // REQUESTS
@@ -35,7 +33,7 @@ public class ComplexTask implements Task {
 
     @Override
     public Date getExpiryDate() {
-        return expiryDate;
+        return null;
     }
 
     @Override
@@ -68,30 +66,20 @@ public class ComplexTask implements Task {
     public void setPriority(Priority priority) {
         this.priority = priority;
     }
-
-    @Override
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
-    }
-
     
     @Override
     public void setDescription(String description) {
         this.description = description;
     }
 
-    
-    @Override
-    public void setCompletionDate(int completionDate) {
-        this.completionDate = completionDate;
-    }
-
     public void addTask(Task task) {
         this.subTasks.add(task);
+        this.updateCompletionDate();
     }
 
     public void removeTask(Task task) {
         this.subTasks.remove(task);
+        this.updateCompletionDate();
     }
 
     // UTILS
@@ -110,5 +98,15 @@ public class ComplexTask implements Task {
         }
 
         this.progressStatus = (countCompleted * 100.0) / this.subTasks.size();
+    }
+
+    private void updateCompletionDate() {
+        int completion = 0;
+
+        for (Task t : this.subTasks) {
+            completion += t.getCompletionDate();
+        }
+
+        this.completionDate = completion;
     }
 }

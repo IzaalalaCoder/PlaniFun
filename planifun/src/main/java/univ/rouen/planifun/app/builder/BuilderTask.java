@@ -11,7 +11,7 @@ public interface BuilderTask {
 
     public Task createNormalTask();
 
-    public Task creatBooleanTask();
+    public Task createBooleanTask();
     
     public Task createComplexTask();
 }

@@ -2,19 +2,19 @@
 
 <!-- Add constraint on data -->
 <!ELEMENT data (name, time)>
-<!ELEMENT time (year, month, days, hour, minute, second)>
+<!ELEMENT time (year, month, day, hour, minute, second)>
 
 <!ELEMENT name (#PCDATA)>
 <!ELEMENT year (#PCDATA)>
 <!ELEMENT month (#PCDATA)>
-<!ELEMENT days (#PCDATA)>
+<!ELEMENT day (#PCDATA)>
 <!ELEMENT hour (#PCDATA)>
 <!ELEMENT minute (#PCDATA)>
 <!ELEMENT second (#PCDATA)>
 
 <!-- Add constraint on task -->
 <!ELEMENT tasks (task* | complex*)>
-<!ELEMENT task (description, completion, (progress|sub))>
+<!ELEMENT task (description, ((completion, progress)|sub))>
 <!ELEMENT description (#PCDATA)>
 <!ELEMENT completion (#PCDATA)>
 <!ELEMENT progress (#PCDATA)>

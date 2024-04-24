@@ -21,7 +21,7 @@ public class ConcreteBuilderTask implements BuilderTask {
     }
 
     @Override
-    public Task creatBooleanTask() {
+    public Task createBooleanTask() {
         return new FactoryBooleanTask().createTask();
     }
 

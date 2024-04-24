@@ -20,9 +20,5 @@ public interface Task {
 
     public void setPriority(Priority priority);
 
-    public void setExpiryDate(Date expiryDate);
-
     public void setDescription(String description);
-
-    public void setCompletionDate(int completionDate);
 }

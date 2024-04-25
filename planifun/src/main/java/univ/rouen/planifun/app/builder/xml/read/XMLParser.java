@@ -14,6 +14,8 @@ public interface XMLParser {
 
     public SetTask getSetTaskInFile();
 
+    public boolean checkXMLFile();
+    
     // COMMANDS
 
     public void readFileXML() throws IOException;

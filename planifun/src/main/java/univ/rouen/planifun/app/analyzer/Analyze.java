@@ -1,10 +1,13 @@
 package univ.rouen.planifun.app.analyzer;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
@@ -19,14 +22,15 @@ public class Analyze {
     private SetTask todo;
     private List<Task> tasks;
     private Calendar calendar;
+    private boolean allCompleted;
 
     // CONSTRUCTORS
 
     public Analyze(SetTask setTask) { 
         this.todo = setTask;
         this.calendar = new GregorianCalendar();
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
         this.tasks = new ArrayList<Task>();
+        this.allCompleted = false;
     }
 
     // REQUESTS
@@ -38,9 +42,19 @@ public class Analyze {
         }
 
         if (this.tasks.size() == 0) {
-            System.out.println("Toutes les tâches sont complétées");
+            if (allCompleted) {
+                System.out.println("Toutes les tâches sont complétées");
+            } else {
+                System.out.println("Certaines tâches sont en retard");
+            }
             return;
         }
+
+
+        Locale locale = new Locale("fr", "FR");
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
+        String date = dateFormat.format(this.calendar.getTime());
+        System.out.println("Pour " + date);
 
         int index = 1;
         for (Task t : this.tasks) {
@@ -59,14 +73,20 @@ public class Analyze {
             return;
         }
 
+        int countCompleted = 0;
         for (Task task : this.todo.getAllTask()) {
-            Calendar c = Calendar.getInstance();
+            Calendar c = new GregorianCalendar();
             c.setTime(task.getExpiryDate());
-            if (task.getProgressStatus() != MAX_PROGRESS && c.before(this.calendar)) {
-                this.tasks.add(task);
+            if (task.getProgressStatus() != MAX_PROGRESS) {
+                if (c.after(this.calendar)) {
+                    this.tasks.add(task);
+                }
+            } else {
+                countCompleted++;
             }
         }
 
+        this.allCompleted = countCompleted == this.todo.getAllTask().size();
         this.sortByDate();
         this.cleanListTask();
     }

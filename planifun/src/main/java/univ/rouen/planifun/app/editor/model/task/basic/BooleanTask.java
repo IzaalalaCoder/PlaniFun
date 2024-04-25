@@ -1,9 +1,10 @@
 package univ.rouen.planifun.app.editor.model.task.basic;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
-import univ.rouen.planifun.app.editor.model.task.BasicTask;
 import univ.rouen.planifun.app.editor.model.task.Priority;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
@@ -58,8 +59,12 @@ public class BooleanTask implements Task, BasicTask {
 
     @Override
     public String toString() {
-        return this.description + " -- " + this.priority.name() 
-            + " | " + this.getExpiryDate().toString();
+        Locale locale = new Locale("fr", "FR");
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
+        String date = dateFormat.format(this.getExpiryDate());
+
+        return this.description + " | " + this.priority.name() 
+            + " | " + date;
     }
 
     // COMMANDS

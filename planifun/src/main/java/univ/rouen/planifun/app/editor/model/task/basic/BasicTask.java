@@ -1,4 +1,4 @@
-package univ.rouen.planifun.app.editor.model.task;
+package univ.rouen.planifun.app.editor.model.task.basic;
 
 import java.util.Calendar;
 

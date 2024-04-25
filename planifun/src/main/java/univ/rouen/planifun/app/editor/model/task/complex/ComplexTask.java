@@ -77,7 +77,7 @@ public class ComplexTask implements Task {
 
     @Override
     public String toString() {
-        String message = this.description + " -- " + this.priority.name();
+        String message = this.description + " | " + this.priority.name();
 
         for (Task t : this.subTasks) {
             message += "\n\t" + t.toString();

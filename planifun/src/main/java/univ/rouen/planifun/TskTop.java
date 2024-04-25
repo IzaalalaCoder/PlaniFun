@@ -10,7 +10,6 @@ public class TskTop {
         try {
             ReadingXML reader = new ReadingXML(new File("C:\\Users\\Izaalala\\Documents\\save_example.xml"));
             reader.readFileXML();
-            System.out.println(reader.getSetTaskInFile().getAllTask().size());
             Analyze analyze = new Analyze(reader.getSetTaskInFile());
             analyze.analyze();
             analyze.getAllTheMostUrgentTask();

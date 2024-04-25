@@ -54,6 +54,13 @@ public class NormalTask implements BasicTask {
         return this.progressStatus;
     }
 
+    @Override
+    public String toString() {
+        return this.description + " -- " + this.priority.name() 
+            + "complété à " + this.progressStatus + "%"
+            + " | " + this.getExpiryDate().toString();
+    }
+
     // COMMANDS
 
     @Override

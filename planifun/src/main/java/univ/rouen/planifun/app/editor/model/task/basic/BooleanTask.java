@@ -54,6 +54,12 @@ public class BooleanTask implements BasicTask {
         return this.done ? 100.0 : 0.0;
     }
 
+    @Override
+    public String toString() {
+        return this.description + " -- " + this.priority.name() 
+            + " | " + this.getExpiryDate().toString();
+    }
+
     // COMMANDS
 
     @Override

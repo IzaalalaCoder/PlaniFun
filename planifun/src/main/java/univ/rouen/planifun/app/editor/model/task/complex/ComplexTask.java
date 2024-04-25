@@ -71,6 +71,17 @@ public class ComplexTask implements Task {
         return progressStatus;
     }
 
+    @Override
+    public String toString() {
+        String message = this.description + " -- " + this.priority.name();
+
+        for (Task t : this.subTasks) {
+            message += "\n\t" + t.toString();
+        }
+
+        return message;
+    }
+
     public List<Task> getAllSubTasks() {
         return this.subTasks;
     }

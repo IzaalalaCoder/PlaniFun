@@ -7,7 +7,18 @@ import univ.rouen.planifun.app.builder.xml.read.ReadingXML;
 
 public class TskTop {
     public static void main(String[] args) {
-        if (args.length != 1) {
+        try {
+            ReadingXML reader = new ReadingXML(new File("C:\\Users\\Izaalala\\Documents\\save_example.xml"));
+            reader.readFileXML();
+            System.out.println(reader.getSetTaskInFile().getAllTask().size());
+            Analyze analyze = new Analyze(reader.getSetTaskInFile());
+            analyze.analyze();
+            analyze.getAllTheMostUrgentTask();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*if (args.length != 1) {
             System.out.println("Erreur de syntaxe");
         } else {
             try {
@@ -19,6 +30,6 @@ public class TskTop {
             }
 
             
-        }
+        }*/
     }
 }

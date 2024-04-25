@@ -18,9 +18,9 @@ import org.xml.sax.SAXParseException;
 import univ.rouen.planifun.app.builder.BuilderTask;
 import univ.rouen.planifun.app.builder.ConcreteBuilderTask;
 import univ.rouen.planifun.app.editor.model.SetTask;
+import univ.rouen.planifun.app.editor.model.task.BasicTask;
 import univ.rouen.planifun.app.editor.model.task.Priority;
 import univ.rouen.planifun.app.editor.model.task.Task;
-import univ.rouen.planifun.app.editor.model.task.basic.BasicTask;
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
@@ -109,6 +109,7 @@ public class ReadingXML implements XMLScheme, XMLParser {
         final Element dataElement = (Element) this.document.getElementsByTagName("data").item(0);
         final Element nameElement = (Element) dataElement.getElementsByTagName("name").item(0);
 
+        this.builderTask = new ConcreteBuilderTask();
         this.model = this.builderTask.createTask(nameElement.getTextContent());
         this.model.setCalendar(this.browseTime(dataElement));
 
@@ -123,8 +124,6 @@ public class ReadingXML implements XMLScheme, XMLParser {
             return;
         }
 
-        this.builderTask = new ConcreteBuilderTask();
-
         for (int i = 0; i < tasks.getLength(); i++) {
             Element task = (Element) tasks.item(i);
 
@@ -133,7 +132,7 @@ public class ReadingXML implements XMLScheme, XMLParser {
             String desc = descElement.getTextContent();
 
             // get priority
-            final Priority priority = this.getPriority(task.getAttributes().getNamedItem("mode").getTextContent());
+            final Priority priority = this.getPriority(task.getAttributes().getNamedItem("priority").getTextContent());
 
             // is complex 
             boolean isComplexTask = task.getElementsByTagName("progress").getLength() == 0;

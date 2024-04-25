@@ -3,9 +3,11 @@ package univ.rouen.planifun.app.editor.model.task.basic;
 import java.util.Calendar;
 import java.util.Date;
 
+import univ.rouen.planifun.app.editor.model.task.BasicTask;
 import univ.rouen.planifun.app.editor.model.task.Priority;
+import univ.rouen.planifun.app.editor.model.task.Task;
 
-public class NormalTask implements BasicTask {
+public class NormalTask implements Task, BasicTask {
 
     // ATTRIBUTES
 

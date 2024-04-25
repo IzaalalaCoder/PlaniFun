@@ -22,18 +22,21 @@ public class Analyze {
 
     // CONSTRUCTORS
 
-    public Analyze(SetTask setTask) {
+    public Analyze(SetTask setTask) { 
+        this.todo = setTask;
         this.calendar = new GregorianCalendar();
         calendar.add(Calendar.DAY_OF_MONTH, 1);
-
-        this.todo = setTask;
         this.tasks = new ArrayList<Task>();
-        this.analyze();
     }
 
     // REQUESTS
 
     public void getAllTheMostUrgentTask() {
+        if (this.todo == null) {
+            System.out.println("Aucune tâche n'a été trouvé");
+            return;
+        }
+
         if (this.tasks.size() == 0) {
             System.out.println("Toutes les tâches sont complétées");
             return;
@@ -49,9 +52,13 @@ public class Analyze {
         }
     }
 
-    // UTILS
+    // COMMANDS
 
-    private void analyze() {
+    public void analyze() {
+        if (this.todo == null) {
+            return;
+        }
+
         for (Task task : this.todo.getAllTask()) {
             Calendar c = Calendar.getInstance();
             c.setTime(task.getExpiryDate());
@@ -63,6 +70,8 @@ public class Analyze {
         this.sortByDate();
         this.cleanListTask();
     }
+    
+    // UTILS
 
     private void sortByDate() {
         Collections.sort(this.tasks, new ComparatorTask());

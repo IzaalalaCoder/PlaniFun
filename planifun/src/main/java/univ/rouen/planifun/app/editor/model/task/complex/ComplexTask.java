@@ -38,6 +38,10 @@ public class ComplexTask implements Task {
 
     @Override
     public Date getExpiryDate() {
+        if (subTasks.isEmpty()) {
+            return null; 
+        }
+
         Calendar calendar =  new GregorianCalendar();
         calendar.set(Calendar.YEAR, 1);
         calendar.set(Calendar.MONTH, 0);

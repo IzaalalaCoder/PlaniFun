@@ -1,4 +1,4 @@
-package univ.rouen.planifun.app.builder.xml.read;
+package univ.rouen.planifun.app.builder.xml;
 
 public interface XMLScheme {
 

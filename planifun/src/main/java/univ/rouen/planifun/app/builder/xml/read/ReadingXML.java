@@ -17,6 +17,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import univ.rouen.planifun.app.builder.BuilderTask;
 import univ.rouen.planifun.app.builder.ConcreteBuilderTask;
+import univ.rouen.planifun.app.builder.xml.XMLScheme;
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Priority;
 import univ.rouen.planifun.app.editor.model.task.Task;
@@ -123,7 +124,6 @@ public class ReadingXML implements XMLScheme, XMLParser {
         if (tasks.getLength() == 0) {
             return;
         }
-
         
         for (int i = 0; i < tasks.getLength(); i++) {
             Element task = (Element) tasks.item(i);

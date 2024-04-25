@@ -1,7 +1,6 @@
 package univ.rouen.planifun.app.editor.model;
 
 import univ.rouen.planifun.app.editor.model.task.Task;
-import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,12 +31,8 @@ public class SetTask {
 
     // REQUESTS
 
-    public Task getTaskAtIndexInList(int index) {
-        return this.tasks.get(index);
-    }
-
-    public Task getTaskAtIndexInComplexTask(ComplexTask complexTask, int index) {
-        return complexTask.getTaskAtIndex(index);
+    public List<Task> getAllTask() {
+        return this.tasks;
     }
 
     public String getName() {
@@ -60,14 +55,6 @@ public class SetTask {
 
     public void removeTaskAtIndexInList(int index) {
         this.tasks.remove(index);
-    }
-
-    public void addTaskInComplexTask(ComplexTask complexTask, Task task) {
-        complexTask.addTask(task);
-    }
-
-    public void removeTaskInComplexTask(ComplexTask complexTask, Task task) {
-        complexTask.removeTask(task);
     }
 
     public void setName(String name) {

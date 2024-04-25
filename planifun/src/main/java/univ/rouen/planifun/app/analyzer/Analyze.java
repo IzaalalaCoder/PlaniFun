@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
-
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
@@ -50,9 +48,7 @@ public class Analyze {
             return;
         }
 
-
-        Locale locale = new Locale("fr", "FR");
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT);
         String date = dateFormat.format(this.calendar.getTime());
         System.out.println("Pour " + date);
 

@@ -2,21 +2,24 @@ package univ.rouen.planifun.app.editor.view.menu;
 
 import java.awt.event.ActionListener;
 
-import univ.rouen.planifun.app.editor.controller.menu.CreateSetTask;
-import univ.rouen.planifun.app.editor.controller.menu.Quit;
+import univ.rouen.planifun.app.editor.controller.menu.ControlCreateTask;
+import univ.rouen.planifun.app.editor.controller.menu.ControlLoadSetTask;
+import univ.rouen.planifun.app.editor.controller.menu.ControlCreateSetTask;
+import univ.rouen.planifun.app.editor.controller.menu.ControlQuit;
+import univ.rouen.planifun.app.editor.controller.menu.ControlSaveSetTask;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 
 public enum Item {
     CREATE("Créer une nouvelle liste de tâche") {
         @Override
         public ActionListener getEvent(EditorMain main) {
-            return new CreateSetTask(main);
+            return new ControlCreateSetTask(main);
         }
     },
     ADD("Ajouter une tâche") {
         @Override
         public ActionListener getEvent(EditorMain main) {
-            return null;
+            return new ControlCreateTask(main);
         }
     },
     SEP_ONE(null) {
@@ -28,13 +31,13 @@ public enum Item {
     LOAD("Charger une liste") {
         @Override
         public ActionListener getEvent(EditorMain main) {
-            return null;
+            return new ControlLoadSetTask(main);
         }
     },
     SAVE("Sauvegarder une liste") {
         @Override
         public ActionListener getEvent(EditorMain main) {
-            return null;
+            return new ControlSaveSetTask(main);
         }
     },
     SEP_TWO(null) {
@@ -46,7 +49,7 @@ public enum Item {
     QUIT("Quitter l'application") {
         @Override
         public ActionListener getEvent(EditorMain main) {
-            return new Quit(main);
+            return new ControlQuit(main);
         }
     };    
     

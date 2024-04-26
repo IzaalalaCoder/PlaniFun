@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 import univ.rouen.planifun.app.editor.view.popup.WarningPopUp;
 
-public class Quit implements ActionListener {
+public class ControlQuit implements ActionListener {
 
     // ATTRIBUTES 
 
@@ -14,7 +14,7 @@ public class Quit implements ActionListener {
 
     // CONSTRUCTOR
 
-    public Quit(EditorMain main) {
+    public ControlQuit(EditorMain main) {
         this.main = main;
     }
 

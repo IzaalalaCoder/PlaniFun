@@ -13,4 +13,12 @@ public class ErrorPopUp {
         JOptionPane.showMessageDialog(null, message, "Erreur"
             , JOptionPane.ERROR_MESSAGE);
     }
+
+    public static void preventUnknowTyoe() {
+
+        String message = "La création de ce type de tâche est inexistant";
+
+        JOptionPane.showMessageDialog(null, message, "Erreur"
+            , JOptionPane.ERROR_MESSAGE);
+    }
 }

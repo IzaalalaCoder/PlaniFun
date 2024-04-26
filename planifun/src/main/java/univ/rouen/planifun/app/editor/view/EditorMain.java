@@ -50,6 +50,10 @@ public class EditorMain extends JFrame {
         this.setTitle(TITLE + " | " + this.model.getName());
     }
 
+    public void refreshModel() {
+        this.leftComponent.refresh();
+    }
+
     // UTILS
 
     private void createMenu() {

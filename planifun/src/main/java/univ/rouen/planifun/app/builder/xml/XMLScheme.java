@@ -16,7 +16,7 @@ public interface XMLScheme {
     final String PROGRESS_ELEMENT = "progress";
     final String COMPLETION_ELEMENT = "completion";
     final String SUB_ELEMENT = "sub";
-    final String DESCRIPTION_ELEMENT = "sub";
+    final String DESCRIPTION_ELEMENT = "description";
     final String NAME_ELEMENT = "name";
     final String DATA_ELEMENT = "data";
     final String PRIORITY_ATTRIBUTE = "priority";

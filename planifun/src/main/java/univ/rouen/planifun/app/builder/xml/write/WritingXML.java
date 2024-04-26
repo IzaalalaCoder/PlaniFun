@@ -19,6 +19,7 @@ import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.model.task.basic.BasicTask;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
+import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 
 public class WritingXML implements XMLWriter {
 
@@ -151,7 +152,37 @@ public class WritingXML implements XMLWriter {
                 task.appendChild(progress);
             } else {
                 final Element sub = doc.createElement("sub");
-                this.addAllTasks(sub, doc);
+                this.addSubAllTasks(sub, doc, (ComplexTask) t);
+                task.appendChild(sub);
+            }
+
+            parent.appendChild(task);
+        }
+    }
+
+    private void addSubAllTasks(Element parent, Document doc, ComplexTask complexTask) {
+        for (Task t : complexTask.getAllSubTasks()) {
+            final Element task = doc.createElement("task");
+            task.setAttribute("priority", t.getPriority().name());
+            
+            final Element description = doc.createElement("description");
+            description.setTextContent(t.getDescription());
+            task.appendChild(description);
+
+            if (t instanceof BasicTask) {
+                final Element completion = doc.createElement("completion");
+                completion.setTextContent(Integer.toString(t.getCompletionDate()));
+
+                final Element progress = doc.createElement("progress");
+                progress.setTextContent(Double.toString(t.getProgressStatus()));
+                progress.setAttribute("mode", t instanceof NormalTask ? "NORMAL" : "BOOLEAN");
+
+                task.appendChild(completion);
+                task.appendChild(progress);
+            } else {
+                final Element sub = doc.createElement("sub");
+                this.addSubAllTasks(sub, doc, (ComplexTask) t);
+                task.appendChild(sub);
             }
 
             parent.appendChild(task);

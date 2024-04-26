@@ -2,8 +2,9 @@ package univ.rouen.planifun.app.editor.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.GridLayout;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -23,12 +24,12 @@ public class ListTask extends JPanel {
     // ATTRIBUTES
 
     private SetTask model;
-    private List<JPanel> panels;
+    private Map<Task, JPanel> panels;
 
     // CONSTRUCTORS
 
     public ListTask() {
-        this.panels = new ArrayList<>();
+        this.panels = new HashMap<>();
         this.model = null;
         this.initializeComponent();        
     }
@@ -47,6 +48,7 @@ public class ListTask extends JPanel {
     // UTILS
 
     private void initializeComponent() {
+        this.setLayout(new GridLayout(0, 1));
         this.setBackground(COLOR_NULL);
 
         this.setPreferredSize(new Dimension(200, 0));
@@ -59,6 +61,18 @@ public class ListTask extends JPanel {
     public void removeAllControllers() {
     }
 
+    public void refresh() {
+        for (Task t : this.model.getAllTask()) {
+            if (!this.panels.containsKey(t)) {
+                JPanel p = this.createTaskComponent(t);
+                this.add(p);
+                this.panels.put(t, p);
+                this.setVisible(true);
+                //this.pack();
+            }
+        }
+    }
+
     private void removeAllComponents() {
         this.removeAll();
         this.panels.clear();
@@ -66,7 +80,9 @@ public class ListTask extends JPanel {
 
     private void createComponents() {
         for (Task t : this.model.getAllTask()) {
-            this.add(this.createTaskComponent(t));
+            JPanel p = this.createTaskComponent(t);
+            this.add(p);
+            this.panels.put(t, p);
         }
     }
 

@@ -111,7 +111,8 @@ public class ReadingXML implements XMLScheme, XMLParser {
         final Element nameElement = (Element) dataElement.getElementsByTagName(NAME_ELEMENT).item(0);
 
         this.builderTask = new ConcreteBuilderTask();
-        this.model = this.builderTask.createTask(nameElement.getTextContent());
+        this.model = this.builderTask.createTask();
+        this.model.setName(nameElement.getTextContent());
         this.model.setCalendar(this.browseTime(dataElement));
 
         final Element tasksElement = (Element) this.document.getElementsByTagName(TASKS_ELEMENT).item(0);

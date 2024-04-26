@@ -17,10 +17,10 @@ public class SetTask {
 
     // CONSTRUCTORS
 
-    public SetTask(String name) {
+    public SetTask() {
         this.tasks = new ArrayList<>();
         this.creationDate = new GregorianCalendar();
-        this.name = name;
+        this.name = "";
     }
 
     public SetTask(String name, Calendar calendar) {

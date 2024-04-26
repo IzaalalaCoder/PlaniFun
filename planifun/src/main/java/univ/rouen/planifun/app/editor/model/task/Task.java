@@ -8,11 +8,11 @@ public interface Task {
 
     public String getDescription();
 
-    public Date getExpiryDate();
-
     public Priority getPriority();
 
     public int getCompletionDate();
+    
+    public Date getExpiryDate();
 
     public Double getProgressStatus();
 

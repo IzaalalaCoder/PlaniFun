@@ -7,7 +7,7 @@ public interface BuilderTask {
 
     // COMMANDS
 
-    public SetTask createTask(String name);
+    public SetTask createTask();
 
     public Task createNormalTask();
 

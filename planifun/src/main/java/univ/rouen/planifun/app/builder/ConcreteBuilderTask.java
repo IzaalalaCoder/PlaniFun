@@ -11,8 +11,8 @@ public class ConcreteBuilderTask implements BuilderTask {
     // COMMANDS
 
     @Override
-    public SetTask createTask(String name) {
-        return new SetTask(name);
+    public SetTask createTask() {
+        return new SetTask();
     }
 
     @Override

@@ -64,7 +64,6 @@ public class ControlCreateTask implements ActionListener {
             t.setDescription(description);
             this.main.getModel().addTaskInList(t);
             //System.out.println(this.main.getModel().getSize());
-            this.main.refreshModel();
         }
 
         

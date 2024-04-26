@@ -3,6 +3,8 @@ package univ.rouen.planifun.app.editor.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,11 +43,39 @@ public class ListTask extends JPanel {
         this.removeAllControllers();
         this.removeAllComponents();
         this.model = model;
+        this.createController();
         this.createComponents();
         this.setBackground(COLOR_NOT_NULL);
     }
 
     // UTILS
+
+    private void createController() {
+        this.model.addPropertyChangeListener(SetTask.PROP_ADD_TASKS, new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                updateListAboutTask(true, (Task) evt.getNewValue());
+            }
+        
+        });
+    }
+
+    private void updateListAboutTask(boolean added, Task t) {
+        System.out.println(this.model.getSize());
+        if (added) {
+            JPanel p = this.createTaskComponent(t);
+            this.add(p);
+            this.panels.put(t, p);
+
+                // Forcer la mise à jour de l'interface utilisateur
+            this.revalidate(); // Assure que les composants sont correctement repositionnés
+            this.repaint(); // Assure que les composants sont redessinés
+        } else {
+            this.panels.get(t).removeAll();
+        }
+        
+    }
 
     private void initializeComponent() {
         this.setLayout(new GridLayout(0, 1));
@@ -59,18 +89,6 @@ public class ListTask extends JPanel {
     }
 
     public void removeAllControllers() {
-    }
-
-    public void refresh() {
-        for (Task t : this.model.getAllTask()) {
-            if (!this.panels.containsKey(t)) {
-                JPanel p = this.createTaskComponent(t);
-                this.add(p);
-                this.panels.put(t, p);
-                this.setVisible(true);
-                //this.pack();
-            }
-        }
     }
 
     private void removeAllComponents() {

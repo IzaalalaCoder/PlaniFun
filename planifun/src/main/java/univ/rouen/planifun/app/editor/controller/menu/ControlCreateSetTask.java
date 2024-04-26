@@ -23,8 +23,13 @@ public class ControlCreateSetTask implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String name = QuestionPopUp.inputString("Quel sera le nom de la liste de tâche");
+        if (name == null) {
+            return;
+        }
+ 
         SetTask model = new SetTask();
-        model.setName(QuestionPopUp.inputString("Quel sera le nom de la liste de tâche"));
+        model.setName(name);
         main.setModel(model);
     }
     

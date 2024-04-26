@@ -7,6 +7,8 @@ import javax.swing.JMenuItem;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.view.menu.Item;
@@ -44,17 +46,32 @@ public class EditorMain extends JFrame {
 
     public void setModel(SetTask model) {
         this.model = model;
+        this.createController();
 
-        this.leftComponent.setModel(model);
+        this.leftComponent.setModel(this.model);
         this.mainComponent.unsetModel();
         this.setTitle(TITLE + " | " + this.model.getName());
     }
 
-    public void refreshModel() {
-        this.leftComponent.refresh();
+    // UTILS
+
+    private void createController() {
+        this.model.addPropertyChangeListener(SetTask.PROP_ADD_TASKS, new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                updateWindow();
+            }
+        
+        });
     }
 
-    // UTILS
+    private void updateWindow() {
+        this.pack();
+        this.repaint();
+    }
+
+
 
     private void createMenu() {
         JMenu menu = new JMenu("Gestion");
@@ -77,7 +94,7 @@ public class EditorMain extends JFrame {
     private void initializeWindow() {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        this.setSize(new Dimension(600, 500));
+        this.setMinimumSize(new Dimension(600, 500));
         this.setTitle(TITLE);
     }
 

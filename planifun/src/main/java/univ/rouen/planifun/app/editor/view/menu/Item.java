@@ -3,7 +3,7 @@ package univ.rouen.planifun.app.editor.view.menu;
 public enum Item {
     LOAD("Charger une liste"),
     SAVE("Sauvegarder une liste"),
-    ADD("Ajouter une tâche"),
+    SEP(null),
     QUIT("Quitter l'application");    
     
     private String title;

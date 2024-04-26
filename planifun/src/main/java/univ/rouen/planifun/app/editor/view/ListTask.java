@@ -67,14 +67,12 @@ public class ListTask extends JPanel {
             JPanel p = this.createTaskComponent(t);
             this.add(p);
             this.panels.put(t, p);
-
-                // Forcer la mise à jour de l'interface utilisateur
-            this.revalidate(); // Assure que les composants sont correctement repositionnés
-            this.repaint(); // Assure que les composants sont redessinés
         } else {
             this.panels.get(t).removeAll();
+            this.remove(this.panels.get(t));
         }
-        
+        this.revalidate();
+        this.repaint();
     }
 
     private void initializeComponent() {

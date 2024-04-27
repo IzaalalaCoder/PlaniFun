@@ -23,7 +23,7 @@ public class ControlCreateSetTask implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String name = QuestionPopUp.inputString("Quel sera le nom de la liste de tâche");
+        String name = QuestionPopUp.inputString("Quel sera le nom de la liste de tâche", "Liste de tâche");
         if (name == null) {
             return;
         }

@@ -55,12 +55,12 @@ public class ControlCreateTask implements ActionListener {
                 t = new ComplexTask();
                 break;
             default:
-                ErrorPopUp.preventUnknowTyoe();
+                ErrorPopUp.preventUnknowType();
                 return;
         };
 
         if (t != null) {
-            String description = QuestionPopUp.inputString("La description de la tâche");
+            String description = QuestionPopUp.inputString("La description de la tâche", "Tâche " + (this.main.getModel().getSize() + 1));
             t.setDescription(description);
             this.main.getModel().addTaskInList(t);
             //System.out.println(this.main.getModel().getSize());

@@ -3,7 +3,6 @@ package univ.rouen.planifun.app.editor.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
@@ -88,7 +87,6 @@ public class ListTask extends JPanel {
     }
 
     private void updateListAboutTask(boolean added, Task t) {
-        System.out.println(this.model.getSize());
         if (added) {
             this.addPanelForTask(t);
         } else {
@@ -101,7 +99,7 @@ public class ListTask extends JPanel {
 
 
     private int calculateTotalHeight() {
-        int totalHeight = this.model.getAllTask().size() * 110;
+        int totalHeight = this.model.getAllTask().size() * 60;
         return totalHeight;
     }
     
@@ -179,7 +177,7 @@ public class ListTask extends JPanel {
     private JPanel createTaskComponent(Task task) {
 
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-        panel.setPreferredSize(new Dimension(this.getWidth(), 50));
+        panel.setMinimumSize(new Dimension(this.getWidth(), 50));
 
         JPanel q = new JPanel();
 
@@ -190,6 +188,9 @@ public class ListTask extends JPanel {
         panel.add(q);
         panel.add(this.createRemoveButton(task));
         this.subPanel.put(panel, q);
+
+
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         panel.addMouseListener(new ReactionItemTask(panel));
         panel.addMouseListener(new ReactionItemTask(q));

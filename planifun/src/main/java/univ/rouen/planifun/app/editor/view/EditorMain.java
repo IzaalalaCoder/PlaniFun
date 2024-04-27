@@ -7,6 +7,7 @@ import javax.swing.JSplitPane;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import univ.rouen.planifun.app.editor.model.SetTask;
+import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.view.menu.TaskMenu;
 
 public class EditorMain extends JFrame {
@@ -49,6 +50,10 @@ public class EditorMain extends JFrame {
         this.setTitle(TITLE + " | " + this.model.getName());
     }
 
+    public void setTask(Task task) {
+        this.mainComponent.setModel(task);
+    }
+
     // UTILS
 
     private void createMenu() {
@@ -64,7 +69,7 @@ public class EditorMain extends JFrame {
     }
 
     private void createComponent() {
-        this.leftComponent = new ListTask();
+        this.leftComponent = new ListTask(this);
         this.mainComponent = new InformationTask();
 
         this.scrollPane = new JScrollPane(this.leftComponent);

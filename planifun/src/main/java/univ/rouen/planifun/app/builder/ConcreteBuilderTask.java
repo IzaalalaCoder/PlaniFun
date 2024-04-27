@@ -1,5 +1,7 @@
 package univ.rouen.planifun.app.builder;
 
+import java.util.Calendar;
+
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.factory.FactoryBooleanTask;
 import univ.rouen.planifun.app.editor.model.factory.FactoryComplexTask;
@@ -16,18 +18,18 @@ public class ConcreteBuilderTask implements BuilderTask {
     }
 
     @Override
-    public Task createNormalTask() {
-        return new FactoryNormalTask().createTask();
+    public Task createNormalTask(Calendar c) {
+        return new FactoryNormalTask().createTask(c);
     }
 
     @Override
-    public Task createBooleanTask() {
-        return new FactoryBooleanTask().createTask();
+    public Task createBooleanTask(Calendar c) {
+        return new FactoryBooleanTask().createTask(c);
     }
 
     @Override
     public Task createComplexTask() {
-        return new FactoryComplexTask().createTask();
+        return new FactoryComplexTask().createTask(null);
     }
     
 }

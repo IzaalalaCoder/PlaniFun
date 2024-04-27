@@ -159,17 +159,16 @@ public class ReadingXML implements XMLScheme, XMLParser {
                     // is normal task
                     boolean isNormal = progressElement.getAttributes().getNamedItem(MODE_ATTRIBUTE).getTextContent().equals("NORMAL");
                     
-                    if (isNormal) {
-                        newTask = this.builderTask.createNormalTask();
-                        ((NormalTask) newTask).setProgressStatus(progress);
-                    } else {
-                        newTask = this.builderTask.createBooleanTask();
-                        ((BooleanTask) newTask).setIsDone(progress == 100.0);
-                    }
-
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(this.model.getCreationDate());
-                    ((BasicTask) newTask).setDefaultCalendar(calendar);
+
+                    if (isNormal) {
+                        newTask = this.builderTask.createNormalTask(calendar);
+                        ((NormalTask) newTask).setProgressStatus(progress);
+                    } else {
+                        newTask = this.builderTask.createBooleanTask(calendar);
+                        ((BooleanTask) newTask).setIsDone(progress == 100.0);
+                    }
                     ((BasicTask) newTask).setCompletionDate(completion);
                 }
 

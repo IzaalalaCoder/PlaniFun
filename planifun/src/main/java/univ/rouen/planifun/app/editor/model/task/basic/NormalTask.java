@@ -19,8 +19,8 @@ public class NormalTask implements Task, BasicTask {
 
     // CONSTRUCTORS
 
-    public NormalTask() {
-        this.defaultCalendar = null;
+    public NormalTask(Calendar c) {
+        this.defaultCalendar = c;
         this.completionDate = 5;
         this.description = "";
         this.progressStatus = 0.0;
@@ -81,11 +81,6 @@ public class NormalTask implements Task, BasicTask {
     @Override
     public void setCompletionDate(int completionDate) {
         this.completionDate = completionDate;
-    }
-
-    @Override
-    public void setDefaultCalendar(Calendar c) {
-        this.defaultCalendar = c;
     }
 
     public void setProgressStatus(Double progressStatus) {

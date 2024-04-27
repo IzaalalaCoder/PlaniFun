@@ -19,8 +19,8 @@ public class BooleanTask implements Task, BasicTask {
 
     // CONSTRUCTORS
 
-    public BooleanTask() {
-        this.defaultCalendar = null;
+    public BooleanTask(Calendar c) {
+        this.defaultCalendar = c;
         this.completionDate = 5;
         this.description = "";
         this.done = false;
@@ -80,11 +80,6 @@ public class BooleanTask implements Task, BasicTask {
     @Override
     public void setCompletionDate(int completionDate) {
         this.completionDate = completionDate;
-    }
-
-    @Override
-    public void setDefaultCalendar(Calendar c) {
-        this.defaultCalendar = c;
     }
 
     public void setIsDone(boolean done) {

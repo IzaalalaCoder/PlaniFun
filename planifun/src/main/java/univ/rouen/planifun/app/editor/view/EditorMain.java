@@ -1,17 +1,12 @@
 package univ.rouen.planifun.app.editor.view;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import univ.rouen.planifun.app.editor.model.SetTask;
-import univ.rouen.planifun.app.editor.view.menu.Item;
+import univ.rouen.planifun.app.editor.view.menu.TaskMenu;
 
 public class EditorMain extends JFrame {
 
@@ -24,6 +19,7 @@ public class EditorMain extends JFrame {
     private ListTask leftComponent;
     private InformationTask mainComponent;
     private SetTask model;
+    private JScrollPane scrollPane;
 
     // CONSTRUCTORS
 
@@ -33,7 +29,6 @@ public class EditorMain extends JFrame {
         this.initializeWindow();
         this.createComponent();
         this.placeComponent();
-        //this.createController();
     }
 
     // REQUESTS
@@ -46,7 +41,6 @@ public class EditorMain extends JFrame {
 
     public void setModel(SetTask model) {
         this.model = model;
-        this.createController();
 
         this.leftComponent.setModel(this.model);
         this.mainComponent.unsetModel();
@@ -55,40 +49,8 @@ public class EditorMain extends JFrame {
 
     // UTILS
 
-    private void createController() {
-        this.model.addPropertyChangeListener(SetTask.PROP_ADD_TASKS, new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updateWindow();
-            }
-        
-        });
-    }
-
-    private void updateWindow() {
-        this.pack();
-        this.repaint();
-    }
-
-
-
     private void createMenu() {
-        JMenu menu = new JMenu("Gestion");
-        for (Item it : Item.values()) {
-            if (it.getTitle() == null) {
-                menu.addSeparator();
-            } else {
-                JMenuItem item = new JMenuItem(it.getTitle());
-                item.addActionListener(it.getEvent(this));
-                menu.add(item);
-            }
-        }
-
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.add(menu);
-
-        this.setJMenuBar(menuBar);
+        this.setJMenuBar(new TaskMenu(this));
     }
 
     private void initializeWindow() {
@@ -96,15 +58,20 @@ public class EditorMain extends JFrame {
         this.setLayout(new BorderLayout());
         this.setMinimumSize(new Dimension(600, 500));
         this.setTitle(TITLE);
+        this.setLocationRelativeTo(null);
     }
 
     private void createComponent() {
         this.leftComponent = new ListTask();
         this.mainComponent = new InformationTask();
+
+        this.scrollPane = new JScrollPane(this.leftComponent);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
     }
 
     private void placeComponent() {
-        this.add(leftComponent, BorderLayout.WEST);
+        this.add(this.scrollPane, BorderLayout.WEST);
         this.add(this.mainComponent, BorderLayout.CENTER);
     }
     

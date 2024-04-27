@@ -2,6 +2,7 @@ package univ.rouen.planifun.app.editor.view;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -20,6 +21,7 @@ public class EditorMain extends JFrame {
     private InformationTask mainComponent;
     private SetTask model;
     private JScrollPane scrollPane;
+    private JSplitPane splitPane;
 
     // CONSTRUCTORS
 
@@ -66,13 +68,15 @@ public class EditorMain extends JFrame {
         this.mainComponent = new InformationTask();
 
         this.scrollPane = new JScrollPane(this.leftComponent);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        this.splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, mainComponent);
+        splitPane.setOneTouchExpandable(true);
 
     }
 
     private void placeComponent() {
-        this.add(this.scrollPane, BorderLayout.WEST);
-        this.add(this.mainComponent, BorderLayout.CENTER);
+        this.add(this.splitPane);
     }
     
 }

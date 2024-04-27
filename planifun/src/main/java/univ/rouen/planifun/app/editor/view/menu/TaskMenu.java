@@ -31,7 +31,7 @@ public class TaskMenu extends JMenuBar {
     // UTILS
 
     private void createMenu() {
-        JMenu menu = new JMenu("Gestion");
+        JMenu menu = new JMenu("Gérer");
         for (Item it : Item.values()) {
             if (it.getTitle() == null) {
                 menu.addSeparator();

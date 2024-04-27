@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import univ.rouen.planifun.app.editor.model.task.Task;
-import univ.rouen.planifun.app.editor.model.task.basic.BasicTask;
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
@@ -44,12 +43,10 @@ public class ControlCreateTask implements ActionListener {
 
         switch (QuestionPopUp.inputTypeTask()) {
             case "NORMAL":
-                t = new NormalTask();
-                ((BasicTask) t).setDefaultCalendar(c);
+                t = new NormalTask(c);
                 break;
             case "BOOLEEN":
-                t = new BooleanTask();
-                ((BasicTask) t).setDefaultCalendar(c);
+                t = new BooleanTask(c);
                 break;
             case "COMPLEXE":
                 t = new ComplexTask();

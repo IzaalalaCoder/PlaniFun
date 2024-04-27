@@ -18,6 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
+import univ.rouen.planifun.app.editor.controller.list.ControlTitleTaskInItem;
 import univ.rouen.planifun.app.editor.controller.list.ReactionItemTask;
 import univ.rouen.planifun.app.editor.controller.list.RemoveTask;
 import univ.rouen.planifun.app.editor.model.SetTask;
@@ -37,13 +39,17 @@ public class ListTask extends JPanel {
     private Map<Task, JPanel> panels;
     private Map<JPanel, JPanel> subPanel;
     private Map<Task, JButton> removeButton;
+    private Map<Task, JLabel> descTask;
+    private EditorMain parent;
 
     // CONSTRUCTORS
 
-    public ListTask() {
+    public ListTask(EditorMain parent) {
         this.panels = new HashMap<>();
         this.removeButton = new HashMap<>();
         this.subPanel = new HashMap<>();
+        this.descTask = new HashMap<>();
+        this.parent = parent;
         this.model = null;
         this.initializeComponent();
     }
@@ -180,22 +186,27 @@ public class ListTask extends JPanel {
         panel.setMinimumSize(new Dimension(this.getWidth(), 50));
 
         JPanel q = new JPanel();
-
-        JLabel description = new JLabel(task.getDescription());
-        description.setOpaque(false);
-        q.add(description);
+        q.add(this.createLabelForDescription(task));
 
         panel.add(q);
         panel.add(this.createRemoveButton(task));
-        this.subPanel.put(panel, q);
-
-
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        this.subPanel.put(panel, q);
 
         panel.addMouseListener(new ReactionItemTask(panel));
         panel.addMouseListener(new ReactionItemTask(q));
 
         return panel;
+    }
+
+    private JLabel createLabelForDescription(Task task) {
+        JLabel description = new JLabel(task.getDescription());
+        description.setOpaque(false);
+        this.descTask.put(task, description);
+
+        description.addMouseListener(new ControlTitleTaskInItem(parent, task));
+        return description;
     }
 
     private JButton createRemoveButton(Task t) {

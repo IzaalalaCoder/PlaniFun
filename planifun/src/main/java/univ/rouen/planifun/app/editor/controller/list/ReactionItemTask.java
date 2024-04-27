@@ -1,14 +1,11 @@
 package univ.rouen.planifun.app.editor.controller.list;
 
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.List;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class ReactionItemTask implements MouseListener {
+public class ReactionItemTask extends MouseAdapter {
 
     // CONSTANTS
 
@@ -25,20 +22,7 @@ public class ReactionItemTask implements MouseListener {
         this.panel = p;
     }
 
-    // REQUESTS
     // COMMANDS
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
 
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -50,6 +34,4 @@ public class ReactionItemTask implements MouseListener {
         panel.setBackground(EXITED_COLOR);
 
     }
-    
-    // UTILS
 }

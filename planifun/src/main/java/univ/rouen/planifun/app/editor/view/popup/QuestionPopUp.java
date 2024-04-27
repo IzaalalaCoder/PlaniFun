@@ -20,4 +20,13 @@ public class QuestionPopUp {
             new ImageIcon(PopUpCommon.PATH_ASSET + "question.png"), type, type[0])];
 
     }
+    
+    public static int inputChoicePriority() {
+        String[] type = {"URGENT", "NORMAL", "SECONDAIRE"};
+
+        return JOptionPane.showOptionDialog(null, "Veuillez indiquer la priorité de le tâche", 
+            "Choix du type de tâche", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, 
+            new ImageIcon(PopUpCommon.PATH_ASSET + "question.png"), type, type[0]);
+
+    }
 }

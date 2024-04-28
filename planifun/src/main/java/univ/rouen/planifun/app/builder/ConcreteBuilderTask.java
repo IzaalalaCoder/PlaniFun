@@ -10,7 +10,7 @@ import univ.rouen.planifun.app.editor.model.task.Task;
 
 public class ConcreteBuilderTask implements BuilderTask {
     
-    // COMMANDS
+    // REQUESTS
 
     @Override
     public SetTask createTask() {

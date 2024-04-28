@@ -4,14 +4,12 @@ import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-
+import java.awt.event.MouseAdapter;
 import javax.swing.JButton;
-
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
-public class RemoveTask implements ActionListener, MouseListener {
+public class RemoveTask extends MouseAdapter implements ActionListener {
 
     // ATTRIBUTES
 
@@ -30,24 +28,11 @@ public class RemoveTask implements ActionListener, MouseListener {
         this.button = btn;
     }
 
-    // REQUESTS
     // COMMANDS
     
     @Override
     public void actionPerformed(ActionEvent e) {
         this.setTask.removeTaskInList(task);
-    }
-    
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
     }
 
     @Override
@@ -59,9 +44,5 @@ public class RemoveTask implements ActionListener, MouseListener {
     public void mouseExited(MouseEvent e) {
         this.button.setCursor(Cursor.getDefaultCursor());
     }
-    
 
-    // UTILS
-
-    
 }

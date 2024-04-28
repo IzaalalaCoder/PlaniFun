@@ -1,12 +1,10 @@
 package univ.rouen.planifun.app.editor.view.menu;
 
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
 import univ.rouen.planifun.app.editor.view.EditorMain;
 
 public class TaskMenu extends JMenuBar {
@@ -26,8 +24,6 @@ public class TaskMenu extends JMenuBar {
         this.createMenu();
     }   
 
-    // REQUESTS
-    // COMMANDS
     // UTILS
 
     private void createMenu() {

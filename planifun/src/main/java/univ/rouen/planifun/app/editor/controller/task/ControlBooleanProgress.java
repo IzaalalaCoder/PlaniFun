@@ -2,7 +2,6 @@ package univ.rouen.planifun.app.editor.controller.task;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 
 public class ControlBooleanProgress implements ActionListener {
@@ -17,9 +16,7 @@ public class ControlBooleanProgress implements ActionListener {
         this.model = model;
     }
 
-    // REQUESTS
     // COMMANDS
-    // UTILS
 
     @Override
     public void actionPerformed(ActionEvent e) {

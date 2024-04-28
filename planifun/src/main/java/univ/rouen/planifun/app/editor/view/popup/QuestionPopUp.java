@@ -4,6 +4,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class QuestionPopUp {
+
+    // STATIC REQUESTS
     
     public static String inputString(String message, String defaultValue) {
         return (String) JOptionPane.showInputDialog(null, message, "Saisie !",

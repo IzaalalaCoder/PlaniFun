@@ -1,9 +1,7 @@
 package univ.rouen.planifun.app.editor.view.menu;
 
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
-
 import univ.rouen.planifun.app.editor.controller.menu.ControlCreateTask;
 import univ.rouen.planifun.app.editor.controller.menu.ControlLoadSetTask;
 import univ.rouen.planifun.app.editor.controller.menu.ControlCreateSetTask;
@@ -12,10 +10,6 @@ import univ.rouen.planifun.app.editor.controller.menu.ControlSaveSetTask;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 
 public enum Item {
-
-    // CONSTANTS
-
-    //private final String PATH_ASSET = "planifun/src/main/resources/assets/";
 
     // VALUES
     
@@ -68,14 +62,20 @@ public enum Item {
         }
     };    
     
+    // ATTRIBUTES
+
     private String title;
     private ImageIcon img;
+
+    // CONSTRUCTORS
 
     private Item(String t, ImageIcon img) {
         this.title = t;
         this.img = img;
     }
 
+    // REQUESTS
+    
     public abstract ActionListener getEvent(EditorMain main);
 
     public String getTitle() {

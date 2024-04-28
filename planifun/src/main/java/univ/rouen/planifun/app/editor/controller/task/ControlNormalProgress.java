@@ -3,7 +3,6 @@ package univ.rouen.planifun.app.editor.controller.task;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 
 public class ControlNormalProgress implements ChangeListener {

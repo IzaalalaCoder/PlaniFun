@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 
 public class ErrorPopUp {
 
-
     // STATIC COMMANDS
 
     public static void preventOpenOrParseFileError() {

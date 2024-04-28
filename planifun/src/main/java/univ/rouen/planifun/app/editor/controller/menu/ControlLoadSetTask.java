@@ -4,12 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-
 import univ.rouen.planifun.app.builder.xml.read.ReadingXML;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 import univ.rouen.planifun.app.editor.view.popup.ErrorPopUp;
@@ -27,7 +25,6 @@ public class ControlLoadSetTask implements ActionListener {
         this.main = main;
     }
 
-    // REQUESTS
     // COMMANDS
 
     @Override
@@ -63,6 +60,4 @@ public class ControlLoadSetTask implements ActionListener {
         this.main.setModel(readerXML.getSetTaskInFile());
     }
 
-    
-    
 }

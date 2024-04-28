@@ -5,9 +5,12 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class PopUpCommon {
+
+    // STATIC ATTRIBUTES
     
     public static final String PATH_ASSET = "planifun/src/main/resources/assets/";
     
+    // STATIC REQUESTS
 
     public static ImageIcon getIcon(ImageIcon imageIcon) {
         if (imageIcon == null) {

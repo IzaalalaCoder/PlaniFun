@@ -4,11 +4,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
+import univ.rouen.planifun.app.editor.view.list.ListTask;
+import univ.rouen.planifun.app.editor.view.list.task.InformationTask;
 import univ.rouen.planifun.app.editor.view.menu.TaskMenu;
 
 public class EditorMain extends JFrame {
@@ -52,7 +56,9 @@ public class EditorMain extends JFrame {
     }
 
     public void setTask(Task task, JLabel label) {
-        this.mainComponent.setModel(task, label);
+        Calendar c = new GregorianCalendar();
+        c.setTime(this.model.getCreationDate());
+        this.mainComponent.setModel(task, label, c);
     }
 
     // UTILS

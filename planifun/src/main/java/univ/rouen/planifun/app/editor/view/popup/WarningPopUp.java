@@ -15,9 +15,7 @@ public class WarningPopUp {
             JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(PopUpCommon.PATH_ASSET + "information.png"));
     }
 
-    public static void preventCreateSetTask() {
-
-        String message = "Vous deviez créer une liste de tâches avant de créer une tâche";
+    public static void preventCreate(String message) {
 
         JOptionPane.showConfirmDialog(null, message, "Attention ! ", 
             JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(PopUpCommon.PATH_ASSET + "information.png"));

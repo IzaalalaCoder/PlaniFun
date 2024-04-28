@@ -2,9 +2,7 @@ package univ.rouen.planifun.app.editor.controller.list;
 
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
-
 import javax.swing.JLabel;
-
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 
@@ -40,6 +38,5 @@ public class ControlTitleTaskInItem extends MouseAdapter {
         JLabel src = (JLabel) e.getSource();
         src.setCursor(Cursor.getDefaultCursor());
     }
-
-    // UTILS
+    
 }

@@ -72,31 +72,10 @@ public class WritingXML implements XMLWriter {
         c.setTime(this.model.getCreationDate());
 
         // Add default time -----------------------------------------
+        
         final Element time = document.createElement("time");
-
-        final Element year = document.createElement("year");
-        year.setTextContent(Integer.toString(c.get(Calendar.YEAR)));
-        time.appendChild(year);
-
-        final Element month = document.createElement("month");
-        month.setTextContent(Integer.toString(c.get(Calendar.MONTH)));
-        time.appendChild(month);
-
-        final Element day = document.createElement("day");
-        day.setTextContent(Integer.toString(c.get(Calendar.DAY_OF_MONTH)));
-        time.appendChild(day);
+        this.addTime(time, document, c);
         
-        final Element hour = document.createElement("hour");
-        hour.setTextContent(Integer.toString(c.get(Calendar.HOUR)));
-        time.appendChild(hour);
-        
-        final Element minute = document.createElement("minute");
-        minute.setTextContent(Integer.toString(c.get(Calendar.MINUTE)));
-        time.appendChild(minute);
-
-        final Element second = document.createElement("second");
-        second.setTextContent(Integer.toString(c.get(Calendar.SECOND)));
-        time.appendChild(second);
         data.appendChild(time);
         // Add default time -----------------------------------------
         
@@ -129,6 +108,32 @@ public class WritingXML implements XMLWriter {
 
 
         transformer.transform(source, result);
+    }
+
+    private void addTime(Element parent, Document doc, Calendar c) {
+        final Element year = doc.createElement("year");
+        year.setTextContent(Integer.toString(c.get(Calendar.YEAR)));
+        parent.appendChild(year);
+
+        final Element month = doc.createElement("month");
+        month.setTextContent(Integer.toString(c.get(Calendar.MONTH)));
+        parent.appendChild(month);
+
+        final Element day = doc.createElement("day");
+        day.setTextContent(Integer.toString(c.get(Calendar.DAY_OF_MONTH)));
+        parent.appendChild(day);
+        
+        final Element hour = doc.createElement("hour");
+        hour.setTextContent(Integer.toString(c.get(Calendar.HOUR)));
+        parent.appendChild(hour);
+        
+        final Element minute = doc.createElement("minute");
+        minute.setTextContent(Integer.toString(c.get(Calendar.MINUTE)));
+        parent.appendChild(minute);
+
+        final Element second = doc.createElement("second");
+        second.setTextContent(Integer.toString(c.get(Calendar.SECOND)));
+        parent.appendChild(second);
     }
 
     private void addAllTasks(Element parent, Document doc) {

@@ -1,15 +1,21 @@
 package univ.rouen.planifun.app.editor.model.task.complex;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import univ.rouen.planifun.app.editor.model.task.Priority;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
 public class ComplexTask implements Task {
+
+    // STATIC CONSTANTS
+
+    public final static String PROP_ADD_SUB_TASKS = "addTask";
+    public final static String PROP_REMOVE_SUB_TASKS = "removeTask";
 
     // ATTRIBUTES
 
@@ -18,10 +24,12 @@ public class ComplexTask implements Task {
     private Priority priority;
     private int completionDate;
     private Double progressStatus;
+    private PropertyChangeSupport pcs;
 
     // CONSTRUCTORS
 
     public ComplexTask() {
+        this.pcs = new PropertyChangeSupport(this);
         this.subTasks = new ArrayList<>();
         this.description = "";
         this.priority = Priority.NORMAL;
@@ -94,7 +102,28 @@ public class ComplexTask implements Task {
         return this.subTasks.get(index);
     }
  
+    public PropertyChangeListener[] getPropertyChangeListeners(String pName) {
+        if (pName == null) {
+            throw new AssertionError();
+        }
+        return pcs.getPropertyChangeListeners(pName);
+    }
+
     // COMMANDS
+
+    public void addPropertyChangeListener(String pName, PropertyChangeListener pcl) {
+        if (pName == null) {
+            throw new AssertionError();
+        }
+        this.pcs.addPropertyChangeListener(pName, pcl);
+    }
+
+    public void removePropertyChangeListener(String pName, PropertyChangeListener pcl) {
+        if (pName == null) {
+            throw new AssertionError();
+        }
+        this.pcs.removePropertyChangeListener(pName, pcl);
+    }
 
     @Override
     public void setPriority(Priority priority) {
@@ -109,11 +138,13 @@ public class ComplexTask implements Task {
     public void addTask(Task task) {
         this.subTasks.add(task);
         this.updateCompletionDate();
+        this.pcs.firePropertyChange(PROP_ADD_SUB_TASKS, null, task);
     }
 
     public void removeTask(Task task) {
         this.subTasks.remove(task);
         this.updateCompletionDate();
+        this.pcs.firePropertyChange(PROP_REMOVE_SUB_TASKS, null, task);
     }
 
     // UTILS

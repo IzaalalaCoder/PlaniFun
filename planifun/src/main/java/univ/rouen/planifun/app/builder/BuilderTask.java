@@ -7,7 +7,7 @@ import univ.rouen.planifun.app.editor.model.task.Task;
 
 public interface BuilderTask {
 
-    // COMMANDS
+    // REQUESTS
 
     public SetTask createTask();
 

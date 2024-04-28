@@ -6,11 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import javax.swing.JFileChooser;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-
 import univ.rouen.planifun.app.builder.xml.write.WritingXML;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 import univ.rouen.planifun.app.editor.view.popup.WarningPopUp;
@@ -32,7 +30,7 @@ public class ControlSaveSetTask implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (main.getModel() == null) {
-            WarningPopUp.preventCreateSetTask();
+            WarningPopUp.preventCreate("Vous deviez créer une liste de tâches avant de sauvegarder celle-ci");
             return;
         }
 

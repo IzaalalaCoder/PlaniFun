@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
@@ -26,13 +25,12 @@ public class ControlCreateTask implements ActionListener {
         this.main = main;
     }
 
-    // REQUESTS
     // COMMANDS
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (this.main.getModel() == null) {
-            WarningPopUp.preventCreateSetTask();
+            WarningPopUp.preventCreate("Vous deviez créer une liste de tâches avant de créer une tâche");
             return;
         }
 
@@ -57,13 +55,12 @@ public class ControlCreateTask implements ActionListener {
         };
 
         if (t != null) {
-            String description = QuestionPopUp.inputString("La description de la tâche", "Tâche " + (this.main.getModel().getSize() + 1));
+            String description = QuestionPopUp.inputString("La description de la tâche", 
+                "Tâche " + (this.main.getModel().getSize() + 1));
             t.setDescription(description);
             this.main.getModel().addTaskInList(t);
         }
-
         
     }
-
-    // UTILS
+    
 }

@@ -2,7 +2,6 @@ package univ.rouen.planifun.app.editor.controller.task;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import univ.rouen.planifun.app.editor.model.task.Task;
@@ -43,8 +42,5 @@ public class ControlChangeDescription implements KeyListener {
         this.model.setDescription(field.getText());
         this.label.setText(field.getText());
     }
-
-    
-
     
 }

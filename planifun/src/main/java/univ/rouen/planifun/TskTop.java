@@ -7,15 +7,15 @@ import univ.rouen.planifun.app.builder.xml.read.ReadingXML;
 
 public class TskTop {
 
+    // ENTERED POINT 
+
     public static void main(String[] args) {
         if (args.length != 1) {
             System.out.println("Erreur de syntaxe");
         } else {
             try {
-                
                 String filePath = args[0];
                 File file = new File(filePath);
-                
                 if (file.exists()) {
                     ReadingXML reader = new ReadingXML(file);
                     reader.readFileXML();

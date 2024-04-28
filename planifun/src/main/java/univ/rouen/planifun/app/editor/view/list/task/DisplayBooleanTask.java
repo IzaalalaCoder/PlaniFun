@@ -1,4 +1,4 @@
-package univ.rouen.planifun.app.editor.view.task;
+package univ.rouen.planifun.app.editor.view.list.task;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -12,6 +12,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import univ.rouen.planifun.app.editor.controller.task.ControlBooleanProgress;
 import univ.rouen.planifun.app.editor.controller.task.ControlChangeDescription;
+import univ.rouen.planifun.app.editor.controller.task.ControlChoicePriority;
 import univ.rouen.planifun.app.editor.controller.task.ControlDateCompletion;
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 
@@ -44,7 +45,7 @@ public class DisplayBooleanTask extends JPanel {
     }
 
     private void createComponents() {
-        this.description = new JTextField();
+        this.description = new JTextField(13);
         this.description.setText(this.model.getDescription());
         this.changePriority = new JButton();
         this.changePriority.setText(this.model.getPriority().name());
@@ -68,20 +69,20 @@ public class DisplayBooleanTask extends JPanel {
     private void placeComponents() {
         this.setLayout(new BorderLayout());
     
-        JPanel p = new JPanel();
+        JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
         p.add(this.changePriority);
         p.add(new JLabel("Description: "));
         p.add(this.description);
         this.add(p, BorderLayout.NORTH);
     
         p = new JPanel(new BorderLayout());
-        JPanel q = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-        q.add(new JLabel("Complétion: "));
+        JPanel q = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        q.add(new JLabel("Nombre de jours estimés : "));
         q.add(this.choiceCompletion);
 
         p.add(q, BorderLayout.NORTH);
 
-        q = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+        q = new JPanel(new FlowLayout(FlowLayout.LEFT));
         q.add(new JLabel("Validé: "));
         q.add(this.checkTask);
         p.add(q);
@@ -93,5 +94,6 @@ public class DisplayBooleanTask extends JPanel {
         this.checkTask.addActionListener(new ControlBooleanProgress(this.model));
         this.choiceCompletion.addChangeListener(new ControlDateCompletion(this.model));
         this.description.addKeyListener(new ControlChangeDescription(associate, model));
+        this.changePriority.addActionListener(new ControlChoicePriority(model));
     }
 }

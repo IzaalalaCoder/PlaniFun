@@ -1,4 +1,4 @@
-package univ.rouen.planifun.app.editor.view.task;
+package univ.rouen.planifun.app.editor.view.list.task;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import univ.rouen.planifun.app.editor.controller.task.ControlChangeDescription;
+import univ.rouen.planifun.app.editor.controller.task.ControlChoicePriority;
 import univ.rouen.planifun.app.editor.controller.task.ControlDateCompletion;
 import univ.rouen.planifun.app.editor.controller.task.ControlNormalProgress;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
@@ -22,7 +23,6 @@ public class DisplayNormalTask extends JPanel {
     private JSpinner progress;
     private JButton changePriority;
     private JSpinner choiceCompletion;
-
     private NormalTask model;
     private JLabel associate;
 
@@ -43,7 +43,7 @@ public class DisplayNormalTask extends JPanel {
     }
 
     private void createComponents() {
-        this.description = new JTextField();
+        this.description = new JTextField(13);
         this.description.setText(this.model.getDescription());
         this.changePriority = new JButton(this.model.getPriority().name());
 
@@ -56,7 +56,7 @@ public class DisplayNormalTask extends JPanel {
             this.model.getProgressStatus().doubleValue(), 
             0.0, 
             100.0, 
-            0.1
+            1
         );
 
         this.progress = new JSpinner(spinnerModel);
@@ -77,20 +77,20 @@ public class DisplayNormalTask extends JPanel {
     private void placeComponents() {
         this.setLayout(new BorderLayout());
     
-        JPanel p = new JPanel();
+        JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
         p.add(this.changePriority);
         p.add(new JLabel("Description : "));
         p.add(this.description);
         this.add(p, BorderLayout.NORTH);
     
         p = new JPanel(new BorderLayout());
-        JPanel q = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-        q.add(new JLabel("Complétion : "));
+        JPanel q = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        q.add(new JLabel("Nombre de jours estimés : "));
         q.add(this.choiceCompletion);
 
         p.add(q, BorderLayout.NORTH);
 
-        q = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+        q = new JPanel(new FlowLayout(FlowLayout.LEFT));
         q.add(new JLabel("Progression : "));
         q.add(this.progress);
         p.add(q);
@@ -102,5 +102,6 @@ public class DisplayNormalTask extends JPanel {
         this.choiceCompletion.addChangeListener(new ControlDateCompletion(this.model));
         this.progress.addChangeListener(new ControlNormalProgress(this.model));
         this.description.addKeyListener(new ControlChangeDescription(associate, model));
+        this.changePriority.addActionListener(new ControlChoicePriority(model));
     }
 }

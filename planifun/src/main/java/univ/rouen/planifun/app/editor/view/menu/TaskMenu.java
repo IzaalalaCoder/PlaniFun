@@ -31,19 +31,21 @@ public class TaskMenu extends JMenuBar {
     // UTILS
 
     private void createMenu() {
-        JMenu menu = new JMenu("Gérer");
-        for (Item it : Item.values()) {
-            if (it.getTitle() == null) {
-                menu.addSeparator();
-            } else {
-                JMenuItem item = new JMenuItem(it.getTitle());
-                item.addActionListener(it.getEvent(parent));
-                item.setIcon(this.getIcon(it.getIcon()));
-                menu.add(item);
+        for (Menu menu : Menu.values()) {
+            JMenu m = new JMenu(menu.name());
+            for (Item it : menu.getItems()) {
+                if (it.getTitle() == null) {
+                    m.addSeparator();
+                } else {
+                    JMenuItem item = new JMenuItem(it.getTitle());
+                    item.addActionListener(it.getEvent(parent));
+                    item.setIcon(this.getIcon(it.getIcon()));
+                    m.add(item);
+                }
             }
-        }
 
-        this.add(menu);
+            this.add(m);
+        }
     }
 
     private ImageIcon getIcon(ImageIcon imageIcon) {

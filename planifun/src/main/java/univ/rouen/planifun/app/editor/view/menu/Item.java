@@ -33,7 +33,7 @@ public enum Item {
             return new ControlCreateTask(main);
         }
     },
-    SEP_ONE(null, null) {
+    SEP(null, null) {
         @Override
         public ActionListener getEvent(EditorMain main) {
             return null;
@@ -53,17 +53,18 @@ public enum Item {
             return new ControlSaveSetTask(main);
         }
     },
-    SEP_TWO(null, null) {
-        @Override
-        public ActionListener getEvent(EditorMain main) {
-            return null;
-        }
-    },
     QUIT("Quitter l'application",
         new ImageIcon(TaskMenu.PATH_ASSET + "quit.png")) {
         @Override
         public ActionListener getEvent(EditorMain main) {
             return new ControlQuit(main);
+        }
+    },
+    HELP("Aide de navigation",
+        new ImageIcon(TaskMenu.PATH_ASSET + "quit.png")) {
+        @Override
+        public ActionListener getEvent(EditorMain main) {
+            return null;
         }
     };    
     

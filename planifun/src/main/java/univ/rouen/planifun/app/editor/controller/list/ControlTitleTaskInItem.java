@@ -26,7 +26,7 @@ public class ControlTitleTaskInItem extends MouseAdapter {
 
     @Override
     public void mousePressed(java.awt.event.MouseEvent e) {
-        this.parent.setTask(this.task);
+        this.parent.setTask(this.task, (JLabel) e.getSource());
     }
 
     @Override

@@ -10,6 +10,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import univ.rouen.planifun.app.editor.controller.task.ControlChangeDescription;
+import univ.rouen.planifun.app.editor.controller.task.ControlDateCompletion;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 
 public class DisplayNormalTask extends JPanel {
@@ -22,10 +24,12 @@ public class DisplayNormalTask extends JPanel {
     private JSpinner choiceCompletion;
 
     private NormalTask model;
+    private JLabel associate;
 
     // CONSTRUCTORS
 
-    public DisplayNormalTask(NormalTask model) {
+    public DisplayNormalTask(NormalTask model, JLabel label) {
+        this.associate = label;
         this.createModel(model);
         this.createComponents();
         this.placeComponents();
@@ -91,13 +95,7 @@ public class DisplayNormalTask extends JPanel {
     }
 
     private void createController() {
-        /*this.progress.addMouseWheelListener(new MouseWheelListener() {
-
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                throw new UnsupportedOperationException("Unimplemented method 'mouseWheelMoved'");
-            }
-            
-        });*/
+        this.choiceCompletion.addChangeListener(new ControlDateCompletion(this.model));
+        this.description.addKeyListener(new ControlChangeDescription(associate, model));
     }
 }

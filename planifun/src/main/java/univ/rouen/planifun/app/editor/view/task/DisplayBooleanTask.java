@@ -10,6 +10,9 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import univ.rouen.planifun.app.editor.controller.task.ControlBooleanProgress;
+import univ.rouen.planifun.app.editor.controller.task.ControlChangeDescription;
+import univ.rouen.planifun.app.editor.controller.task.ControlDateCompletion;
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 
 public class DisplayBooleanTask extends JPanel {
@@ -22,10 +25,12 @@ public class DisplayBooleanTask extends JPanel {
     private JSpinner choiceCompletion;
 
     private BooleanTask model;
+    private JLabel associate;
 
     // CONSTRUCTORS
 
-    public DisplayBooleanTask(BooleanTask model) {
+    public DisplayBooleanTask(BooleanTask model, JLabel label) {
+        this.associate = label;
         this.createModel(model);
         this.createComponents();
         this.placeComponents();
@@ -85,6 +90,8 @@ public class DisplayBooleanTask extends JPanel {
     }
 
     private void createController() {
-        
+        this.checkTask.addActionListener(new ControlBooleanProgress(this.model));
+        this.choiceCompletion.addChangeListener(new ControlDateCompletion(this.model));
+        this.description.addKeyListener(new ControlChangeDescription(associate, model));
     }
 }

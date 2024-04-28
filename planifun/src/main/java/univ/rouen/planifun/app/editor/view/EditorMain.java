@@ -1,6 +1,7 @@
 package univ.rouen.planifun.app.editor.view;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
@@ -50,8 +51,8 @@ public class EditorMain extends JFrame {
         this.setTitle(TITLE + " | " + this.model.getName());
     }
 
-    public void setTask(Task task) {
-        this.mainComponent.setModel(task);
+    public void setTask(Task task, JLabel label) {
+        this.mainComponent.setModel(task, label);
     }
 
     // UTILS

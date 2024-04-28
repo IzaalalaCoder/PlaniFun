@@ -5,13 +5,13 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import univ.rouen.planifun.app.editor.controller.task.ControlChangeDescription;
 import univ.rouen.planifun.app.editor.controller.task.ControlDateCompletion;
+import univ.rouen.planifun.app.editor.controller.task.ControlNormalProgress;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 
 public class DisplayNormalTask extends JPanel {
@@ -19,7 +19,7 @@ public class DisplayNormalTask extends JPanel {
     // ATTRIBUTES
 
     private JTextField description;
-    private JProgressBar progress;
+    private JSpinner progress;
     private JButton changePriority;
     private JSpinner choiceCompletion;
 
@@ -45,21 +45,25 @@ public class DisplayNormalTask extends JPanel {
     private void createComponents() {
         this.description = new JTextField();
         this.description.setText(this.model.getDescription());
-
         this.changePriority = new JButton(this.model.getPriority().name());
-        this.createProgressBar();
-        this.createSpinner();
 
+        this.createSpinnerForDateCompletion();
+        this.createSpinnerForProgressStatus();
     }
 
-    private void createProgressBar() {
-        this.progress = new JProgressBar(JProgressBar.HORIZONTAL);
-        this.progress.setStringPainted(true);
-        this.progress.setMaximum(100);
-        this.progress.setMinimum(0);
+    private void createSpinnerForProgressStatus() {
+        SpinnerModel spinnerModel = new SpinnerNumberModel(
+            this.model.getProgressStatus().doubleValue(), 
+            0.0, 
+            100.0, 
+            0.1
+        );
+
+        this.progress = new JSpinner(spinnerModel);
+        this.progress.setBounds(100, 100, 50, 30);
     }
 
-    private void createSpinner() {
+    private void createSpinnerForDateCompletion() {
         SpinnerModel spinnerModel = new SpinnerNumberModel(this.model.getCompletionDate(), 
             0, 
             Integer.MAX_VALUE, 
@@ -96,6 +100,7 @@ public class DisplayNormalTask extends JPanel {
 
     private void createController() {
         this.choiceCompletion.addChangeListener(new ControlDateCompletion(this.model));
+        this.progress.addChangeListener(new ControlNormalProgress(this.model));
         this.description.addKeyListener(new ControlChangeDescription(associate, model));
     }
 }

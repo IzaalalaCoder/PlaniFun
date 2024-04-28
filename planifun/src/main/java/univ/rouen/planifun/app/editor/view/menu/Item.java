@@ -60,8 +60,8 @@ public enum Item {
             return new ControlQuit(main);
         }
     },
-    HELP("Aide de navigation",
-        new ImageIcon(TaskMenu.PATH_ASSET + "quit.png")) {
+    HELP("Aide",
+        new ImageIcon(TaskMenu.PATH_ASSET + "question.png")) {
         @Override
         public ActionListener getEvent(EditorMain main) {
             return null;

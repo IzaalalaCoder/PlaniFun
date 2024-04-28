@@ -14,6 +14,7 @@ import univ.rouen.planifun.app.editor.controller.task.ControlChoicePriority;
 import univ.rouen.planifun.app.editor.controller.task.ControlDateCompletion;
 import univ.rouen.planifun.app.editor.controller.task.ControlNormalProgress;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
+import univ.rouen.planifun.app.editor.view.EditorMain;
 
 public class DisplayNormalTask extends JPanel {
     
@@ -28,12 +29,12 @@ public class DisplayNormalTask extends JPanel {
 
     // CONSTRUCTORS
 
-    public DisplayNormalTask(NormalTask model, JLabel label) {
+    public DisplayNormalTask(EditorMain main, NormalTask model, JLabel label) {
         this.associate = label;
         this.createModel(model);
         this.createComponents();
         this.placeComponents();
-        this.createController();
+        this.createController(main);
     }
     
     // UTILS
@@ -98,7 +99,7 @@ public class DisplayNormalTask extends JPanel {
         this.add(p);
     }
 
-    private void createController() {
+    private void createController(EditorMain main) {
         this.choiceCompletion.addChangeListener(new ControlDateCompletion(this.model));
         this.progress.addChangeListener(new ControlNormalProgress(this.model));
         this.description.addKeyListener(new ControlChangeDescription(associate, model));

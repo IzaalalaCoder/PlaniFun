@@ -21,7 +21,8 @@ public class ControlNormalProgress implements ChangeListener {
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        this.model.setProgressStatus((double) ((JSpinner) e.getSource()).getValue());
+        JSpinner spinner = (JSpinner) e.getSource();
+        this.model.setProgressStatus(Double.valueOf((double) spinner.getValue()));
     }
     
 }

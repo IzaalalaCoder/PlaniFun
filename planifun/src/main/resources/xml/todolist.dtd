@@ -13,7 +13,7 @@
 <!ELEMENT second (#PCDATA)>
 
 <!-- Add constraint on task -->
-<!ELEMENT tasks (task* | complex*)>
+<!ELEMENT tasks (task*)>
 <!ELEMENT task (description, ((completion, progress)|sub))>
 <!ELEMENT description (#PCDATA)>
 <!ELEMENT completion (#PCDATA)>

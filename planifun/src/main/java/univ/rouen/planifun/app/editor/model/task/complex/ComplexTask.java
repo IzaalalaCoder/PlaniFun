@@ -74,6 +74,7 @@ public class ComplexTask implements Task {
 
     @Override
     public int getCompletionDate() {
+        this.updateCompletionDate();
         return completionDate;
     }
 
@@ -137,13 +138,11 @@ public class ComplexTask implements Task {
 
     public void addTask(Task task) {
         this.subTasks.add(task);
-        this.updateCompletionDate();
         this.pcs.firePropertyChange(PROP_ADD_SUB_TASKS, null, task);
     }
 
     public void removeTask(Task task) {
         this.subTasks.remove(task);
-        this.updateCompletionDate();
         this.pcs.firePropertyChange(PROP_REMOVE_SUB_TASKS, null, task);
     }
 

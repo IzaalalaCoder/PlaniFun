@@ -40,7 +40,6 @@ public class ListSubTask extends AbstractListTask {
     // UTILS
 
     private void createModel(ComplexTask model) {
-        this.setBackground(COLOR_NOT_NULL);
         if (this.model != null) {
             this.removeAllControllers();
             this.removeAllComponents();
@@ -69,6 +68,15 @@ public class ListSubTask extends AbstractListTask {
         
         });
     } 
+
+    public void refresh() {
+        for (Task t : this.model.getAllSubTasks()) {
+            this.changeBackgroundColorAboutProgress(this.panels.get(t), t);
+        }
+        setListTaskPreferredSize(calculateTotalHeight());
+        this.revalidate();
+        this.repaint();
+    }
     
     public void removeAllControllers() {
         this.model.removePropertyChangeListener(ComplexTask.PROP_ADD_SUB_TASKS, null);
@@ -91,6 +99,7 @@ public class ListSubTask extends AbstractListTask {
             this.addPanelForTask(t);
         }
         setListTaskPreferredSize(calculateTotalHeight());
+        this.refresh();
         this.revalidate();
         this.repaint();
     }

@@ -49,53 +49,6 @@ public class ListTask extends AbstractListTask {
         this.createComponents();
     }
 
-    // UTILS
-
-    private void createController() {
-        this.model.addPropertyChangeListener(SetTask.PROP_ADD_TASKS, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updateListAboutTask(true, (Task) evt.getNewValue());
-            }
-        
-        });
-
-        this.model.addPropertyChangeListener(SetTask.PROP_REMOVE_TASKS, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updateListAboutTask(false, (Task) evt.getNewValue());
-            }
-        
-        });
-    } 
-    
-    public void removeAllControllers() {
-        this.model.removePropertyChangeListener(SetTask.PROP_ADD_TASKS, null);
-        this.model.removePropertyChangeListener(SetTask.PROP_REMOVE_TASKS, null);
-    }
-
-    @Override
-    protected int calculateTotalHeight() {
-        int totalHeight = this.model.getAllTask().size() * 60;
-        return totalHeight;
-    }
-
-
-
-    private void removeAllComponents() {
-        Set<Task> taskSet = new HashSet<>(this.panels.keySet());
-        super.removeAllComponents(taskSet);
-    }
-
-    private void createComponents() {
-        for (Task t : this.model.getAllTask()) {
-            this.addPanelForTask(t);
-        }
-        setListTaskPreferredSize(calculateTotalHeight());
-        this.revalidate();
-        this.repaint();
-    }
-
     @Override
     protected JLabel createLabelForDescription(Task task) {
         JLabel description = new JLabel(task.getDescription());
@@ -121,4 +74,58 @@ public class ListTask extends AbstractListTask {
         return remove;
     }
 
+    public void refresh() {
+        for (Task t : this.model.getAllTask()) {
+            this.changeBackgroundColorAboutProgress(this.panels.get(t), t);
+        }
+        setListTaskPreferredSize(calculateTotalHeight());
+        this.revalidate();
+        this.repaint();
+    }
+    
+    public void removeAllControllers() {
+        this.model.removePropertyChangeListener(SetTask.PROP_ADD_TASKS, null);
+        this.model.removePropertyChangeListener(SetTask.PROP_REMOVE_TASKS, null);
+    }
+
+    @Override
+    protected int calculateTotalHeight() {
+        int totalHeight = this.model.getAllTask().size() * 60;
+        return totalHeight;
+    }
+
+    // UTILS
+
+    private void createController() {
+        this.model.addPropertyChangeListener(SetTask.PROP_ADD_TASKS, new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                updateListAboutTask(true, (Task) evt.getNewValue());
+            }
+        
+        });
+
+        this.model.addPropertyChangeListener(SetTask.PROP_REMOVE_TASKS, new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                updateListAboutTask(false, (Task) evt.getNewValue());
+            }
+        
+        });
+    } 
+    
+    private void removeAllComponents() {
+        Set<Task> taskSet = new HashSet<>(this.panels.keySet());
+        super.removeAllComponents(taskSet);
+    }
+
+    private void createComponents() {
+        for (Task t : this.model.getAllTask()) {
+            this.addPanelForTask(t);
+        }
+        setListTaskPreferredSize(calculateTotalHeight());
+        this.refresh();
+        this.revalidate();
+        this.repaint();
+    }
 }

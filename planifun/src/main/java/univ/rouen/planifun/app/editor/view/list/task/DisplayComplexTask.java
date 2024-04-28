@@ -14,6 +14,7 @@ import univ.rouen.planifun.app.editor.controller.task.ControlChangeDescription;
 import univ.rouen.planifun.app.editor.controller.task.ControlChoicePriority;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
+import univ.rouen.planifun.app.editor.view.EditorMain;
 import univ.rouen.planifun.app.editor.view.list.ListSubTask;
 
 public class DisplayComplexTask extends JPanel {
@@ -35,11 +36,11 @@ public class DisplayComplexTask extends JPanel {
 
     // CONSTRUCTORS
 
-    public DisplayComplexTask(ComplexTask model, JLabel label, Calendar defaultDate) {
+    public DisplayComplexTask(EditorMain main, ComplexTask model, JLabel label, Calendar defaultDate) {
         this.associate = label;
         this.calendar = defaultDate;
         this.createModel(model);
-        this.createComponents();
+        this.createComponents(main);
         this.placeComponents();
         this.createController();
     }
@@ -66,8 +67,8 @@ public class DisplayComplexTask extends JPanel {
         this.model = model;
     }
 
-    private void createComponents() {
-        this.informationTask = new InformationTask();
+    private void createComponents(EditorMain main) {
+        this.informationTask = new InformationTask(main);
         this.listSubTask = new ListSubTask(this, this.calendar);
         this.description = new JTextField(13);
         this.description.setText(this.model.getDescription());

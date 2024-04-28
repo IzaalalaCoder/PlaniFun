@@ -1,9 +1,11 @@
 package univ.rouen.planifun.app.builder.xml.read;
 
+import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
@@ -116,52 +118,50 @@ public class ReadingXML implements XMLScheme, XMLParser {
         this.model.setCalendar(this.browseTime(dataElement));
 
         final Element tasksElement = (Element) this.document.getElementsByTagName(TASKS_ELEMENT).item(0);
-        this.browseAllTask(tasksElement, null);
+        this.browseAllTask(tasksElement, null, new ArrayList<>());
     }
 
-    private void browseAllTask(Element element, ComplexTask complexTask) {
+    private void browseAllTask(Element element, ComplexTask parentComplexTask, List<Element> elementsVisited) {
         NodeList tasks = element.getElementsByTagName(TASK_ELEMENT);
-
+    
         if (tasks.getLength() == 0) {
             return;
         }
-        
+    
         for (int i = 0; i < tasks.getLength(); i++) {
-            Element task = (Element) tasks.item(i);
+            Element taskElement = (Element) tasks.item(i);
+            
+            if (!elementsVisited.contains(taskElement)) {
 
-            if (element.getTagName().equals(task.getParentNode().getNodeName())) {
-                // extract description
-                final Element descElement = (Element) task.getElementsByTagName(DESCRIPTION_ELEMENT).item(0);
-                final String desc = descElement.getTextContent();
+                elementsVisited.add(taskElement);
 
-                // extract priority
-                final Priority priority = this.getPriority(task.getAttributes().getNamedItem(PRIORITY_ATTRIBUTE).getTextContent());
-
-                // is complex 
-                boolean isComplexTask = task.getElementsByTagName(SUB_ELEMENT).getLength() == 1;
-                
+                Element descElement = (Element) taskElement.getElementsByTagName(DESCRIPTION_ELEMENT).item(0);
+                String desc = descElement.getTextContent();
+                Priority priority = getPriority(taskElement.getAttribute(PRIORITY_ATTRIBUTE));
+                boolean isComplexTask = taskElement.getElementsByTagName(SUB_ELEMENT).getLength() > 0;
                 int completion = -1;
-                Double progress = -1.0;
-
-                Task newTask = null;
+                double progress = -1.0;
+        
+                Task newTask;
                 if (isComplexTask) {
-                    newTask = this.builderTask.createComplexTask();
-                    final Element subElement = (Element) task.getElementsByTagName(SUB_ELEMENT).item(0);
-                    this.browseAllTask(subElement, (ComplexTask) newTask);
+                    ComplexTask subComplexTask = (ComplexTask) builderTask.createComplexTask();
+                    browseAllTask(taskElement, subComplexTask, elementsVisited);
+                    newTask = subComplexTask;
+                    if (parentComplexTask != null) {
+                        parentComplexTask.addTask(newTask);
+                    } else {
+                        this.model.addTaskInList(newTask);
+                    }
                 } else {
-                    final Element completionElement = (Element) task.getElementsByTagName(COMPLETION_ELEMENT).item(0);
+                    Element completionElement = (Element) taskElement.getElementsByTagName(COMPLETION_ELEMENT).item(0);
                     completion = Integer.parseInt(completionElement.getTextContent());
-
-                    // set month
-                    final Element progressElement = (Element) task.getElementsByTagName(PROGRESS_ELEMENT).item(0);
+                    Element progressElement = (Element) taskElement.getElementsByTagName(PROGRESS_ELEMENT).item(0);
                     progress = Double.parseDouble(progressElement.getTextContent());
-
-                    // is normal task
                     boolean isNormal = progressElement.getAttributes().getNamedItem(MODE_ATTRIBUTE).getTextContent().equals("NORMAL");
-                    
+        
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(this.model.getCreationDate());
-
+        
                     if (isNormal) {
                         newTask = this.builderTask.createNormalTask(calendar);
                         ((NormalTask) newTask).setProgressStatus(progress);
@@ -169,20 +169,21 @@ public class ReadingXML implements XMLScheme, XMLParser {
                         newTask = this.builderTask.createBooleanTask(calendar);
                         ((BooleanTask) newTask).setIsDone(progress == 100.0);
                     }
+
                     ((BasicTask) newTask).setCompletionDate(completion);
+        
+                    if (parentComplexTask != null) {
+                        parentComplexTask.addTask(newTask);
+                    } else {
+                        this.model.addTaskInList(newTask);
+                    }
                 }
-
-                newTask.setDescription(desc);   
+    
+                // Set description and priority
+                newTask.setDescription(desc);
                 newTask.setPriority(priority);
-
-                if (complexTask == null) {
-                this.model.addTaskInList(newTask);
-                } else {
-                    complexTask.addTask(newTask);
-                }
             }
         }
-            
     }
 
     private Calendar browseTime(Element element) {

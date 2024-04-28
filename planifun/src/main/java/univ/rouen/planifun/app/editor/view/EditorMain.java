@@ -77,7 +77,7 @@ public class EditorMain extends JFrame {
 
     private void createComponent() {
         this.leftComponent = new ListTask(this);
-        this.mainComponent = new InformationTask();
+        this.mainComponent = new InformationTask(this);
 
         this.scrollPane = new JScrollPane(this.leftComponent);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);

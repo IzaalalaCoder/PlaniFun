@@ -71,14 +71,16 @@ public class Analyze {
 
         int countCompleted = 0;
         for (Task task : this.todo.getAllTask()) {
-            Calendar c = new GregorianCalendar();
-            c.setTime(task.getExpiryDate());
-            if (task.getProgressStatus() != MAX_PROGRESS) {
-                if (c.after(this.calendar)) {
-                    this.tasks.add(task);
+            if (task.getExpiryDate() != null) {
+                Calendar c = new GregorianCalendar();
+                c.setTime(task.getExpiryDate());
+                if (task.getProgressStatus() != MAX_PROGRESS) {
+                    if (c.after(this.calendar)) {
+                        this.tasks.add(task);
+                    }
+                } else {
+                    countCompleted++;
                 }
-            } else {
-                countCompleted++;
             }
         }
 

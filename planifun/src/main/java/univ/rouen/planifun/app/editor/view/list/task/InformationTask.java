@@ -11,18 +11,23 @@ import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
+import univ.rouen.planifun.app.editor.view.EditorMain;
 
 public class InformationTask extends JPanel {
 
     // ATTRIBUTES
 
     private Task model;
+    private JPanel panel;
+    private EditorMain parent;
 
     // CONSTRUCTORS
 
-    public InformationTask() {
+    public InformationTask(EditorMain main) {
+        this.parent = main;
         this.setLayout(new BorderLayout());
         this.model = null;
+        this.panel = null;
         this.setBackground(Color.darkGray);
     }
     
@@ -40,21 +45,21 @@ public class InformationTask extends JPanel {
             this.displayComplexTask(label, c);
         }
 
+        this.add(this.panel);
         this.revalidate();
         this.repaint();
     }
 
     private void displayBooleanTask(JLabel l) {
-        this.add(new DisplayBooleanTask((BooleanTask) this.model, l));
-
+        this.panel = new DisplayBooleanTask(this.parent, (BooleanTask) this.model, l);
     }
 
     private void displayNormalTask(JLabel l) {
-        this.add(new DisplayNormalTask((NormalTask) this.model, l));
+        this.panel = new DisplayNormalTask(this.parent, (NormalTask) this.model, l);
     }
 
     private void displayComplexTask(JLabel l, Calendar c) {
-        this.add(new DisplayComplexTask((ComplexTask) this.model, l, c));
+        this.panel = new DisplayComplexTask(this.parent, (ComplexTask) this.model, l, c);
     }
  
     public void unsetModel() {

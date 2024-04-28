@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
-import univ.rouen.planifun.app.editor.controller.list.ReactionItemTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
 public abstract class AbstractListTask extends JPanel {
@@ -115,10 +114,17 @@ public abstract class AbstractListTask extends JPanel {
 
         this.subPanel.put(panel, q);
 
-        panel.addMouseListener(new ReactionItemTask(panel));
-        panel.addMouseListener(new ReactionItemTask(q));
-
         return panel;
+    }
+
+    protected void changeBackgroundColorAboutProgress(JPanel p, Task t) {
+        if (t.getProgressStatus() == 100.0) {
+            p.setBackground(Color.green);
+        } else if (t.getProgressStatus() < 100.0 && t.getProgressStatus() >= 50.0) {
+            p.setBackground(Color.orange);
+        } else {
+            p.setBackground(Color.red);
+        }
     }
 
     // ABSTRACT METHODS

@@ -15,6 +15,7 @@ import univ.rouen.planifun.app.editor.controller.task.ControlChangeDescription;
 import univ.rouen.planifun.app.editor.controller.task.ControlChoicePriority;
 import univ.rouen.planifun.app.editor.controller.task.ControlDateCompletion;
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
+import univ.rouen.planifun.app.editor.view.EditorMain;
 
 public class DisplayBooleanTask extends JPanel {
     
@@ -30,12 +31,12 @@ public class DisplayBooleanTask extends JPanel {
 
     // CONSTRUCTORS
 
-    public DisplayBooleanTask(BooleanTask model, JLabel label) {
+    public DisplayBooleanTask(EditorMain main, BooleanTask model, JLabel label) {
         this.associate = label;
         this.createModel(model);
         this.createComponents();
         this.placeComponents();
-        this.createController();
+        this.createController(main);
     }
 
     // UTILS
@@ -90,7 +91,7 @@ public class DisplayBooleanTask extends JPanel {
         this.add(p);
     }
 
-    private void createController() {
+    private void createController(EditorMain main) {
         this.checkTask.addActionListener(new ControlBooleanProgress(this.model));
         this.choiceCompletion.addChangeListener(new ControlDateCompletion(this.model));
         this.description.addKeyListener(new ControlChangeDescription(associate, model));

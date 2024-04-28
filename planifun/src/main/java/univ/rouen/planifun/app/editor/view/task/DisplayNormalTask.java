@@ -1,8 +1,7 @@
 package univ.rouen.planifun.app.editor.view.task;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,19 +26,13 @@ public class DisplayNormalTask extends JPanel {
     // CONSTRUCTORS
 
     public DisplayNormalTask(NormalTask model) {
-        this.setBackground(Color.GREEN);
-        this.initializePanel();
         this.createModel(model);
         this.createComponents();
         this.placeComponents();
         this.createController();
     }
-    // REQUESTS
-    // COMMANDS
+    
     // UTILS
-
-    private void initializePanel() {
-    }
 
     private void createModel(NormalTask model) {
         this.model = model;
@@ -57,13 +50,14 @@ public class DisplayNormalTask extends JPanel {
 
     private void createProgressBar() {
         this.progress = new JProgressBar(JProgressBar.HORIZONTAL);
+        this.progress.setStringPainted(true);
         this.progress.setMaximum(100);
         this.progress.setMinimum(0);
     }
 
     private void createSpinner() {
         SpinnerModel spinnerModel = new SpinnerNumberModel(this.model.getCompletionDate(), 
-            5, 
+            0, 
             Integer.MAX_VALUE, 
             1
         );
@@ -75,27 +69,35 @@ public class DisplayNormalTask extends JPanel {
     private void placeComponents() {
         this.setLayout(new BorderLayout());
     
-        JPanel topPanel = new JPanel();
-        topPanel.add(new JLabel("Description: "));
-        topPanel.add(this.description);
-        this.add(topPanel, BorderLayout.NORTH);
+        JPanel p = new JPanel();
+        p.add(this.changePriority);
+        p.add(new JLabel("Description : "));
+        p.add(this.description);
+        this.add(p, BorderLayout.NORTH);
     
-        JPanel centerPanel = new JPanel(new GridLayout(2, 1));
-        JPanel innerPanel = new JPanel(new GridLayout(1, 2));
-        innerPanel.add(new JLabel("Complétion: "));
-        innerPanel.add(this.choiceCompletion);
-        centerPanel.add(innerPanel);
-        innerPanel = new JPanel(new GridLayout(1, 2));
-        innerPanel.add(new JLabel("Progression : "));
-        innerPanel.add(this.progress);
-        centerPanel.add(innerPanel);
-        this.add(centerPanel, BorderLayout.CENTER);
-    
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.add(this.changePriority);
-        this.add(bottomPanel, BorderLayout.SOUTH);
-    }
-    private void createController() {
+        p = new JPanel(new BorderLayout());
+        JPanel q = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+        q.add(new JLabel("Complétion : "));
+        q.add(this.choiceCompletion);
 
+        p.add(q, BorderLayout.NORTH);
+
+        q = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+        q.add(new JLabel("Progression : "));
+        q.add(this.progress);
+        p.add(q);
+
+        this.add(p);
+    }
+
+    private void createController() {
+        /*this.progress.addMouseWheelListener(new MouseWheelListener() {
+
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                throw new UnsupportedOperationException("Unimplemented method 'mouseWheelMoved'");
+            }
+            
+        });*/
     }
 }

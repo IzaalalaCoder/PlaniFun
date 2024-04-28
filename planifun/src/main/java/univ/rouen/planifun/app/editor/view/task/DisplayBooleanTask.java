@@ -1,8 +1,7 @@
 package univ.rouen.planifun.app.editor.view.task;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -11,7 +10,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 
 public class DisplayBooleanTask extends JPanel {
@@ -28,19 +26,13 @@ public class DisplayBooleanTask extends JPanel {
     // CONSTRUCTORS
 
     public DisplayBooleanTask(BooleanTask model) {
-        this.setBackground(Color.RED);
-        this.initializePanel();
         this.createModel(model);
         this.createComponents();
         this.placeComponents();
         this.createController();
     }
-    // REQUESTS
-    // COMMANDS
-    // UTILS
 
-    private void initializePanel() {
-    }
+    // UTILS
 
     private void createModel(BooleanTask model) {
         this.model = model;
@@ -48,15 +40,18 @@ public class DisplayBooleanTask extends JPanel {
 
     private void createComponents() {
         this.description = new JTextField();
+        this.description.setText(this.model.getDescription());
         this.changePriority = new JButton();
+        this.changePriority.setText(this.model.getPriority().name());
         this.checkTask = new JCheckBox();
+        this.checkTask.setSelected(this.model.getProgressStatus() == 100.0);
         this.createSpinner();
 
     }
 
     private void createSpinner() {
         SpinnerModel spinnerModel = new SpinnerNumberModel(this.model.getCompletionDate(), 
-            5, 
+            0, 
             Integer.MAX_VALUE, 
             1
         );
@@ -68,28 +63,28 @@ public class DisplayBooleanTask extends JPanel {
     private void placeComponents() {
         this.setLayout(new BorderLayout());
     
-        JPanel topPanel = new JPanel();
-        topPanel.add(new JLabel("Description: "));
-        topPanel.add(this.description);
-        this.add(topPanel, BorderLayout.NORTH);
+        JPanel p = new JPanel();
+        p.add(this.changePriority);
+        p.add(new JLabel("Description: "));
+        p.add(this.description);
+        this.add(p, BorderLayout.NORTH);
     
-        JPanel centerPanel = new JPanel(new GridLayout(2, 1));
-        JPanel innerPanel = new JPanel(new GridLayout(1, 2));
-        innerPanel.add(new JLabel("Complétion: "));
-        innerPanel.add(this.choiceCompletion);
-        centerPanel.add(innerPanel);
-        innerPanel = new JPanel(new GridLayout(1, 2));
-        innerPanel.add(new JLabel("Validé: "));
-        innerPanel.add(this.checkTask);
-        centerPanel.add(innerPanel);
-        this.add(centerPanel, BorderLayout.CENTER);
-    
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.add(this.changePriority);
-        this.add(bottomPanel, BorderLayout.SOUTH);
+        p = new JPanel(new BorderLayout());
+        JPanel q = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+        q.add(new JLabel("Complétion: "));
+        q.add(this.choiceCompletion);
+
+        p.add(q, BorderLayout.NORTH);
+
+        q = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+        q.add(new JLabel("Validé: "));
+        q.add(this.checkTask);
+        p.add(q);
+
+        this.add(p);
     }
 
     private void createController() {
-
+        
     }
 }

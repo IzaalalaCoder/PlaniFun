@@ -65,17 +65,12 @@ public class InformationTask extends JPanel {
     public void unsetModel() {
         this.setBackground(Color.white);
         if (model != null) {
-            this.removeAllControllers();
-            this.removeAllComponents();
+            this.removeAllComponentsRecursive(this);
             this.model = null;
         }
-    }
 
-    public void removeAllControllers() {
-    }
-
-    public void removeAllComponents() {
-        this.removeAllComponentsRecursive(this);
+        this.revalidate();
+        this.repaint();
     }
 
     private void removeAllComponentsRecursive(Container container) {

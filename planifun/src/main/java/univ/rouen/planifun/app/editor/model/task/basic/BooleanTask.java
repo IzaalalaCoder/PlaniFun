@@ -4,9 +4,8 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import univ.rouen.planifun.app.editor.model.task.Priority;
-import univ.rouen.planifun.app.editor.model.task.Task;
 
-public class BooleanTask implements Task, BasicTask {
+public class BooleanTask implements BasicTask {
 
     // ATTRIBUTES
 

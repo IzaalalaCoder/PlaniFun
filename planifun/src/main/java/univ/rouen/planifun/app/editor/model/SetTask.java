@@ -1,7 +1,6 @@
 package univ.rouen.planifun.app.editor.model;
 
 import univ.rouen.planifun.app.editor.model.task.Task;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;

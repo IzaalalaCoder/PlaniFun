@@ -58,6 +58,7 @@ public class DisplayComplexTask extends JPanel {
     // COMMANDS 
 
     public void setSubTask(Task task, JLabel label, Calendar c) {
+        this.listSubTask.changeBackgroundColorAboutTask(task);
         this.informationTask.setModel(task, label, c);
     }
     

@@ -56,6 +56,7 @@ public class EditorMain extends JFrame {
     }
 
     public void setTask(Task task, JLabel label) {
+        this.leftComponent.changeBackgroundColorAboutTask(task);
         Calendar c = new GregorianCalendar();
         c.setTime(this.model.getCreationDate());
         this.mainComponent.setModel(task, label, c);

@@ -29,6 +29,12 @@ public abstract class AbstractListTask extends JPanel {
     protected Map<Task, JButton> removeButton;
     protected Map<Task, JLabel> descTask;
 
+    // COMMANDS
+
+    public void changeBackgroundColorAboutTask(Task t) {
+        this.changeBackgroundColorAboutProgress(this.panels.get(t), t);
+    }
+
     // UTILS
 
     protected void updateListAboutTask(boolean added, Task t) {

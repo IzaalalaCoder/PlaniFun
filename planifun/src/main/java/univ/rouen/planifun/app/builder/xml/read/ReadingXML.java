@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import univ.rouen.planifun.app.builder.BuilderTask;
 import univ.rouen.planifun.app.builder.ConcreteBuilderTask;
-import univ.rouen.planifun.app.builder.xml.XMLScheme;
+import univ.rouen.planifun.app.builder.xml.XMLElement;
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Priority;
 import univ.rouen.planifun.app.editor.model.task.Task;
@@ -28,7 +28,7 @@ import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 
-public class ReadingXML implements XMLScheme, XMLParser {
+public class ReadingXML implements XMLParser {
 
     // ATTRIBUTES
 
@@ -76,7 +76,7 @@ public class ReadingXML implements XMLScheme, XMLParser {
             throw new AssertionError("Can not open");
         }
         
-        this.browseFile(file);
+        this.browseFile();
         Files.delete(this.file.toPath());
     }
 
@@ -108,21 +108,21 @@ public class ReadingXML implements XMLScheme, XMLParser {
         this.document = builder.parse(file);
     }
 
-    private void browseFile(File file) {
-        final Element dataElement = (Element) this.document.getElementsByTagName(DATA_ELEMENT).item(0);
-        final Element nameElement = (Element) dataElement.getElementsByTagName(NAME_ELEMENT).item(0);
+    private void browseFile() {
+        final Element dataElement = (Element) this.document.getElementsByTagName(XMLElement.DATA.getTagName()).item(0);
+        final Element nameElement = (Element) dataElement.getElementsByTagName(XMLElement.NAME.getTagName()).item(0);
 
         this.builderTask = new ConcreteBuilderTask();
         this.model = this.builderTask.createTask();
         this.model.setName(nameElement.getTextContent());
         this.model.setCalendar(this.browseTime(dataElement));
 
-        final Element tasksElement = (Element) this.document.getElementsByTagName(TASKS_ELEMENT).item(0);
+        final Element tasksElement = (Element) this.document.getElementsByTagName(XMLElement.TASKS.getTagName()).item(0);
         this.browseAllTask(tasksElement, null, new ArrayList<>());
     }
 
     private void browseAllTask(Element element, ComplexTask parentComplexTask, List<Element> elementsVisited) {
-        NodeList tasks = element.getElementsByTagName(TASK_ELEMENT);
+        NodeList tasks = element.getElementsByTagName(XMLElement.TASK.getTagName());
     
         if (tasks.getLength() == 0) {
             return;
@@ -135,10 +135,10 @@ public class ReadingXML implements XMLScheme, XMLParser {
 
                 elementsVisited.add(taskElement);
 
-                Element descElement = (Element) taskElement.getElementsByTagName(DESCRIPTION_ELEMENT).item(0);
+                Element descElement = (Element) taskElement.getElementsByTagName(XMLElement.DESCRIPTION.getTagName()).item(0);
                 String desc = descElement.getTextContent();
-                Priority priority = getPriority(taskElement.getAttribute(PRIORITY_ATTRIBUTE));
-                boolean isComplexTask = taskElement.getElementsByTagName(SUB_ELEMENT).getLength() > 0;
+                Priority priority = getPriority(taskElement.getAttribute(XMLElement.PRIORITY.getTagName()));
+                boolean isComplexTask = taskElement.getElementsByTagName(XMLElement.SUB.getTagName()).getLength() > 0;
                 int completion = -1;
                 double progress = -1.0;
         
@@ -153,11 +153,11 @@ public class ReadingXML implements XMLScheme, XMLParser {
                         this.model.addTaskInList(newTask);
                     }
                 } else {
-                    Element completionElement = (Element) taskElement.getElementsByTagName(COMPLETION_ELEMENT).item(0);
+                    Element completionElement = (Element) taskElement.getElementsByTagName(XMLElement.COMPLETION.getTagName()).item(0);
                     completion = Integer.parseInt(completionElement.getTextContent());
-                    Element progressElement = (Element) taskElement.getElementsByTagName(PROGRESS_ELEMENT).item(0);
+                    Element progressElement = (Element) taskElement.getElementsByTagName(XMLElement.PROGRESS.getTagName()).item(0);
                     progress = Double.parseDouble(progressElement.getTextContent());
-                    boolean isNormal = progressElement.getAttributes().getNamedItem(MODE_ATTRIBUTE).getTextContent().equals("NORMAL");
+                    boolean isNormal = progressElement.getAttributes().getNamedItem(XMLElement.MODE.getTagName()).getTextContent().equals("NORMAL");
         
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(this.model.getCreationDate());
@@ -188,35 +188,35 @@ public class ReadingXML implements XMLScheme, XMLParser {
 
     private Calendar browseTime(Element element) {
         Calendar calendar = new GregorianCalendar();
-        final Element timeElement = (Element) element.getElementsByTagName(TIME_ELEMENT).item(0);
+        final Element timeElement = (Element) element.getElementsByTagName(XMLElement.TIME.getTagName()).item(0);
 
         // set year
-        final Element yearElement = (Element) timeElement.getElementsByTagName(YEAR_ELEMENT).item(0);
+        final Element yearElement = (Element) timeElement.getElementsByTagName(XMLElement.YEAR.getTagName()).item(0);
         int year = Integer.parseInt(yearElement.getTextContent());
         calendar.set(Calendar.YEAR, year);
 
         // set month
-        final Element monthElement = (Element) timeElement.getElementsByTagName(MONTH_ELEMENT).item(0);
+        final Element monthElement = (Element) timeElement.getElementsByTagName(XMLElement.MONTH.getTagName()).item(0);
         int month = Integer.parseInt(monthElement.getTextContent());
         calendar.set(Calendar.MONTH, month);
 
         // set day
-        final Element dayElement = (Element) timeElement.getElementsByTagName(DAY_ELEMENT).item(0);
+        final Element dayElement = (Element) timeElement.getElementsByTagName(XMLElement.DAY.getTagName()).item(0);
         int day = Integer.parseInt(dayElement.getTextContent());
         calendar.set(Calendar.DAY_OF_MONTH, day);
 
         // set hour
-        final Element hourElement = (Element) timeElement.getElementsByTagName(HOUR_ELEMENT).item(0);
+        final Element hourElement = (Element) timeElement.getElementsByTagName(XMLElement.HOUR.getTagName()).item(0);
         int hour = Integer.parseInt(hourElement.getTextContent());
         calendar.set(Calendar.HOUR_OF_DAY, hour);
 
         // set minute
-        final Element minuteElement = (Element) timeElement.getElementsByTagName(MINUTE_ELEMENT).item(0);
+        final Element minuteElement = (Element) timeElement.getElementsByTagName(XMLElement.MINUTE.getTagName()).item(0);
         int minute = Integer.parseInt(minuteElement.getTextContent());
         calendar.set(Calendar.MINUTE, minute);
 
         // set second
-        final Element secondElement = (Element) timeElement.getElementsByTagName(SECOND_ELEMENT).item(0);
+        final Element secondElement = (Element) timeElement.getElementsByTagName(XMLElement.SECOND.getTagName()).item(0);
         int second = Integer.parseInt(secondElement.getTextContent());
         calendar.set(Calendar.SECOND, second);
 

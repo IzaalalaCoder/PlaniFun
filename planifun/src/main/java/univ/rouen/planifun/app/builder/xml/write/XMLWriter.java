@@ -2,7 +2,6 @@ package univ.rouen.planifun.app.builder.xml.write;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 

@@ -6,8 +6,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
+import univ.rouen.planifun.app.editor.view.popup.WarningPopUp;
 
 public class RemoveTask extends MouseAdapter implements ActionListener {
 
@@ -32,7 +35,11 @@ public class RemoveTask extends MouseAdapter implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.setTask.removeTaskInList(task);
+        int result = WarningPopUp.preventRemoveTask(this.task.getDescription());
+
+        if (result == JOptionPane.OK_OPTION) {
+            this.setTask.removeTaskInList(task);
+        }
     }
 
     @Override

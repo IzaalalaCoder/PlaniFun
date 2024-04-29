@@ -3,6 +3,7 @@ package univ.rouen.planifun.app.editor.view.menu;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import univ.rouen.planifun.app.editor.controller.menu.ControlCreateTask;
+import univ.rouen.planifun.app.editor.controller.menu.ControlHelpView;
 import univ.rouen.planifun.app.editor.controller.menu.ControlLoadSetTask;
 import univ.rouen.planifun.app.editor.controller.menu.ControlCreateSetTask;
 import univ.rouen.planifun.app.editor.controller.menu.ControlQuit;
@@ -58,7 +59,7 @@ public enum Item {
         new ImageIcon(TaskMenu.PATH_ASSET + "question.png")) {
         @Override
         public ActionListener getEvent(EditorMain main) {
-            return null;
+            return new ControlHelpView();
         }
     };    
     

@@ -112,13 +112,14 @@ public abstract class AbstractListTask extends JPanel {
         q.add(this.createLabelForDescription(task));
 
         panel.add(q);
-
         JButton remove = this.createRemoveButton(task);
         panel.add(remove);
-        this.removeButton.put(task, remove);
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         this.subPanel.put(panel, q);
+        this.removeButton.put(task, remove);
+
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        this.changeBackgroundColorAboutProgress(panel, task);
 
         return panel;
     }

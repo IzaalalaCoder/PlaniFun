@@ -9,8 +9,9 @@ import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
+import univ.rouen.planifun.app.editor.controller.list.ControlRemoveTask;
 import univ.rouen.planifun.app.editor.controller.list.ControlTitleTaskInItem;
-import univ.rouen.planifun.app.editor.controller.list.RemoveTask;
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.view.EditorMain;
@@ -68,8 +69,8 @@ public class ListTask extends AbstractListTask {
     
         remove.setContentAreaFilled(false);
         remove.setBorder(null);
-        remove.addActionListener(new RemoveTask(this.model, t));
-        remove.addMouseListener(new RemoveTask(remove));
+        remove.addActionListener(new ControlRemoveTask(this.model, t));
+        remove.addMouseListener(new ControlRemoveTask(remove));
 
         return remove;
     }

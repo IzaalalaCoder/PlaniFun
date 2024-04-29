@@ -12,7 +12,7 @@ import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 import univ.rouen.planifun.app.editor.view.popup.WarningPopUp;
 
-public class RemoveSubTask extends MouseAdapter implements ActionListener {
+public class ControlRemoveSubTask extends MouseAdapter implements ActionListener {
 
     // ATTRIBUTES
 
@@ -22,12 +22,12 @@ public class RemoveSubTask extends MouseAdapter implements ActionListener {
 
     // CONSTRUCTORS
 
-    public RemoveSubTask(ComplexTask setTask, Task task) {
+    public ControlRemoveSubTask(ComplexTask setTask, Task task) {
         this.complexTask = setTask;
         this.task = task;
     }
 
-    public RemoveSubTask(JButton btn) {
+    public ControlRemoveSubTask(JButton btn) {
         this.button = btn;
     }
 

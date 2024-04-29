@@ -5,7 +5,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import univ.rouen.planifun.app.editor.model.task.basic.BasicTask;
 
-public class ControlDateCompletion implements ChangeListener {
+public class ControlChangeDateCompletion implements ChangeListener {
 
     // ATTRIBUTES
 
@@ -13,7 +13,7 @@ public class ControlDateCompletion implements ChangeListener {
 
     // CONSTRUCTORS
 
-    public ControlDateCompletion(BasicTask model) {
+    public ControlChangeDateCompletion(BasicTask model) {
         this.model = model;
     }
     

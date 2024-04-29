@@ -1,10 +1,9 @@
-package univ.rouen.planifun.app.editor.view.popup;
+package univ.rouen.planifun.app.editor.view.util;
 
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
 
-public class PopUpCommon {
+public class ManageImage {
 
     // STATIC ATTRIBUTES
     

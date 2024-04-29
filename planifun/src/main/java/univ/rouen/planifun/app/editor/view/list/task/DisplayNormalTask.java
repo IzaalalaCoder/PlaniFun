@@ -9,9 +9,10 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+
+import univ.rouen.planifun.app.editor.controller.task.ControlChangeDateCompletion;
 import univ.rouen.planifun.app.editor.controller.task.ControlChangeDescription;
 import univ.rouen.planifun.app.editor.controller.task.ControlChoicePriority;
-import univ.rouen.planifun.app.editor.controller.task.ControlDateCompletion;
 import univ.rouen.planifun.app.editor.controller.task.ControlNormalProgress;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
@@ -101,7 +102,7 @@ public class DisplayNormalTask extends JPanel {
     }
 
     private void createController(EditorMain main) {
-        this.choiceCompletion.addChangeListener(new ControlDateCompletion(this.model));
+        this.choiceCompletion.addChangeListener(new ControlChangeDateCompletion(this.model));
         this.progress.addChangeListener(new ControlNormalProgress(this.model));
         this.description.addKeyListener(new ControlChangeDescription(associate, (Task) model));
         this.changePriority.addActionListener(new ControlChoicePriority((Task) model));

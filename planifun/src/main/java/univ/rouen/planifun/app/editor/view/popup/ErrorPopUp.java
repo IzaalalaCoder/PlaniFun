@@ -2,6 +2,7 @@ package univ.rouen.planifun.app.editor.view.popup;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import univ.rouen.planifun.app.editor.view.util.ManageImage;
 
 public class ErrorPopUp {
 
@@ -12,7 +13,7 @@ public class ErrorPopUp {
         String message = "Le fichier n'a pas pu être ouvert ou a été corrompu";
 
         JOptionPane.showMessageDialog(null, message, "Erreur"
-            , JOptionPane.ERROR_MESSAGE, new ImageIcon(PopUpCommon.PATH_ASSET + "error.png"));
+            , JOptionPane.ERROR_MESSAGE, new ImageIcon(ManageImage.PATH_ASSET + "error.png"));
     }
 
     public static void preventUnknowType() {
@@ -20,6 +21,6 @@ public class ErrorPopUp {
         String message = "La création de ce type de tâche est inexistant";
 
         JOptionPane.showMessageDialog(null, message, "Erreur"
-            , JOptionPane.ERROR_MESSAGE, new ImageIcon(PopUpCommon.PATH_ASSET + "error.png"));
+            , JOptionPane.ERROR_MESSAGE, new ImageIcon(ManageImage.PATH_ASSET + "error.png"));
     }
 }

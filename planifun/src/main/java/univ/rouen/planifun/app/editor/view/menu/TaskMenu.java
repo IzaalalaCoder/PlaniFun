@@ -1,11 +1,10 @@
 package univ.rouen.planifun.app.editor.view.menu;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import univ.rouen.planifun.app.editor.view.EditorMain;
+import univ.rouen.planifun.app.editor.view.util.ManageImage;
 
 public class TaskMenu extends JMenuBar {
     
@@ -35,22 +34,13 @@ public class TaskMenu extends JMenuBar {
                 } else {
                     JMenuItem item = new JMenuItem(it.getTitle());
                     item.addActionListener(it.getEvent(parent));
-                    item.setIcon(this.getIcon(it.getIcon()));
+                    item.setIcon(ManageImage.getIcon(it.getIcon()));
                     m.add(item);
                 }
             }
 
             this.add(m);
         }
-    }
-
-    private ImageIcon getIcon(ImageIcon imageIcon) {
-        if (imageIcon == null) {
-            return null;
-        }
-        Image image = imageIcon.getImage();
-        Image newimg = image.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH);
-        return new ImageIcon(newimg);
     }
 
 }

@@ -11,9 +11,9 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import univ.rouen.planifun.app.editor.controller.task.ControlBooleanProgress;
+import univ.rouen.planifun.app.editor.controller.task.ControlChangeDateCompletion;
 import univ.rouen.planifun.app.editor.controller.task.ControlChangeDescription;
 import univ.rouen.planifun.app.editor.controller.task.ControlChoicePriority;
-import univ.rouen.planifun.app.editor.controller.task.ControlDateCompletion;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 import univ.rouen.planifun.app.editor.view.EditorMain;
@@ -94,7 +94,7 @@ public class DisplayBooleanTask extends JPanel {
 
     private void createController(EditorMain main) {
         this.checkTask.addActionListener(new ControlBooleanProgress(this.model));
-        this.choiceCompletion.addChangeListener(new ControlDateCompletion(this.model));
+        this.choiceCompletion.addChangeListener(new ControlChangeDateCompletion(this.model));
         this.description.addKeyListener(new ControlChangeDescription(associate, (Task) model));
         this.changePriority.addActionListener(new ControlChoicePriority((Task) model));
     }

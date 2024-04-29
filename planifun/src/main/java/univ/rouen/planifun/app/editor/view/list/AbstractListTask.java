@@ -124,12 +124,16 @@ public abstract class AbstractListTask extends JPanel {
     }
 
     protected void changeBackgroundColorAboutProgress(JPanel p, Task t) {
+        JPanel q = this.subPanel.get(p);
         if (t.getProgressStatus() == 100.0) {
             p.setBackground(Color.green);
+            q.setBackground(Color.green);
         } else if (t.getProgressStatus() < 100.0 && t.getProgressStatus() >= 50.0) {
             p.setBackground(Color.orange);
+            q.setBackground(Color.orange);
         } else {
             p.setBackground(Color.red);
+            q.setBackground(Color.red);
         }
     }
 

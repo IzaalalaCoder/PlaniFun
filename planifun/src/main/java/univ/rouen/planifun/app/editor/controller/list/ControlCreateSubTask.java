@@ -30,7 +30,11 @@ public class ControlCreateSubTask implements ActionListener {
         Task t = null;
         Calendar c = this.parent.getCalendar();
 
-        switch (QuestionPopUp.inputTypeTask()) {
+        String type = QuestionPopUp.inputTypeTask();
+        if (type == null) {
+            return;
+        }
+        switch (type) {
             case "NORMAL":
                 t = new NormalTask(c);
                 break;
@@ -38,7 +42,7 @@ public class ControlCreateSubTask implements ActionListener {
                 t = new BooleanTask(c);
                 break;
             case "COMPLEXE":
-                t = new ComplexTask();
+                t = new ComplexTask(c);
                 break;
             default:
                 ErrorPopUp.preventUnknowType();
@@ -48,6 +52,12 @@ public class ControlCreateSubTask implements ActionListener {
         if (t != null) {
             String description = QuestionPopUp.inputString("La description de la sous-tâche", 
                 "Sous-tâche " + (this.parent.getModel().getAllSubTasks().size() + 1));
+            
+            if (description == null || description.length() == 0) {
+                t = null;
+                return;
+            }
+
             t.setDescription(description);
             this.parent.getModel().addTask(t);
         }

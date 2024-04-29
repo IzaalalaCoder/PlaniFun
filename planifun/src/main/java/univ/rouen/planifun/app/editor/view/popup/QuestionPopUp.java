@@ -16,11 +16,12 @@ public class QuestionPopUp {
 
     public static String inputTypeTask() {
         String[] type = {"NORMAL", "BOOLEEN", "COMPLEXE"};
-
-        return type[JOptionPane.showOptionDialog(null, "Veuillez indiquer le type de tâche", 
+        
+        int result = JOptionPane.showOptionDialog(null, "Veuillez indiquer le type de tâche", 
             "Choix du type de tâche", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, 
-            new ImageIcon(PopUpCommon.PATH_ASSET + "question.png"), type, type[0])];
+            new ImageIcon(PopUpCommon.PATH_ASSET + "question.png"), type, type[0]);
 
+        return result == -1 ? null : type[result];
     }
     
     public static int inputChoicePriority() {

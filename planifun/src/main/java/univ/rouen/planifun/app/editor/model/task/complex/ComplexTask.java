@@ -5,7 +5,6 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import univ.rouen.planifun.app.editor.model.task.Priority;
 import univ.rouen.planifun.app.editor.model.task.Task;
@@ -24,11 +23,13 @@ public class ComplexTask implements Task {
     private Priority priority;
     private int completionDate;
     private Double progressStatus;
+    private Calendar defaultCalendar;
     private PropertyChangeSupport pcs;
 
     // CONSTRUCTORS
 
-    public ComplexTask() {
+    public ComplexTask(Calendar c) {
+        this.defaultCalendar = (Calendar) c.clone();
         this.pcs = new PropertyChangeSupport(this);
         this.subTasks = new ArrayList<>();
         this.description = "";
@@ -50,22 +51,11 @@ public class ComplexTask implements Task {
             return null; 
         }
 
-        Calendar calendar =  new GregorianCalendar();
-        calendar.set(Calendar.YEAR, 1);
-        calendar.set(Calendar.MONTH, 0);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        
-        for (Task task : this.subTasks) {
-            Calendar c = Calendar.getInstance();
-            c.setTime(task.getExpiryDate());
+        Calendar c = (Calendar) this.defaultCalendar.clone();
+        c.add(Calendar.DAY_OF_MONTH, this.maxCompletionDate());
 
-            if (c.after(calendar)) {
-                calendar = c;
-            }
-        }
-
-        return calendar.getTime();
-    }
+        return c.getTime();
+    }   
 
     @Override
     public Priority getPriority() {
@@ -172,5 +162,15 @@ public class ComplexTask implements Task {
         }
 
         this.completionDate = completion;
+    }
+
+    private int maxCompletionDate() {
+        int maxCompletionDate = 0;
+
+        for (Task t : this.subTasks) {
+            maxCompletionDate = Math.max(maxCompletionDate, t.getCompletionDate());
+        }
+
+        return maxCompletionDate;
     }
 }

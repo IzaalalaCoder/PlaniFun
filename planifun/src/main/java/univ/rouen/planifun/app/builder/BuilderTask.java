@@ -14,5 +14,5 @@ public interface BuilderTask {
 
     public Task createBooleanTask(Calendar c);
     
-    public Task createComplexTask();
+    public Task createComplexTask(Calendar c);
 }

@@ -28,8 +28,8 @@ public class ConcreteBuilderTask implements BuilderTask {
     }
 
     @Override
-    public Task createComplexTask() {
-        return new FactoryComplexTask().createTask(null);
+    public Task createComplexTask(Calendar c) {
+        return new FactoryComplexTask().createTask(c);
     }
     
 }

@@ -10,6 +10,6 @@ public class FactoryComplexTask implements FactoryTask {
 
     @Override
     public Task createTask(Calendar c) {
-        return new ComplexTask();
+        return new ComplexTask(c);
     }
 }

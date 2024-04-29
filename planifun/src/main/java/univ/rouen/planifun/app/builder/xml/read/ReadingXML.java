@@ -142,9 +142,12 @@ public class ReadingXML implements XMLParser {
                 int completion = -1;
                 double progress = -1.0;
         
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(this.model.getCreationDate());
+
                 Task newTask;
                 if (isComplexTask) {
-                    ComplexTask subComplexTask = (ComplexTask) builderTask.createComplexTask();
+                    ComplexTask subComplexTask = (ComplexTask) builderTask.createComplexTask(calendar);
                     browseAllTask(taskElement, subComplexTask, elementsVisited);
                     newTask = subComplexTask;
                     if (parentComplexTask != null) {
@@ -159,8 +162,7 @@ public class ReadingXML implements XMLParser {
                     progress = Double.parseDouble(progressElement.getTextContent());
                     boolean isNormal = progressElement.getAttributes().getNamedItem(XMLElement.MODE.getTagName()).getTextContent().equals("NORMAL");
         
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(this.model.getCreationDate());
+                    
         
                     if (isNormal) {
                         newTask = this.builderTask.createNormalTask(calendar);

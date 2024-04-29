@@ -39,7 +39,11 @@ public class ControlCreateTask implements ActionListener {
         Calendar c = new GregorianCalendar();
         c.setTime(this.main.getModel().getCreationDate());
 
-        switch (QuestionPopUp.inputTypeTask()) {
+        String type = QuestionPopUp.inputTypeTask();
+        if (type == null) {
+            return;
+        }
+        switch (type) {
             case "NORMAL":
                 t = new NormalTask(c);
                 break;
@@ -47,7 +51,7 @@ public class ControlCreateTask implements ActionListener {
                 t = new BooleanTask(c);
                 break;
             case "COMPLEXE":
-                t = new ComplexTask();
+                t = new ComplexTask(c);
                 break;
             default:
                 ErrorPopUp.preventUnknowType();
@@ -57,6 +61,12 @@ public class ControlCreateTask implements ActionListener {
         if (t != null) {
             String description = QuestionPopUp.inputString("La description de la tâche", 
                 "Tâche " + (this.main.getModel().getSize() + 1));
+
+            if (description == null || description.length() == 0) {
+                t = null;
+                return;
+            }
+            
             t.setDescription(description);
             this.main.getModel().addTaskInList(t);
         }

@@ -18,7 +18,7 @@ public class NormalTask implements BasicTask {
     // CONSTRUCTORS
 
     public NormalTask(Calendar c) {
-        this.defaultCalendar = c;
+        this.defaultCalendar = (Calendar) c.clone();
         this.completionDate = 5;
         this.description = "";
         this.progressStatus = 0.0;
@@ -34,7 +34,7 @@ public class NormalTask implements BasicTask {
 
     @Override
     public Date getExpiryDate() {
-        Calendar c = this.defaultCalendar;
+        Calendar c = (Calendar) this.defaultCalendar.clone();
         c.add(Calendar.DAY_OF_MONTH, completionDate);
         return c.getTime();
     }

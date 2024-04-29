@@ -19,14 +19,14 @@ public class Analyze {
 
     private SetTask todo;
     private List<Task> tasks;
-    private Calendar calendar;
+    private Calendar today;
     private boolean allCompleted;
 
     // CONSTRUCTORS
 
     public Analyze(SetTask setTask) { 
         this.todo = setTask;
-        this.calendar = new GregorianCalendar();
+        this.today = new GregorianCalendar();
         this.tasks = new ArrayList<Task>();
         this.allCompleted = false;
     }
@@ -49,7 +49,7 @@ public class Analyze {
         }
 
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT);
-        String date = dateFormat.format(this.calendar.getTime());
+        String date = dateFormat.format(this.today.getTime());
         System.out.println("Pour " + date);
 
         int index = 1;
@@ -75,7 +75,7 @@ public class Analyze {
                 Calendar c = new GregorianCalendar();
                 c.setTime(task.getExpiryDate());
                 if (task.getProgressStatus() != MAX_PROGRESS) {
-                    if (c.after(this.calendar)) {
+                    if (c.after(this.today)) {
                         this.tasks.add(task);
                     }
                 } else {

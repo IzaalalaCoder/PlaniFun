@@ -7,11 +7,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.view.popup.WarningPopUp;
 
+/**
+ * Implements ActionListener and MouseListener and manage remove task
+ */
 public class ControlRemoveTask extends MouseAdapter implements ActionListener {
 
     // ATTRIBUTES
@@ -36,7 +38,6 @@ public class ControlRemoveTask extends MouseAdapter implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         int result = WarningPopUp.preventRemoveTask(this.task.getDescription());
-
         if (result == JOptionPane.OK_OPTION) {
             this.setTask.removeTaskInList(task);
         }
@@ -51,5 +52,4 @@ public class ControlRemoveTask extends MouseAdapter implements ActionListener {
     public void mouseExited(MouseEvent e) {
         this.button.setCursor(Cursor.getDefaultCursor());
     }
-
 }

@@ -28,14 +28,16 @@ import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 
+/**
+ * Implements XMLParser
+ */
 public class ReadingXML implements XMLParser {
 
     // ATTRIBUTES
 
     private Document document;
     private SetTask model;
-    private File file;
-    private boolean flag = true;
+    private final File file;
     private BuilderTask builderTask;
 
     // CONSTRUCTOR
@@ -44,35 +46,26 @@ public class ReadingXML implements XMLParser {
         this.model = null;
         this.document = null;
         this.file = Files.copy(f.toPath(), Paths.get(PATH_XML)).toFile();
-        this.flag = true;
         this.builderTask = null;
-        try {
-            this.openFile();
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            this.flag = false;
-        }
     }
 
     // REQUESTS
 
     @Override
     public SetTask getSetTaskInFile() {
-        if (!this.flag) {
-            throw new AssertionError("Can not create game");
+        if (this.model == null) {
+            throw new AssertionError("Can not create task list");
         }
         return model;
-    }
-
-    @Override
-    public boolean checkXMLFile() {
-        return this.flag;
     }
 
     // COMMANDS
 
     @Override
     public void readFileXML() throws IOException {
-        if (!this.flag) {
+        try {
+            this.openFile();
+        } catch (ParserConfigurationException | SAXException e) {
             throw new AssertionError("Can not open");
         }
         
@@ -82,6 +75,12 @@ public class ReadingXML implements XMLParser {
 
     // UTILS
 
+    /**
+     * openFile : open and validate current file by using XML parsing
+     * @throws ParserConfigurationException : error on config parse
+     * @throws SAXException : error on treatments file
+     * @throws IOException : error on open file
+     */
     private void openFile() throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setValidating(true);
@@ -108,39 +107,49 @@ public class ReadingXML implements XMLParser {
         this.document = builder.parse(file);
     }
 
+    /**
+     * browseFile : read file while creating a tasks list
+     */
     private void browseFile() {
-        final Element dataElement = (Element) this.document.getElementsByTagName(XMLElement.DATA.getTagName()).item(0);
-        final Element nameElement = (Element) dataElement.getElementsByTagName(XMLElement.NAME.getTagName()).item(0);
+        final Element dataElement = (Element) this.document.getElementsByTagName(
+                XMLElement.DATA.getTagName()).item(0);
+        final Element nameElement = (Element) dataElement.getElementsByTagName(
+                XMLElement.NAME.getTagName()).item(0);
 
         this.builderTask = new ConcreteBuilderTask();
-        this.model = this.builderTask.createTask();
+        this.model = this.builderTask.createSetTask();
         this.model.setName(nameElement.getTextContent());
         this.model.setCalendar(this.browseTime(dataElement));
 
-        final Element tasksElement = (Element) this.document.getElementsByTagName(XMLElement.TASKS.getTagName()).item(0);
+        final Element tasksElement = (Element) this.document.getElementsByTagName(
+                XMLElement.TASKS.getTagName()).item(0);
         this.browseAllTask(tasksElement, null, new ArrayList<>());
     }
 
+    /**
+     * browseAllTask : browse task list for add task in the model
+     * @param element : current element being read
+     * @param parentComplexTask : element parent
+     * @param elementsVisited : elements list already visit
+     */
     private void browseAllTask(Element element, ComplexTask parentComplexTask, List<Element> elementsVisited) {
         NodeList tasks = element.getElementsByTagName(XMLElement.TASK.getTagName());
     
         if (tasks.getLength() == 0) {
             return;
         }
-    
+
         for (int i = 0; i < tasks.getLength(); i++) {
             Element taskElement = (Element) tasks.item(i);
-            
+
             if (!elementsVisited.contains(taskElement)) {
-
                 elementsVisited.add(taskElement);
-
-                Element descElement = (Element) taskElement.getElementsByTagName(XMLElement.DESCRIPTION.getTagName()).item(0);
+                Element descElement = (Element) taskElement.getElementsByTagName(
+                        XMLElement.DESCRIPTION.getTagName()
+                ).item(0);
                 String desc = descElement.getTextContent();
                 Priority priority = getPriority(taskElement.getAttribute(XMLElement.PRIORITY.getTagName()));
                 boolean isComplexTask = taskElement.getElementsByTagName(XMLElement.SUB.getTagName()).getLength() > 0;
-                int completion = -1;
-                double progress = -1.0;
         
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(this.model.getCreationDate());
@@ -150,19 +159,15 @@ public class ReadingXML implements XMLParser {
                     ComplexTask subComplexTask = (ComplexTask) builderTask.createComplexTask(calendar);
                     browseAllTask(taskElement, subComplexTask, elementsVisited);
                     newTask = subComplexTask;
-                    if (parentComplexTask != null) {
-                        parentComplexTask.addTask(newTask);
-                    } else {
-                        this.model.addTaskInList(newTask);
-                    }
                 } else {
-                    Element completionElement = (Element) taskElement.getElementsByTagName(XMLElement.COMPLETION.getTagName()).item(0);
-                    completion = Integer.parseInt(completionElement.getTextContent());
-                    Element progressElement = (Element) taskElement.getElementsByTagName(XMLElement.PROGRESS.getTagName()).item(0);
-                    progress = Double.parseDouble(progressElement.getTextContent());
-                    boolean isNormal = progressElement.getAttributes().getNamedItem(XMLElement.MODE.getTagName()).getTextContent().equals("NORMAL");
-        
-                    
+                    Element completionElement = (Element) taskElement.getElementsByTagName(
+                            XMLElement.COMPLETION.getTagName()).item(0);
+                    int completion = Integer.parseInt(completionElement.getTextContent());
+                    Element progressElement = (Element) taskElement.getElementsByTagName(
+                            XMLElement.PROGRESS.getTagName()).item(0);
+                    double progress = Double.parseDouble(progressElement.getTextContent());
+                    boolean isNormal = progressElement.getAttributes().getNamedItem(
+                            XMLElement.MODE.getTagName()).getTextContent().equals("NORMAL");
         
                     if (isNormal) {
                         newTask = this.builderTask.createNormalTask(calendar);
@@ -171,16 +176,15 @@ public class ReadingXML implements XMLParser {
                         newTask = this.builderTask.createBooleanTask(calendar);
                         ((BooleanTask) newTask).setIsDone(progress == 100.0);
                     }
-
                     ((BasicTask) newTask).setCompletionDate(completion);
-        
-                    if (parentComplexTask != null) {
-                        parentComplexTask.addTask(newTask);
-                    } else {
-                        this.model.addTaskInList(newTask);
-                    }
                 }
-    
+
+                if (parentComplexTask != null) {
+                    parentComplexTask.addTask(newTask);
+                } else {
+                    this.model.addTaskInList(newTask);
+                }
+
                 // Set description and priority
                 newTask.setDescription(desc);
                 newTask.setPriority(priority);
@@ -188,43 +192,60 @@ public class ReadingXML implements XMLParser {
         }
     }
 
+    /**
+     * browseTime : generate calendar from read content
+     * @param element : current element being read
+     * @return Calendar
+     */
     private Calendar browseTime(Element element) {
         Calendar calendar = new GregorianCalendar();
-        final Element timeElement = (Element) element.getElementsByTagName(XMLElement.TIME.getTagName()).item(0);
+        final Element timeElement = (Element) element.getElementsByTagName(
+                XMLElement.TIME.getTagName()).item(0);
 
         // set year
-        final Element yearElement = (Element) timeElement.getElementsByTagName(XMLElement.YEAR.getTagName()).item(0);
+        final Element yearElement = (Element) timeElement.getElementsByTagName(
+                XMLElement.YEAR.getTagName()).item(0);
         int year = Integer.parseInt(yearElement.getTextContent());
         calendar.set(Calendar.YEAR, year);
 
         // set month
-        final Element monthElement = (Element) timeElement.getElementsByTagName(XMLElement.MONTH.getTagName()).item(0);
+        final Element monthElement = (Element) timeElement.getElementsByTagName(
+                XMLElement.MONTH.getTagName()).item(0);
         int month = Integer.parseInt(monthElement.getTextContent());
         calendar.set(Calendar.MONTH, month);
 
         // set day
-        final Element dayElement = (Element) timeElement.getElementsByTagName(XMLElement.DAY.getTagName()).item(0);
+        final Element dayElement = (Element) timeElement.getElementsByTagName(
+                XMLElement.DAY.getTagName()).item(0);
         int day = Integer.parseInt(dayElement.getTextContent());
         calendar.set(Calendar.DAY_OF_MONTH, day);
 
         // set hour
-        final Element hourElement = (Element) timeElement.getElementsByTagName(XMLElement.HOUR.getTagName()).item(0);
+        final Element hourElement = (Element) timeElement.getElementsByTagName(
+                XMLElement.HOUR.getTagName()).item(0);
         int hour = Integer.parseInt(hourElement.getTextContent());
         calendar.set(Calendar.HOUR_OF_DAY, hour);
 
         // set minute
-        final Element minuteElement = (Element) timeElement.getElementsByTagName(XMLElement.MINUTE.getTagName()).item(0);
+        final Element minuteElement = (Element) timeElement.getElementsByTagName(
+                XMLElement.MINUTE.getTagName()).item(0);
         int minute = Integer.parseInt(minuteElement.getTextContent());
         calendar.set(Calendar.MINUTE, minute);
 
         // set second
-        final Element secondElement = (Element) timeElement.getElementsByTagName(XMLElement.SECOND.getTagName()).item(0);
+        final Element secondElement = (Element) timeElement.getElementsByTagName(
+                XMLElement.SECOND.getTagName()).item(0);
         int second = Integer.parseInt(secondElement.getTextContent());
         calendar.set(Calendar.SECOND, second);
 
         return calendar;
     }
 
+    /**
+     * getPriority : generate priority from string
+     * @param p : represents priority
+     * @return Priority
+     */
     private Priority getPriority(String p) {
         for (Priority priority : Priority.values()) {
             if (priority.name().equals(p)) {

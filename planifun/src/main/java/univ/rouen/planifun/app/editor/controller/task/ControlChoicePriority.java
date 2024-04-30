@@ -7,11 +7,14 @@ import univ.rouen.planifun.app.editor.model.task.Priority;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.view.popup.QuestionPopUp;
 
+/**
+ * Implements ActionListener to manage change priority's task
+ */
 public class ControlChoicePriority implements ActionListener {
 
     // ATTRIBUTES
 
-    private Task model;
+    private final Task model;
 
     // CONSTRUCTORS
     
@@ -31,5 +34,4 @@ public class ControlChoicePriority implements ActionListener {
             btn.setText(this.model.getPriority().name());
         }
     }
-    
 }

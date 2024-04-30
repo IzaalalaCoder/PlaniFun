@@ -4,15 +4,37 @@ import java.util.Calendar;
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
+/**
+ * Is a todolist and task constructor.
+ */
 public interface BuilderTask {
 
     // REQUESTS
 
-    public SetTask createTask();
+    /**
+     * createSetTask : create todolist
+     * @return SetTask
+     */
+    SetTask createSetTask();
 
-    public Task createNormalTask(Calendar c);
+    /**
+     * createNormalTask : create normal task
+     * @param c : default time
+     * @return Task
+     */
+    Task createNormalTask(Calendar c);
 
-    public Task createBooleanTask(Calendar c);
-    
-    public Task createComplexTask(Calendar c);
+    /**
+     * createBooleanTask : create boolean task
+     * @param c : default time
+     * @return Task
+     */
+    Task createBooleanTask(Calendar c);
+
+    /**
+     * createComplexTask : create complex task
+     * @param c : default time
+     * @return Task
+     */
+    Task createComplexTask(Calendar c);
 }

@@ -13,13 +13,16 @@ import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 
+/**
+ * Manage display information's task
+ */
 public class InformationTask extends JPanel {
 
     // ATTRIBUTES
 
     private Task model;
     private JPanel panel;
-    private EditorMain parent;
+    private final EditorMain parent;
 
     // CONSTRUCTORS
 
@@ -33,6 +36,12 @@ public class InformationTask extends JPanel {
     
     // UTILS
 
+    /**
+     * setModel : display information's task
+     * @param task : selected task
+     * @param label : associate label
+     * @param c : default calendar
+     */
     public void setModel(Task task, JLabel label, Calendar c) {
         unsetModel();
         this.model = task;
@@ -50,22 +59,38 @@ public class InformationTask extends JPanel {
         this.repaint();
     }
 
+    /**
+     * displayBooleanTask : display information of boolean task
+     * @param l : label selected
+     */
     private void displayBooleanTask(JLabel l) {
-        this.panel = new DisplayBooleanTask(this.parent, (BooleanTask) this.model, l);
+        this.panel = new DisplayBooleanTask((BooleanTask) this.model, l);
     }
 
+    /**
+     * displayNormalTask : display information of normal task
+     * @param l : label selected
+     */
     private void displayNormalTask(JLabel l) {
-        this.panel = new DisplayNormalTask(this.parent, (NormalTask) this.model, l);
+        this.panel = new DisplayNormalTask((NormalTask) this.model, l);
     }
 
+    /**
+     * displayComplexTask : display information of complex task
+     * @param l : label selected
+     * @param c : default calendar
+     */
     private void displayComplexTask(JLabel l, Calendar c) {
         this.panel = new DisplayComplexTask(this.parent, (ComplexTask) this.model, l, c);
     }
- 
+
+    /**
+     * unsetModel : remove model and this information
+     */
     public void unsetModel() {
         this.setBackground(Color.white);
         if (model != null) {
-            this.removeAllComponentsRecursive(this);
+            this.removeAllComponents(this);
             this.model = null;
         }
 
@@ -73,10 +98,14 @@ public class InformationTask extends JPanel {
         this.repaint();
     }
 
-    private void removeAllComponentsRecursive(Container container) {
+    /**
+     * removeAllComponents : remove all components
+     * @param container : current container
+     */
+    private void removeAllComponents(Container container) {
         for (Component component : container.getComponents()) {
             if (component instanceof Container) {
-                removeAllComponentsRecursive((Container) component);
+                removeAllComponents((Container) component);
             }
             container.remove(component);
         }

@@ -7,13 +7,16 @@ import javax.swing.JLabel;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.view.list.task.DisplayComplexTask;
 
+/**
+ * Implements MouseListener to manage display subtask
+ */
 public class ControlTitleSubTaskInItem extends MouseAdapter {
    
     // ATTRIBUTES
 
-    private Task task;
-    private Calendar calendar;
-    private DisplayComplexTask parent;
+    private final Task task;
+    private final Calendar calendar;
+    private final DisplayComplexTask parent;
 
     // CONSTRUCTORS
 
@@ -41,5 +44,4 @@ public class ControlTitleSubTaskInItem extends MouseAdapter {
         JLabel src = (JLabel) e.getSource();
         src.setCursor(Cursor.getDefaultCursor());
     }
-
 }

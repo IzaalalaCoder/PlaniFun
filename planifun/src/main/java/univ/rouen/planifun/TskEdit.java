@@ -4,6 +4,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 
+/**
+ * Launch editor application
+ */
 public class TskEdit {
 
     // ENTERED POINT 
@@ -13,8 +16,9 @@ public class TskEdit {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
             EditorMain editorMain = new EditorMain();
             editorMain.setVisible(true);
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | InstantiationException
+                 | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            // e.printStackTrace();
         }
     }
 }

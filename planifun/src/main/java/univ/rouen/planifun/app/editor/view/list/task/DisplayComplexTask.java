@@ -17,6 +17,9 @@ import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 import univ.rouen.planifun.app.editor.view.list.ListSubTask;
 
+/**
+ * Manage display complex task
+ */
 public class DisplayComplexTask extends JPanel {
     
     // ATTRIBUTES
@@ -26,13 +29,11 @@ public class DisplayComplexTask extends JPanel {
     private JButton changePriority;
     private JLabel dateCompletion;
     private JButton addTask;
-    private JSplitPane mainSplit;
-    private JSplitPane taskSplit;
     private ComplexTask model;
-    private JLabel associate;
     private InformationTask informationTask;
     private ListSubTask listSubTask;
-    private Calendar calendar;
+    private final Calendar calendar;
+    private final JLabel associate;
 
     // CONSTRUCTORS
 
@@ -47,16 +48,30 @@ public class DisplayComplexTask extends JPanel {
 
     // REQUESTS
 
+    /**
+     * getModel : return complex task
+     * @return ComplexTask
+     */
     public ComplexTask getModel() {
         return this.model;
     }
 
+    /**
+     * getCalendar : return default calendar
+     * @return Calendar
+     */
     public Calendar getCalendar() {
         return this.calendar;
     }
 
     // COMMANDS 
 
+    /**
+     *
+     * @param task : task
+     * @param label :
+     * @param c : default calendar
+     */
     public void setSubTask(Task task, JLabel label, Calendar c) {
         this.listSubTask.changeBackgroundColorAboutTask(task);
         this.informationTask.setModel(task, label, c);
@@ -64,10 +79,18 @@ public class DisplayComplexTask extends JPanel {
     
     // UTILS
 
+    /**
+     * createModel : change model
+     * @param model : complex task
+     */
     private void createModel(ComplexTask model) {
         this.model = model;
     }
 
+    /**
+     * createComponents : create all components
+     * @param main : component parent
+     */
     private void createComponents(EditorMain main) {
         this.informationTask = new InformationTask(main);
         this.listSubTask = new ListSubTask(this, this.calendar);
@@ -80,6 +103,9 @@ public class DisplayComplexTask extends JPanel {
         this.addTask = new JButton("Ajouter une tâche");
     }
 
+    /**
+     * createProgressBarForTaskCompletion : create component for progression of complex task in interface
+     */
     private void createProgressBarForTaskCompletion() {
         this.progress = new JProgressBar();
         this.progress.setMinimum(0);
@@ -88,6 +114,9 @@ public class DisplayComplexTask extends JPanel {
         this.progress.setValue(this.model.getProgressStatus().intValue());
     }
 
+    /**
+     * placeComponents : place all components in interface
+     */
     private void placeComponents() {
         this.setLayout(new BorderLayout());
     
@@ -111,11 +140,14 @@ public class DisplayComplexTask extends JPanel {
         p.add(this.addTask, BorderLayout.SOUTH);
 
 
-        this.taskSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, this.listSubTask, this.informationTask);
-        this.mainSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, p, this.taskSplit );
+        JSplitPane taskSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, this.listSubTask, this.informationTask);
+        JSplitPane mainSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, p, taskSplit);
         this.add(mainSplit);
     }
 
+    /**
+     * createController : create all controller
+     */
     private void createController() {
         this.addTask.addActionListener(new ControlCreateSubTask(this));
         this.description.addKeyListener(new ControlChangeDescription(associate, model));

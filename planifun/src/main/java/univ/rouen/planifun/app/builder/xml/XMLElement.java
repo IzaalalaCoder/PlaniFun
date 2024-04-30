@@ -1,5 +1,8 @@
 package univ.rouen.planifun.app.builder.xml;
 
+/**
+ * Represent all elements found in XML file.
+ */
 public enum XMLElement {
 
     // VALUES
@@ -24,16 +27,20 @@ public enum XMLElement {
 
     // ATTRIBUTES
 
-    private String tagName;
+    private final String tagName;
 
     // CONSTRUCTORS
  
-    private XMLElement(String tagName) {
+    XMLElement(String tagName) {
         this.tagName = tagName;
     }
 
     // REQUESTS
- 
+
+    /**
+     * getTagName : return tag name
+     * @return String
+     */
     public String getTagName() {
         return this.tagName;
     }

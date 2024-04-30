@@ -5,11 +5,14 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import univ.rouen.planifun.app.editor.model.task.basic.BasicTask;
 
+/**
+ * Implements ChangeListener to manage change date completion of basic task
+ */
 public class ControlChangeDateCompletion implements ChangeListener {
 
     // ATTRIBUTES
 
-    private BasicTask model;
+    private final BasicTask model;
 
     // CONSTRUCTORS
 
@@ -23,5 +26,4 @@ public class ControlChangeDateCompletion implements ChangeListener {
     public void stateChanged(ChangeEvent e) {
         this.model.setCompletionDate((Integer) ((JSpinner) e.getSource()).getValue()); 
     }
-    
 }

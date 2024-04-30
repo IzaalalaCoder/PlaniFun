@@ -6,15 +6,14 @@ import javax.swing.JMenuItem;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 import univ.rouen.planifun.app.editor.view.util.ManageImage;
 
+/**
+ * Manage bar menu
+ */
 public class TaskMenu extends JMenuBar {
-    
-    // CONSTANTS
-
-    public static final String PATH_ASSET = "planifun/src/main/resources/assets/";
 
     // ATTRIBUTES
 
-    private EditorMain parent;
+    private final EditorMain parent;
 
     // CONSTRUCTORS
 
@@ -25,6 +24,9 @@ public class TaskMenu extends JMenuBar {
 
     // UTILS
 
+    /**
+     * createMenu : create this menu
+     */
     private void createMenu() {
         for (Menu menu : Menu.values()) {
             JMenu m = new JMenu(menu.name());

@@ -6,11 +6,14 @@ import javax.swing.JOptionPane;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 import univ.rouen.planifun.app.editor.view.popup.WarningPopUp;
 
+/**
+ * Implements ActionListener to leave application
+ */
 public class ControlQuit implements ActionListener {
 
     // ATTRIBUTES 
 
-    private EditorMain main;
+    private final EditorMain main;
 
     // CONSTRUCTOR
 
@@ -29,5 +32,4 @@ public class ControlQuit implements ActionListener {
         }
         this.main.dispose();
     }
-    
 }

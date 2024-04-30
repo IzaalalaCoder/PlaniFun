@@ -5,19 +5,18 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import univ.rouen.planifun.app.editor.model.task.Task;
-import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
-import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
-import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 import univ.rouen.planifun.app.editor.view.popup.ErrorPopUp;
 import univ.rouen.planifun.app.editor.view.popup.QuestionPopUp;
-import univ.rouen.planifun.app.editor.view.popup.WarningPopUp;
 
+/**
+ * Implements ActionListener to create new task
+ */
 public class ControlCreateTask implements ActionListener {
 
     // ATTRIBUTES
     
-    private EditorMain main;
+    private final EditorMain main;
     
     // CONSTRUCTORS
     
@@ -30,47 +29,27 @@ public class ControlCreateTask implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (this.main.getModel() == null) {
-            WarningPopUp.preventCreate("Vous deviez créer une liste de tâches avant de créer une tâche");
+            ErrorPopUp.preventCreate("Vous deviez créer une liste de tâches avant de créer une tâche");
             return;
         }
-
-        Task t = null;
-
         Calendar c = new GregorianCalendar();
         c.setTime(this.main.getModel().getCreationDate());
 
-        String type = QuestionPopUp.inputTypeTask();
-        if (type == null) {
+        Task t = QuestionPopUp.inputTypeTask(c);
+        if (t == null) {
+            ErrorPopUp.preventUnknownType();
             return;
         }
-        switch (type) {
-            case "NORMAL":
-                t = new NormalTask(c);
-                break;
-            case "BOOLEEN":
-                t = new BooleanTask(c);
-                break;
-            case "COMPLEXE":
-                t = new ComplexTask(c);
-                break;
-            default:
-                ErrorPopUp.preventUnknowType();
-                return;
-        };
 
-        if (t != null) {
-            String description = QuestionPopUp.inputString("La description de la tâche", 
-                "Tâche " + (this.main.getModel().getSize() + 1));
-
-            if (description == null || description.length() == 0) {
-                t = null;
-                return;
-            }
-            
-            t.setDescription(description);
-            this.main.getModel().addTaskInList(t);
+        String description = QuestionPopUp.inputString("La description de la tâche",
+            "Tâche " + (this.main.getModel().getSize() + 1));
+        if (description == null || description.isEmpty()) {
+            t = null;
+            return;
         }
+
+        t.setDescription(description);
+        this.main.getModel().addTaskInList(t);
         
     }
-    
 }

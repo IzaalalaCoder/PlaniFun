@@ -4,6 +4,9 @@ import java.util.Calendar;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
 
+/**
+ * Implements FactoryTask for create boolean task
+ */
 public class FactoryBooleanTask implements FactoryTask {
 
     // REQUESTS

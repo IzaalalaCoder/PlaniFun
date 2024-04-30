@@ -4,6 +4,9 @@ import java.util.Calendar;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 
+/**
+ * Implements FactoryTask for create complex task
+ */
 public class FactoryComplexTask implements FactoryTask {
 
     // REQUESTS

@@ -6,12 +6,15 @@ import javax.swing.JLabel;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.view.EditorMain;
 
+/**
+ * Implements MouseListener to manage display task
+ */
 public class ControlTitleTaskInItem extends MouseAdapter {
    
     // ATTRIBUTES
 
-    private Task task;
-    private EditorMain parent;
+    private final Task task;
+    private final EditorMain parent;
 
     // CONSTRUCTORS
 
@@ -38,5 +41,4 @@ public class ControlTitleTaskInItem extends MouseAdapter {
         JLabel src = (JLabel) e.getSource();
         src.setCursor(Cursor.getDefaultCursor());
     }
-    
 }

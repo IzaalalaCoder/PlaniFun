@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import univ.rouen.planifun.app.editor.model.task.Priority;
 
+/**
+ * Implements BasicTask for manage normal task
+ */
 public class NormalTask implements BasicTask {
 
     // ATTRIBUTES
@@ -13,7 +16,7 @@ public class NormalTask implements BasicTask {
     private Priority priority;
     private int completionDate;
     private Double progressStatus;
-    private Calendar defaultCalendar;
+    private final Calendar defaultCalendar;
 
     // CONSTRUCTORS
 
@@ -68,20 +71,36 @@ public class NormalTask implements BasicTask {
 
     @Override
     public void setPriority(Priority priority) {
+        if (priority == null) {
+            throw new NullPointerException();
+        }
         this.priority = priority;
     }
 
     @Override
     public void setDescription(String description) {
+        if (description == null || description.trim().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         this.description = description;
     }
 
     @Override
     public void setCompletionDate(int completionDate) {
+        if (completionDate < 0) {
+            throw new IllegalArgumentException();
+        }
         this.completionDate = completionDate;
     }
 
+    /**
+     * setProgressStatus : modify task progress
+     * @param progressStatus : task progress
+     */
     public void setProgressStatus(Double progressStatus) {
+        if (progressStatus < 0.0 || progressStatus > 100.0) {
+            throw new IllegalArgumentException();
+        }
         this.progressStatus = progressStatus;
     }
 }

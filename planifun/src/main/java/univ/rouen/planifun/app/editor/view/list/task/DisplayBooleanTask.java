@@ -16,8 +16,10 @@ import univ.rouen.planifun.app.editor.controller.task.ControlChangeDescription;
 import univ.rouen.planifun.app.editor.controller.task.ControlChoicePriority;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
-import univ.rouen.planifun.app.editor.view.EditorMain;
 
+/**
+ * Manage display boolean task
+ */
 public class DisplayBooleanTask extends JPanel {
     
     // ATTRIBUTES
@@ -26,26 +28,32 @@ public class DisplayBooleanTask extends JPanel {
     private JCheckBox checkTask;
     private JButton changePriority;
     private JSpinner choiceCompletion;
-
     private BooleanTask model;
-    private JLabel associate;
+    private final JLabel associate;
 
     // CONSTRUCTORS
 
-    public DisplayBooleanTask(EditorMain main, BooleanTask model, JLabel label) {
+    public DisplayBooleanTask(BooleanTask model, JLabel label) {
         this.associate = label;
         this.createModel(model);
         this.createComponents();
         this.placeComponents();
-        this.createController(main);
+        this.createController();
     }
 
     // UTILS
 
+    /**
+     * createModel : change model
+     * @param model : boolean task
+     */
     private void createModel(BooleanTask model) {
         this.model = model;
     }
 
+    /**
+     * createComponents : create all components
+     */
     private void createComponents() {
         this.description = new JTextField(13);
         this.description.setText(this.model.getDescription());
@@ -53,11 +61,14 @@ public class DisplayBooleanTask extends JPanel {
         this.changePriority.setText(this.model.getPriority().name());
         this.checkTask = new JCheckBox();
         this.checkTask.setSelected(this.model.getProgressStatus() == 100.0);
-        this.createSpinner();
+        this.createSpinnerForDateCompletion();
 
     }
 
-    private void createSpinner() {
+    /**
+     * createSpinnerForDateCompletion : create components spinner for choice completion in interface
+     */
+    private void createSpinnerForDateCompletion() {
         SpinnerModel spinnerModel = new SpinnerNumberModel(this.model.getCompletionDate(), 
             0, 
             Integer.MAX_VALUE, 
@@ -68,6 +79,9 @@ public class DisplayBooleanTask extends JPanel {
         this.choiceCompletion.setBounds(100, 100, 50, 30);
     }
 
+    /**
+     * placeComponents : place all components in interface
+     */
     private void placeComponents() {
         this.setLayout(new BorderLayout());
     
@@ -92,7 +106,10 @@ public class DisplayBooleanTask extends JPanel {
         this.add(p);
     }
 
-    private void createController(EditorMain main) {
+    /**
+     * createController : create all controller
+     */
+    private void createController() {
         this.checkTask.addActionListener(new ControlBooleanProgress(this.model));
         this.choiceCompletion.addChangeListener(new ControlChangeDateCompletion(this.model));
         this.description.addKeyListener(new ControlChangeDescription(associate, (Task) model));

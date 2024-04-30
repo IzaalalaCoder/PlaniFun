@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import univ.rouen.planifun.app.editor.model.task.Priority;
 
+/**
+ * Implements BasicTask for manage boolean task
+ */
 public class BooleanTask implements BasicTask {
 
     // ATTRIBUTES
@@ -13,7 +16,7 @@ public class BooleanTask implements BasicTask {
     private Priority priority;
     private int completionDate;
     private boolean done;
-    private Calendar defaultCalendar;
+    private final Calendar defaultCalendar;
 
     // CONSTRUCTORS
 
@@ -67,19 +70,32 @@ public class BooleanTask implements BasicTask {
 
     @Override
     public void setPriority(Priority priority) {
+        if (priority == null) {
+            throw new NullPointerException();
+        }
         this.priority = priority;
     }
 
     @Override
     public void setDescription(String description) {
+        if (description == null || description.trim().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         this.description = description;
     }
 
     @Override
     public void setCompletionDate(int completionDate) {
+        if (completionDate < 0) {
+            throw new IllegalArgumentException();
+        }
         this.completionDate = completionDate;
     }
 
+    /**
+     * setIsDone : modify task completed
+     * @param done : task completed
+     */
     public void setIsDone(boolean done) {
         this.done = done;
     }

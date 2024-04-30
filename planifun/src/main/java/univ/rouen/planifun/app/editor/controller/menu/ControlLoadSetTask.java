@@ -13,11 +13,14 @@ import univ.rouen.planifun.app.editor.view.EditorMain;
 import univ.rouen.planifun.app.editor.view.popup.ErrorPopUp;
 import univ.rouen.planifun.app.editor.view.popup.WarningPopUp;
 
+/**
+ * Implements ActionListener to manage load todolist
+ */
 public class ControlLoadSetTask implements ActionListener {
 
     // ATTRIBUTES
 
-    private EditorMain main;
+    private final EditorMain main;
 
     // CONSTRUCTORS
 
@@ -54,10 +57,14 @@ public class ControlLoadSetTask implements ActionListener {
 
     // UTILS
 
+    /**
+     * openSetTask : retrieve todolist in selected file
+     * @param file : selected file
+     * @throws IOException : error on open file
+     */
     private void openSetTask(File file) throws IOException {
         ReadingXML readerXML = new ReadingXML(file);
         readerXML.readFileXML();
         this.main.setModel(readerXML.getSetTaskInFile());
     }
-
 }

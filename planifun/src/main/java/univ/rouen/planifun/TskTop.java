@@ -5,6 +5,9 @@ import java.io.IOException;
 import univ.rouen.planifun.app.analyzer.Analyze;
 import univ.rouen.planifun.app.builder.xml.read.ReadingXML;
 
+/**
+ * Launch analyze program
+ */
 public class TskTop {
 
     // ENTERED POINT 
@@ -31,7 +34,7 @@ public class TskTop {
                     reader.readFileXML();
                     Analyze analyze = number == null ? 
                         new Analyze(reader.getSetTaskInFile()) 
-                        : new Analyze(reader.getSetTaskInFile(), number.intValue());
+                        : new Analyze(reader.getSetTaskInFile(), number);
                     analyze.analyze();
                     analyze.getAllTheMostUrgentTask();
                 } else {

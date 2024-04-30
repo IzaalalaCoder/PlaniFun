@@ -2,23 +2,54 @@ package univ.rouen.planifun.app.editor.model.task;
 
 import java.util.Date;
 
+/**
+ * Manage task
+ */
 public interface Task {
 
     // REQUESTS
 
-    public String getDescription();
+    /**
+     * getDescription : return description's task
+     * @return String
+     */
+    String getDescription();
 
-    public Priority getPriority();
+    /**
+     * getPriority : return priority's task
+     * @return Priority
+     */
+    Priority getPriority();
 
-    public int getCompletionDate();
-    
-    public Date getExpiryDate();
+    /**
+     * getCompletionDate : return delay's task
+     * @return int
+     */
+    int getCompletionDate();
 
-    public Double getProgressStatus();
+    /**
+     * getExpiryDate : return expiry date's task
+     * @return Date
+     */
+    Date getExpiryDate();
+
+    /**
+     * getProgressStatus : return progress status's task
+     * @return Double
+     */
+    Double getProgressStatus();
 
     // COMMANDS
 
-    public void setPriority(Priority priority);
+    /**
+     * setPriority : change priority
+     * @param priority : priority of task
+     */
+    void setPriority(Priority priority);
 
-    public void setDescription(String description);
+    /**
+     * setDescription : change description
+     * @param description : description of task
+     */
+    void setDescription(String description);
 }

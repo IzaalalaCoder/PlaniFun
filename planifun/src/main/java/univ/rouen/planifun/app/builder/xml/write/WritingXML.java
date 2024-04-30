@@ -22,6 +22,9 @@ import univ.rouen.planifun.app.editor.model.task.basic.BasicTask;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 
+/**
+ * Implements XMLWriter
+ */
 public class WritingXML implements XMLWriter {
 
     // ATTRIBUTES
@@ -31,8 +34,8 @@ public class WritingXML implements XMLWriter {
 
     // CONSTRUCTOR
 
-    public WritingXML(SetTask tasks) {
-        this.model = tasks;
+    public WritingXML(SetTask setTask) {
+        this.model = setTask;
         this.save = null;
     }
 
@@ -57,18 +60,18 @@ public class WritingXML implements XMLWriter {
         DocumentType doctype = document.getImplementation().createDocumentType(qualifiedName, null, systemId);
         document.appendChild(doctype);
 
-        // Création de l'élément racine
+        // add root
+
         Element root = document.createElement("todo");
         document.appendChild(root);
-        
-        // Add data information
+
+        // Add data  -----------------------------------------
         final Element data = document.createElement(XMLElement.DATA.getTagName());
 
         final Element name = document.createElement(XMLElement.NAME.getTagName());
         name.setTextContent(model.getName());
         data.appendChild(name);
 
-        // recup date
         Calendar c = new GregorianCalendar();
         c.setTime(this.model.getCreationDate());
 
@@ -79,13 +82,13 @@ public class WritingXML implements XMLWriter {
         data.appendChild(time);
         root.appendChild(data);
 
-        // Add all tasks
+        // Add all tasks -----------------------------------------
 
         final Element tasks = document.createElement(XMLElement.TASKS.getTagName());
         this.addAllTasks(tasks, document);
         root.appendChild(tasks);
 
-        // Écriture du contenu dans un fichier XML
+        // transform file
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
@@ -99,10 +102,18 @@ public class WritingXML implements XMLWriter {
         transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");      
         transformer.setOutputProperty("doctype-system", "todolist.dtd");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        transformer.setOutputProperty("{https://xml.apache.org/xslt}indent-amount", "2");
         transformer.transform(source, result);
     }
 
+    // UTILS
+
+    /**
+     * addTime : write time in generate file
+     * @param parent : parent element
+     * @param doc : creator elements
+     * @param c : time to be written
+     */
     private void addTime(Element parent, Document doc, Calendar c) {
         final Element year = doc.createElement(XMLElement.YEAR.getTagName());
         year.setTextContent(Integer.toString(c.get(Calendar.YEAR)));
@@ -129,62 +140,60 @@ public class WritingXML implements XMLWriter {
         parent.appendChild(second);
     }
 
+    /**
+     * addAllTasks : add all tasks in generate file
+     * @param parent : element parent
+     * @param doc : creators elements
+     */
     private void addAllTasks(Element parent, Document doc) {
         for (Task t : this.model.getAllTask()) {
-            final Element task = doc.createElement(XMLElement.TASK.getTagName());
-            task.setAttribute(XMLElement.PRIORITY.getTagName(), t.getPriority().name());
-            
-            final Element description = doc.createElement(XMLElement.DESCRIPTION.getTagName());
-            description.setTextContent(t.getDescription());
-            task.appendChild(description);
-
-            if (t instanceof BasicTask) {
-                final Element completion = doc.createElement(XMLElement.COMPLETION.getTagName());
-                completion.setTextContent(Integer.toString(t.getCompletionDate()));
-
-                final Element progress = doc.createElement(XMLElement.PROGRESS.getTagName());
-                progress.setTextContent(Double.toString(t.getProgressStatus()));
-                progress.setAttribute(XMLElement.MODE.getTagName(), t instanceof NormalTask ? "NORMAL" : "BOOLEAN");
-
-                task.appendChild(completion);
-                task.appendChild(progress);
-            } else {
-                final Element sub = doc.createElement(XMLElement.SUB.getTagName());
-                this.addSubAllTasks(sub, doc, (ComplexTask) t);
-                task.appendChild(sub);
-            }
-
-            parent.appendChild(task);
+            createTask(parent, doc, t);
         }
     }
 
+    /**
+     * addSubAllTasks : add all sub tasks in generate file
+     * @param parent : element parent
+     * @param doc : creators elements
+     * @param complexTask : model of complex task
+     */
     private void addSubAllTasks(Element parent, Document doc, ComplexTask complexTask) {
         for (Task t : complexTask.getAllSubTasks()) {
-            final Element task = doc.createElement(XMLElement.TASK.getTagName());
-            task.setAttribute(XMLElement.PRIORITY.getTagName(), t.getPriority().name());
-            
-            final Element description = doc.createElement(XMLElement.DESCRIPTION.getTagName());
-            description.setTextContent(t.getDescription());
-            task.appendChild(description);
-
-            if (t instanceof BasicTask) {
-                final Element completion = doc.createElement(XMLElement.COMPLETION.getTagName());
-                completion.setTextContent(Integer.toString(t.getCompletionDate()));
-
-                final Element progress = doc.createElement(XMLElement.PROGRESS.getTagName());
-                progress.setTextContent(Double.toString(t.getProgressStatus()));
-                progress.setAttribute(XMLElement.MODE.getTagName(), t instanceof NormalTask ? "NORMAL" : "BOOLEAN");
-
-                task.appendChild(completion);
-                task.appendChild(progress);
-            } else {
-                final Element sub = doc.createElement(XMLElement.SUB.getTagName());
-                this.addSubAllTasks(sub, doc, (ComplexTask) t);
-                task.appendChild(sub);
-            }
-
-            parent.appendChild(task);
+            createTask(parent, doc, t);
         }
     }
-}
 
+    /**
+     * createTask : create element of task
+     * @param parent : element parent
+     * @param doc : creators elements
+     * @param t : model of task
+     */
+    private void createTask(Element parent, Document doc, Task t) {
+        final Element task = doc.createElement(XMLElement.TASK.getTagName());
+        task.setAttribute(XMLElement.PRIORITY.getTagName(), t.getPriority().name());
+
+        final Element description = doc.createElement(XMLElement.DESCRIPTION.getTagName());
+        description.setTextContent(t.getDescription());
+        task.appendChild(description);
+
+        if (t instanceof BasicTask) {
+            final Element completion = doc.createElement(XMLElement.COMPLETION.getTagName());
+            completion.setTextContent(Integer.toString(t.getCompletionDate()));
+
+            final Element progress = doc.createElement(XMLElement.PROGRESS.getTagName());
+            progress.setTextContent(Double.toString(t.getProgressStatus()));
+            progress.setAttribute(XMLElement.MODE.getTagName(), t instanceof NormalTask ? "NORMAL" : "BOOLEAN");
+
+            task.appendChild(completion);
+            task.appendChild(progress);
+        } else {
+            final Element sub = doc.createElement(XMLElement.SUB.getTagName());
+            this.addSubAllTasks(sub, doc, (ComplexTask) t);
+            task.appendChild(sub);
+        }
+
+        parent.appendChild(task);
+    }
+
+}

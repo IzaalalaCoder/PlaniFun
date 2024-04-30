@@ -5,17 +5,31 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+/**
+ * Manage writer of XML file for save todolist
+ */
 public interface XMLWriter {
 
     // CONSTANTS
 
-    public String PATH_XML = "planifun/src/main/resources/xml/new_save.xml";
+    String PATH_XML = "src/main/resources/xml/new_save.xml";
 
     // REQUESTS
 
-    public File getGeneratedFile() throws IOException;
+    /**
+     * getGeneratedFile : return generate file
+     * @return File
+     * @throws IOException : error on open file
+     */
+    File getGeneratedFile() throws IOException;
 
     // COMMANDS
 
-    public void writeXMLFile() throws ParserConfigurationException, TransformerException ;
+    /**
+     * writeXMLFile : write a new file
+     * @throws ParserConfigurationException : error on config parse
+     * @throws TransformerException : error on file transform
+     */
+    void writeXMLFile() throws ParserConfigurationException, TransformerException;
+
 }

@@ -9,15 +9,16 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-
 import univ.rouen.planifun.app.editor.controller.task.ControlChangeDateCompletion;
 import univ.rouen.planifun.app.editor.controller.task.ControlChangeDescription;
 import univ.rouen.planifun.app.editor.controller.task.ControlChoicePriority;
 import univ.rouen.planifun.app.editor.controller.task.ControlNormalProgress;
 import univ.rouen.planifun.app.editor.model.task.Task;
 import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
-import univ.rouen.planifun.app.editor.view.EditorMain;
 
+/**
+ * Manage display normal task
+ */
 public class DisplayNormalTask extends JPanel {
     
     // ATTRIBUTES
@@ -27,24 +28,31 @@ public class DisplayNormalTask extends JPanel {
     private JButton changePriority;
     private JSpinner choiceCompletion;
     private NormalTask model;
-    private JLabel associate;
+    private final JLabel associate;
 
     // CONSTRUCTORS
 
-    public DisplayNormalTask(EditorMain main, NormalTask model, JLabel label) {
+    public DisplayNormalTask(NormalTask model, JLabel label) {
         this.associate = label;
         this.createModel(model);
         this.createComponents();
         this.placeComponents();
-        this.createController(main);
+        this.createController();
     }
     
     // UTILS
 
+    /**
+     * createModel : change model
+     * @param model : normal task
+     */
     private void createModel(NormalTask model) {
         this.model = model;
     }
 
+    /**
+     * createComponents : create all components
+     */
     private void createComponents() {
         this.description = new JTextField(13);
         this.description.setText(this.model.getDescription());
@@ -54,6 +62,9 @@ public class DisplayNormalTask extends JPanel {
         this.createSpinnerForProgressStatus();
     }
 
+    /**
+     * createSpinnerForProgressStatus : create components spinner for set progress status in interface
+     */
     private void createSpinnerForProgressStatus() {
         SpinnerModel spinnerModel = new SpinnerNumberModel(
             this.model.getProgressStatus().doubleValue(), 
@@ -66,6 +77,9 @@ public class DisplayNormalTask extends JPanel {
         this.progress.setBounds(100, 100, 50, 30);
     }
 
+    /**
+     * createSpinnerForDateCompletion : create components spinner for choice completion in interface
+     */
     private void createSpinnerForDateCompletion() {
         SpinnerModel spinnerModel = new SpinnerNumberModel(this.model.getCompletionDate(), 
             0, 
@@ -77,6 +91,9 @@ public class DisplayNormalTask extends JPanel {
         this.choiceCompletion.setBounds(100, 100, 50, 30);
     }
 
+    /**
+     * placeComponents : place all components in interface
+     */
     private void placeComponents() {
         this.setLayout(new BorderLayout());
     
@@ -101,7 +118,10 @@ public class DisplayNormalTask extends JPanel {
         this.add(p);
     }
 
-    private void createController(EditorMain main) {
+    /**
+     * createController : create all controller
+     */
+    private void createController() {
         this.choiceCompletion.addChangeListener(new ControlChangeDateCompletion(this.model));
         this.progress.addChangeListener(new ControlNormalProgress(this.model));
         this.description.addKeyListener(new ControlChangeDescription(associate, (Task) model));

@@ -1,36 +1,35 @@
 package univ.rouen.planifun.app.analyzer;
 
 import java.text.DateFormat;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.Objects;
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
+/**
+ * Analyze can analyze todolist
+ */
 public class Analyze {
 
-    // CONSTANTS 
-
-    private final Double MAX_PROGRESS = 100.0;
-    
     // ATTRIBUTES
 
-    private SetTask todo;
-    private List<Task> tasks;
-    private List<Task> late;
-    private Calendar today;
+    private final SetTask todo;
+    private final List<Task> tasks;
+    private final List<Task> late;
+    private final Calendar today;
     private boolean allCompleted;
-    private int number;
+    private final int number;
 
     // CONSTRUCTORS
 
     public Analyze(SetTask setTask) { 
         this.todo = setTask;
         this.today = new GregorianCalendar();
-        this.tasks = new ArrayList<Task>();
-        this.late = new ArrayList<Task>();
+        this.tasks = new ArrayList<>();
+        this.late = new ArrayList<>();
         this.allCompleted = false;
         this.number = 5;
     }
@@ -38,14 +37,17 @@ public class Analyze {
     public Analyze(SetTask setTask, int number) { 
         this.todo = setTask;
         this.today = new GregorianCalendar();
-        this.tasks = new ArrayList<Task>();
-        this.late = new ArrayList<Task>();
+        this.tasks = new ArrayList<>();
+        this.late = new ArrayList<>();
         this.allCompleted = false;
         this.number = number;
     }
 
     // REQUESTS
 
+    /**
+     * getAllTheMostUrgentTask : display number most urgent task in console.
+     */
     public void getAllTheMostUrgentTask() {
         if (this.todo == null) {
             System.out.println("Aucune tâche n'a été trouvé");
@@ -53,24 +55,22 @@ public class Analyze {
         }
         
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT);
-
-        if (this.tasks.size() == 0) {
+        if (this.tasks.isEmpty()) {
             if (allCompleted) {
                 System.out.println("Toutes les tâches sont complétées");
-            } else if (this.late.size() > 0) {
+            } else if (!this.late.isEmpty()) {
                 System.out.println("Les tâches en retard ");
-                System.out.println("==> En retard depuis le " +  dateFormat.format(this.todo.getCreationDate().getTime()));
+                System.out.println("==> En retard depuis le " +  dateFormat.format(
+                        this.todo.getCreationDate().getTime()));
                 for (Task t : this.late) {
                     System.out.println("---------- Tache numéro : " + (this.late.indexOf(t) + 1));
                     System.out.println("==> En retard depuis le " +  dateFormat.format(t.getExpiryDate().getTime()));
-                    System.out.println(t.toString());
+                    System.out.println(t);
                     System.out.println();
                 }
             }
             return;
         }
-
-        
         String date = dateFormat.format(this.today.getTime());
         System.out.println("Le " + date);
 
@@ -79,13 +79,15 @@ public class Analyze {
             System.out.println("- Tache numéro : " + index);
             System.out.println(t.toString());
             System.out.println();
-
             index++;
         }
     }
 
     // COMMANDS
 
+    /**
+     * analyze : analyze all tasks in todolist.
+     */
     public void analyze() {
         if (this.todo == null) {
             return;
@@ -96,7 +98,8 @@ public class Analyze {
             if (task.getExpiryDate() != null) {
                 Calendar c = new GregorianCalendar();
                 c.setTime(task.getExpiryDate());
-                if (task.getProgressStatus() != MAX_PROGRESS) {
+                final Double MAX_PROGRESS = 100.0;
+                if (!Objects.equals(task.getProgressStatus(), MAX_PROGRESS)) {
                     if (c.after(this.today)) {
                         this.tasks.add(task);
                     } else {
@@ -115,18 +118,24 @@ public class Analyze {
     
     // UTILS
 
+    /**
+     * sortByDate : sort task list by date.
+     */
     private void sortByDate() {
-        Collections.sort(this.tasks, new ComparatorTask());
-        Collections.sort(this.late, new ComparatorTask());
+        this.tasks.sort(new ComparatorTask());
+        this.late.sort(new ComparatorTask());
     }
 
+    /**
+     * cleanListTask : cleans task list by removing excess tasks until the specified number.
+     */
     private void cleanListTask() {
         if (this.tasks.size() <= this.number) {
             return;
         }
 
         while (this.tasks.size() != this.number) {
-            this.tasks.remove(this.tasks.size() - 1);
+            this.tasks.removeLast();
         }
     }
 }

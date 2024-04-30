@@ -6,12 +6,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import univ.rouen.planifun.app.editor.model.task.Task;
 
+/**
+ * Implements KeyListener to manage change description's task
+ */
 public class ControlChangeDescription implements KeyListener {
 
     // ATTRIBUTES
 
-    private Task model;
-    private JLabel label;
+    private final Task model;
+    private final JLabel label;
 
     // CONSTRUCTORS
 
@@ -42,5 +45,4 @@ public class ControlChangeDescription implements KeyListener {
         this.model.setDescription(field.getText());
         this.label.setText(field.getText());
     }
-    
 }

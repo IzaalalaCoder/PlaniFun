@@ -4,21 +4,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import univ.rouen.planifun.app.editor.model.task.Task;
-import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
-import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
-import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 import univ.rouen.planifun.app.editor.view.list.task.DisplayComplexTask;
 import univ.rouen.planifun.app.editor.view.popup.ErrorPopUp;
 import univ.rouen.planifun.app.editor.view.popup.QuestionPopUp;
 
+/**
+ * Implements ActionListener and manage create new subtask
+ */
 public class ControlCreateSubTask implements ActionListener {
 
     // ATTRIBUTES
-    
-    private DisplayComplexTask parent;
-    
+
+    private final DisplayComplexTask parent;
+
     // CONSTRUCTORS
-    
+
     public ControlCreateSubTask(DisplayComplexTask parent) {
         this.parent = parent;
     }
@@ -27,41 +27,26 @@ public class ControlCreateSubTask implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Task t = null;
-        Calendar c = this.parent.getCalendar();
-
-        String type = QuestionPopUp.inputTypeTask();
-        if (type == null) {
+        if (this.parent.getModel() == null) {
+            ErrorPopUp.preventCreate("Vous deviez créer une liste de tâches avant de créer une tâche");
             return;
         }
-        switch (type) {
-            case "NORMAL":
-                t = new NormalTask(c);
-                break;
-            case "BOOLEEN":
-                t = new BooleanTask(c);
-                break;
-            case "COMPLEXE":
-                t = new ComplexTask(c);
-                break;
-            default:
-                ErrorPopUp.preventUnknowType();
-                return;
-        };
+        Calendar c = (Calendar) this.parent.getCalendar().clone();
 
-        if (t != null) {
-            String description = QuestionPopUp.inputString("La description de la sous-tâche", 
-                "Sous-tâche " + (this.parent.getModel().getAllSubTasks().size() + 1));
-            
-            if (description == null || description.length() == 0) {
-                t = null;
-                return;
-            }
-
-            t.setDescription(description);
-            this.parent.getModel().addTask(t);
+        Task t = QuestionPopUp.inputTypeTask(c);
+        if (t == null) {
+            ErrorPopUp.preventUnknownType();
+            return;
         }
-        
+
+        String description = QuestionPopUp.inputString("La description de la sous-tâche",
+                "Sous-tâche " + (this.parent.getModel().getAllSubTasks().size() + 1));
+        if (description == null || description.isEmpty()) {
+            t = null;
+            return;
+        }
+
+        t.setDescription(description);
+        this.parent.getModel().addTask(t);
     }
-    
 }

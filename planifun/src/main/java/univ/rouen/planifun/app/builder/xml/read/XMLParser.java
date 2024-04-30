@@ -3,20 +3,29 @@ package univ.rouen.planifun.app.builder.xml.read;
 import java.io.IOException;
 import univ.rouen.planifun.app.editor.model.SetTask;
 
+/**
+ * Manage read of XML file for recreate todolist
+ */
 public interface XMLParser {
 
     // CONSTANTS
 
-    public String PATH_DTD = "planifun/src/main/resources/xml/todolist.dtd";
-    public final String PATH_XML = "planifun/src/main/resources/xml/save.xml";
+    String PATH_XML = "src/main/resources/xml/save.xml";
 
     // REQUESTS
 
-    public SetTask getSetTaskInFile();
-
-    public boolean checkXMLFile();
+    /**
+     * getSetTaskInFile : return generated task list
+     * @return SetTask
+     */
+    SetTask getSetTaskInFile();
     
     // COMMANDS
 
-    public void readFileXML() throws IOException;
+    /**
+     * readFileXML : read current file for generated task list
+     * @throws IOException : error on open file
+     */
+    void readFileXML() throws IOException;
+
 }

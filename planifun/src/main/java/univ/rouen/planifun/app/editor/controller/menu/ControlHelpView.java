@@ -5,20 +5,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-
 import univ.rouen.planifun.app.editor.view.popup.ErrorPopUp;
 
+/**
+ * Implements ActionListener to display help to use application
+ */
 public class ControlHelpView implements ActionListener {
 
-    // CONSTANTS
-
-    private final String PATH_FILES = "planifun/src/main/resources/Aide.pdf";
-    
     // COMMANDS
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        File output = new File(PATH_FILES); 
+        String PATH_FILES = "src/main/resources/Aide.pdf";
+        File output = new File(PATH_FILES);
         Desktop desktop = Desktop.getDesktop();
         try {
             desktop.open(output);
@@ -26,5 +25,4 @@ public class ControlHelpView implements ActionListener {
             ErrorPopUp.preventOpenOrParseFileError();
         }
     }
-    
 }

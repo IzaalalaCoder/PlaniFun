@@ -34,7 +34,10 @@ public class Analyze {
         this.number = 5;
     }
 
-    public Analyze(SetTask setTask, int number) { 
+    public Analyze(SetTask setTask, int number) {
+        if (number <= 0) {
+            throw new IllegalArgumentException("Number must be greater than 0");
+        }
         this.todo = setTask;
         this.today = new GregorianCalendar();
         this.tasks = new ArrayList<>();

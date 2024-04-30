@@ -64,7 +64,7 @@ public class ControlLoadSetTask implements ActionListener {
      */
     private void openSetTask(File file) throws IOException {
         ReadingXML readerXML = new ReadingXML(file);
-        readerXML.readFileXML();
+        readerXML.readXMLFile();
         this.main.setModel(readerXML.getSetTaskInFile());
     }
 }

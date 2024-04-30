@@ -26,6 +26,6 @@ public interface XMLParser {
      * readFileXML : read current file for generated task list
      * @throws IOException : error on open file
      */
-    void readFileXML() throws IOException;
+    void readXMLFile() throws IOException;
 
 }

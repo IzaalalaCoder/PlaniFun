@@ -31,7 +31,7 @@ public class TskTop {
                 ReadingXML reader = null;
                 try {
                     reader = new ReadingXML(file);
-                    reader.readFileXML();
+                    reader.readXMLFile();
                     Analyze analyze = number == null ?
                         new Analyze(reader.getSetTaskInFile())
                         : new Analyze(reader.getSetTaskInFile(), number);

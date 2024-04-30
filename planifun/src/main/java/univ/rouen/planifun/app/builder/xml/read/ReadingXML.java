@@ -62,7 +62,7 @@ public class ReadingXML implements XMLParser {
     // COMMANDS
 
     @Override
-    public void readFileXML() throws IOException {
+    public void readXMLFile() throws IOException {
         try {
             this.openFile();
         } catch (ParserConfigurationException | SAXException e) {

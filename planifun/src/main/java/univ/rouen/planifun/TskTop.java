@@ -24,26 +24,25 @@ public class TskTop {
                     System.out.println("Erreur de syntaxe : Un nombre est demandé");
                     return;
                 }
-                
             }
-            try {
-                String filePath = args[0];
-                File file = new File(filePath);
-                if (file.exists()) {
-                    ReadingXML reader = new ReadingXML(file);
+            String filePath = args[0];
+            File file = new File(filePath);
+            if (file.exists()) {
+                ReadingXML reader = null;
+                try {
+                    reader = new ReadingXML(file);
                     reader.readFileXML();
-                    Analyze analyze = number == null ? 
-                        new Analyze(reader.getSetTaskInFile()) 
+                    Analyze analyze = number == null ?
+                        new Analyze(reader.getSetTaskInFile())
                         : new Analyze(reader.getSetTaskInFile(), number);
                     analyze.analyze();
                     analyze.getAllTheMostUrgentTask();
-                } else {
-                    System.out.println("Le fichier n'existe pas : " + filePath);
+                } catch (IOException e) {
+                    System.out.println("Erreur de lecture du fichier");
                 }
-            } catch (IOException e) {
-                System.out.println("Erreur de lecture du fichier");
+            } else {
+                System.out.println("Le fichier n'existe pas : " + filePath);
             }
-            
         }
     }
     

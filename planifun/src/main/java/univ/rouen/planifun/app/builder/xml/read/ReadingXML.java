@@ -17,15 +17,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import univ.rouen.planifun.app.builder.BuilderTask;
-import univ.rouen.planifun.app.builder.ConcreteBuilderTask;
+import univ.rouen.planifun.app.builder.ConcreteBuilderSetTask;
 import univ.rouen.planifun.app.builder.xml.XMLElement;
 import univ.rouen.planifun.app.editor.model.SetTask;
 import univ.rouen.planifun.app.editor.model.task.Priority;
 import univ.rouen.planifun.app.editor.model.task.Task;
-import univ.rouen.planifun.app.editor.model.task.basic.BasicTask;
-import univ.rouen.planifun.app.editor.model.task.basic.BooleanTask;
-import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 
 /**
@@ -36,27 +32,22 @@ public class ReadingXML implements XMLParser {
     // ATTRIBUTES
 
     private Document document;
-    private SetTask model;
     private final File file;
-    private BuilderTask builderTask;
+    private final ConcreteBuilderSetTask builderTask;
 
     // CONSTRUCTOR
 
     public ReadingXML(File f) throws IOException {
-        this.model = null;
         this.document = null;
         this.file = Files.copy(f.toPath(), Paths.get(PATH_XML)).toFile();
-        this.builderTask = null;
+        this.builderTask = new ConcreteBuilderSetTask();
     }
 
     // REQUESTS
 
     @Override
     public SetTask getSetTaskInFile() {
-        if (this.model == null) {
-            throw new AssertionError("Can not create task list");
-        }
-        return model;
+        return this.builderTask.getSetTask();
     }
 
     // COMMANDS
@@ -116,10 +107,10 @@ public class ReadingXML implements XMLParser {
         final Element nameElement = (Element) dataElement.getElementsByTagName(
                 XMLElement.NAME.getTagName()).item(0);
 
-        this.builderTask = new ConcreteBuilderTask();
-        this.model = this.builderTask.createSetTask();
-        this.model.setName(nameElement.getTextContent());
-        this.model.setCalendar(this.browseTime(dataElement));
+
+        this.builderTask.startSetTask();
+        this.builderTask.setName(nameElement.getTextContent());
+        this.builderTask.setCalendar(this.browseTime(dataElement));
 
         final Element tasksElement = (Element) this.document.getElementsByTagName(
                 XMLElement.TASKS.getTagName()).item(0);
@@ -152,11 +143,14 @@ public class ReadingXML implements XMLParser {
                 boolean isComplexTask = taskElement.getElementsByTagName(XMLElement.SUB.getTagName()).getLength() > 0;
         
                 Calendar calendar = Calendar.getInstance();
-                calendar.setTime(this.model.getCreationDate());
+                this.builderTask.setCalendar(calendar);
 
                 Task newTask;
                 if (isComplexTask) {
-                    ComplexTask subComplexTask = (ComplexTask) builderTask.createComplexTask(calendar);
+                    builderTask.createComplexTask(calendar);
+                    this.builderTask.setDescription(desc);
+                    this.builderTask.setPriority(priority);
+                    ComplexTask subComplexTask = (ComplexTask) this.builderTask.getLastTask();
                     browseAllTask(taskElement, subComplexTask, elementsVisited);
                     newTask = subComplexTask;
                 } else {
@@ -170,24 +164,23 @@ public class ReadingXML implements XMLParser {
                             XMLElement.MODE.getTagName()).getTextContent().equals("NORMAL");
         
                     if (isNormal) {
-                        newTask = this.builderTask.createNormalTask(calendar);
-                        ((NormalTask) newTask).setProgressStatus(progress);
+                        builderTask.createNormalTask(calendar);
+                        builderTask.setProgress(progress);
                     } else {
-                        newTask = this.builderTask.createBooleanTask(calendar);
-                        ((BooleanTask) newTask).setIsDone(progress == 100.0);
+                        builderTask.createBooleanTask(calendar);
+                        builderTask.setIsDone(progress == 100.0);
                     }
-                    ((BasicTask) newTask).setCompletionDate(completion);
+                    this.builderTask.setDescription(desc);
+                    this.builderTask.setPriority(priority);
+                    this.builderTask.setCompletion(completion);
+                    newTask = this.builderTask.getLastTask();
                 }
 
                 if (parentComplexTask != null) {
-                    parentComplexTask.addTask(newTask);
+                    this.builderTask.addTaskInComplexTask(parentComplexTask, newTask);
                 } else {
-                    this.model.addTaskInList(newTask);
+                    this.builderTask.addTaskInSetTask(newTask);
                 }
-
-                // Set description and priority
-                newTask.setDescription(desc);
-                newTask.setPriority(priority);
             }
         }
     }

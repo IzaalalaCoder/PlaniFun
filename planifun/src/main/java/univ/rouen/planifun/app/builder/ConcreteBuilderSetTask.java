@@ -13,7 +13,7 @@ import univ.rouen.planifun.app.editor.model.task.basic.NormalTask;
 import univ.rouen.planifun.app.editor.model.task.complex.ComplexTask;
 
 /**
- * Implements BuilderTask and
+ * Implements BuilderTask
  */
 public class ConcreteBuilderSetTask implements BuilderSetTask {
 
